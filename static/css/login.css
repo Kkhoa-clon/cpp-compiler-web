@@ -1,0 +1,155 @@
+/* Nền chung */
+body {
+    background: linear-gradient(135deg, #0f0f0f, #003366); /* Nền tối với gradient xanh đậm */
+    color: #e0e0e0;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Container chính */
+.container {
+    display: flex;
+    width: 80%; /* Kích thước tổng quát */
+    height: 69%; /* Giảm chiều cao tổng quát */
+    max-width: 1200px; /* Giới hạn kích thước tối đa */
+    max-height: 700px; /* Giới hạn chiều cao tối đa */
+    border-radius: 10px; /* Bo tròn cho container */
+    overflow: hidden; /* Ẩn phần vượt ra ngoài */
+}
+
+/* Container của form */
+.form-container {
+    flex: 0 0 40%; /* Chiếm 40% chiều rộng */
+    background: #1a1a1a; /* Nền xám tối */
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Tiêu đề trang */
+h1 {
+    margin-bottom: 30px; /* Khoảng cách lớn hơn */
+    color: #007bff;
+    font-size: 2.5em; /* Kích thước tiêu đề lớn hơn */
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* Labels */
+label {
+    display: block;
+    margin-bottom: 12px; /* Khoảng cách lớn hơn */
+    font-weight: bold;
+    color: #e0e0e0;
+    font-size: 1.1em; /* Kích thước chữ lớn hơn */
+    text-align: left;
+}
+
+/* Inputs */
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 16px; /* Padding lớn hơn */
+    margin-bottom: 20px;
+    border: 1px solid #555;
+    border-radius: 6px; /* Bo tròn nhẹ */
+    background: #333;
+    color: #e0e0e0;
+    font-size: 1.1em; /* Kích thước chữ lớn hơn */
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+    box-shadow: inset 0 0 5px rgba(0, 123, 255, 0.3); /* Hiệu ứng sáng nhẹ */
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    outline: none;
+    border-color: #007bff;
+    background-color: #444; /* Nền ô nhập liệu tối hơn khi focus */
+}
+
+/* Nút đăng ký */
+button[type="submit"] {
+    background: linear-gradient(135deg, #007bff, #0056b3); /* Gradient xanh dương */
+    color: #e0e0e0;
+    border: none;
+    padding: 16px 30px; /* Padding lớn hơn */
+    border-radius: 6px; /* Bo tròn nhẹ */
+    cursor: pointer;
+    width: 100%;
+    font-size: 1.2em; /* Kích thước chữ lớn hơn */
+    font-weight: bold;
+    margin-top: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Bóng đổ nhẹ */
+    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; /* Hiệu ứng chuyển động mượt mà */
+}
+
+button[type="submit"]:hover {
+    background: linear-gradient(135deg, #0056b3, #003f7f); /* Gradient khi hover */
+    transform: scale(1.05); /* Phóng to nhẹ khi hover */
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4); /* Bóng đổ rõ rệt hơn khi hover */
+}
+
+button[type="submit"]:active {
+    transform: scale(1); /* Trở về kích thước ban đầu khi nhấn */
+}
+
+/* Container ảnh */
+.image-container {
+    flex: 0 0 60%; /* Chiếm 60% chiều rộng */
+    background: #ddd; /* Nền sáng cho container ảnh */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; /* Để thêm hiệu ứng ánh sáng */
+    overflow: hidden;
+}
+
+/* Ảnh */
+.image-container img {
+    max-width: 100%;
+    height: auto; /* Đảm bảo ảnh giữ tỷ lệ */
+}
+
+/* Hiệu ứng đèn mờ đen */
+.image-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Đèn mờ đen */
+    z-index: 1; /* Đảm bảo đè lên ảnh */
+}
+
+/* Đảm bảo ảnh không bị che bởi đèn mờ */
+.image-container img {
+    position: relative;
+    z-index: 0;
+}
+
+/* Thêm padding cho các phần tử */
+* {
+    box-sizing: border-box;
+}
+/* Container của form */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    position: relative; /* Để viền xanh hoạt động đúng */
+    padding: 20px;
+    box-shadow: 0 0 0 5px rgba(0, 123, 255, 0.5); /* Viền xanh quanh toàn bộ container */
+    border-radius: 10px; /* Bo tròn nhẹ cho container */
+}
+

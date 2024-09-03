@@ -1,0 +1,323 @@
+/* Thiết lập các màu sắc */
+:root {
+  --background: #1e1e1e; /* Màu nền của trang */
+  --text: #f1f1f1; /* Màu văn bản chính */
+  --header-footer: #212529; /* Màu nền của header và footer */
+  --primary: #007bff; /* Màu chính của giao diện */
+  --secondary: #0056b3; /* Màu phụ của giao diện */
+  --sidebar: #222; /* Màu nền của sidebar */
+  --section-background-dark: #333; /* Màu nền tối cho các phần tối */
+  --section-background-light: #444; /* Màu nền xám gần như đen cho các phần sáng */
+  --highlight: rgba(0, 123, 255, 0.2); /* Màu nền highlight */
+}
+
+/* General Styles */
+body {
+  font-family: "Roboto", sans-serif; /* Thay đổi font để thêm hiện đại */
+  background-color: var(--background); /* Màu nền của trang */
+  transition: margin-left .5s;
+  color: var(--text); /* Màu văn bản chính */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* Thiết lập box-sizing để dễ dàng quản lý kích thước */
+  scroll-behavior: smooth; /* Hiệu ứng cuộn mượt mà */
+}
+
+
+header {
+  background: var(--header-footer); /* Màu nền của header */
+  color: var(--text); /* Màu văn bản trong header */
+  padding: 20px;
+  position: fixed; /* Đặt header cố định ở trên cùng */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; /* Đảm bảo header nằm trên cùng */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Hiệu ứng bóng cho header */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2.2em; /* Kích thước tiêu đề trong header */
+  color: var(--primary); /* Màu tiêu đề */
+}
+
+.main-content {
+  padding: 100px 20px 20px; /* Để không bị chồng lên header */
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.search-container {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.search-container input {
+  width: 100%;
+  max-width: 700px;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--primary); /* Viền của ô tìm kiếm */
+  background: var(--header-footer); /* Màu nền của ô tìm kiếm */
+  color: var(--text); /* Màu văn bản trong ô tìm kiếm */
+  font-size: 16px;
+  transition: border-color 0.3s, box-shadow 0.3s; /* Hiệu ứng chuyển tiếp khi focus */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Hiệu ứng bóng cho ô tìm kiếm */
+}
+
+.search-container input::placeholder {
+  color: var(--text); /* Màu văn bản placeholder */
+}
+
+.search-container input:focus {
+  border-color: var(--primary); /* Màu viền khi focus */
+  outline: none;
+  box-shadow: 0 0 12px var(--primary); /* Hiệu ứng bóng khi focus */
+
+}
+
+
+.course-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* Khoảng cách giữa các thẻ card */
+  justify-content: flex-start; /* Sắp xếp các thẻ card từ trái qua phải */
+}
+
+.course-card {
+  background: var(--header-footer); /* Màu nền của thẻ card giống với màu của thanh chứa các nút trang chính */
+  border-radius: 10px; /* Bo tròn các góc của thẻ card */
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4); /* Hiệu ứng bóng cho thẻ card */
+  flex: 1 1 calc(20% - 8px); /* Chiếm khoảng 20% chiều ngang của container trừ khoảng cách giữa các thẻ card */
+  max-width: calc(20% - 8px); /* Điều chỉnh kích thước tối đa của thẻ card */
+  overflow: hidden; /* Ẩn phần nội dung vượt quá giới hạn của thẻ card */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease; /* Hiệu ứng chuyển tiếp khi hover */
+  position: relative; /* Vị trí tương đối cho các phần tử con */
+  height: 280px; /* Chiều cao của thẻ card */
+  box-sizing: border-box; /* Tính toán kích thước bao gồm padding và border */
+}
+
+
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 64, 128, 0.5); /* Nền mờ có thể nhìn xuyên qua */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.5s ease;
+}
+
+.preloader.unactive {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loading {
+  width: 100px;
+  height: 100px;
+  border: 8px solid #0056b3;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  animation: reloader 1s infinite linear;
+}
+
+/* Thêm vòng quay ngược chiều */
+.loading.reverse {
+  position: absolute;
+  width: 120px; /* Kích thước khác một chút để phân biệt */
+  height: 120px;
+  border-width: 6px;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  animation: reloader-reverse 1.5s infinite linear;
+}
+
+@keyframes reloader {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes reloader-reverse {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+/* Cải tiến hiệu ứng khi trỏ chuột vào thẻ card */
+.course-card {
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+  background-color: #222; /* Màu nền mặc định của thẻ */
+  border: 1px solid #222; /* Viền mặc định của thẻ */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Bóng đổ mặc định của thẻ */
+  border: 1px solid #212529; /* Viền xanh dương */
+}
+
+.course-card:hover {
+  background-color: #222; /* Thay đổi màu nền khi hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Tăng hiệu ứng bóng đổ khi hover */
+  border: 1px solid var(--primary); /* Thay đổi viền khi hover */
+}
+
+
+.course-card img {
+  width: 100%; /* Chiều rộng của ảnh bằng 100% chiều rộng của thẻ card */
+  border-bottom: 2px solid var(--primary); /* Viền dưới ảnh màu chính */
+}
+
+.course-card .content {
+  padding: 15px; /* Khoảng cách bên trong thẻ card */
+}
+
+.course-card .content h2 {
+  margin: 0 0 10px; /* Khoảng cách bên ngoài tiêu đề */
+  font-size: 1.2em; /* Kích thước chữ tiêu đề */
+  color: var(--primary); /* Màu chữ tiêu đề */
+}
+
+.course-card .content p {
+  margin: 0; /* Không có khoảng cách bên ngoài cho văn bản mô tả */
+  font-size: 1.0em; /* Kích thước chữ cho văn bản mô tả */
+  color: #d1d1d1; /* Màu chữ văn bản mô tả */
+}
+
+.course-card .content a {
+  display: inline-block; /* Hiển thị liên kết như một phần tử khối */
+  margin-top: 10px; /* Khoảng cách phía trên của liên kết */
+  background: var(--primary); /* Màu nền của liên kết */
+  color: var(--text); /* Màu chữ của liên kết */
+  padding: 10px 20px; /* Khoảng cách bên trong liên kết */
+  border-radius: 5px; /* Bo tròn các góc của liên kết */
+  text-decoration: none; /* Loại bỏ gạch chân khỏi liên kết */
+  font-size: 1.1em; /* Kích thước chữ của liên kết */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Hiệu ứng chuyển tiếp khi hover */
+}
+
+.course-card .content a:hover {
+  background: var(--secondary); /* Màu nền của liên kết khi hover */
+  transform: scale(1.05); /* Tăng kích thước của liên kết khi hover */
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #1e1e1e, #007bff); /* Nền gradient từ màu tối gần như đen sang màu xanh dương */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Hiệu ứng ánh sáng động cho nền */
+@keyframes gradientAnimation {
+  0% {
+      background-position: 0% 0%;
+  }
+  50% {
+      background-position: 100% 100%;
+  }
+  100% {
+      background-position: 0% 0%;
+  }
+}
+
+body {
+  background: linear-gradient(135deg, #1e1e1e, #222, #333);
+  background-size: 200% 200%;
+  animation: gradientAnimation 10s ease infinite; /* Hiệu ứng nền động */
+}
+
+/* Thanh điều hướng */
+.navbar {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: #212529; /* Nền thanh bar xám tối */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+  transition: background 0.5s ease;
+  z-index: 1000;
+}
+
+.navbar:hover {
+  background: #1e1e1e; /* Nền thanh bar đổi khi hover */
+}
+
+.navbar-link {
+  color: #f1f1f1; /* Chữ màu sáng gần như trắng */
+  text-decoration: none;
+  font-size: 1.2em;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 5px;
+  background: #212529; /* Nền nút xám tối */
+  display: inline-block;
+  transition: background 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Hiệu ứng bóng đổ */
+  border: 2px solid #007bff; /* Viền xanh dương */
+}
+
+.navbar-link:hover {
+  background: #1e1e1e; /* Nền nút đổi khi hover */
+  transform: scale(1.05); /* Hiệu ứng phóng to khi hover */
+  border-color: #0056b3; /* Viền nút xanh dương đậm hơn khi hover */
+}
+
+/* Thanh cuộn cho trình duyệt Webkit (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 12px; /* Chiều rộng của thanh cuộn dọc */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #444; /* Màu của phần cuộn chính (xám sáng hơn một chút) */
+  border-radius: 6px; /* Bo tròn góc phần cuộn chính */
+}
+
+::-webkit-scrollbar-track {
+  background: #333; /* Màu nền của thanh cuộn (xám tối) */
+}
+
+/* Thanh cuộn cho Firefox */
+html {
+  scrollbar-width: thin; /* Kích thước thanh cuộn */
+  scrollbar-color: #444 #333; /* Màu phần cuộn và nền thanh cuộn */
+}
+#view-button {
+  background-color: #222; /* Màu nền nút đậm hơn để nổi bật */
+  color: #ffffff; /* Màu chữ trắng */
+  border: 2px solid #0056b3; /* Viền nút cùng màu nền để tạo sự đồng nhất */
+  padding: 8px 16px; /* Kích thước nút nhỏ gọn */
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 1px; /* Bo tròn nhẹ */
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Bóng đổ nhẹ */
+  border: 1px solid #007bff; /* Viền xanh dương */
+}
+
+#view-button:hover {
+  background-color: #0056b3; /* Màu nền nút đậm hơn khi hover */
+  border-color: #0056b3; /* Thay đổi màu viền khi hover */
+  transform: scale(1.05); /* Hiệu ứng phóng to nhẹ khi hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Bóng đổ đậm hơn khi hover */
+}
+
+#view-button:active {
+  background-color: #003580; /* Màu nền khi nhấn nút */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Bóng đổ đậm hơn khi nhấn */
+  transform: scale(0.98); /* Hiệu ứng thu nhỏ nhẹ khi nhấn */
+}

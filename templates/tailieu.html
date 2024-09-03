@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tài Liệu</title>
+    <link rel="icon" href="/static/images/logo2.jpg" type="image/x-jpg">
+    <link rel="stylesheet" href="/static/css/tailieu.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+  </head>
+  <body>
+    <div class="preloader">
+      <div class="loading"></div>
+      <div class="loading reverse"></div>
+      <!-- Vòng quay ngược chiều -->
+    </div>
+    <script>
+      window.addEventListener("load", () => {
+        const preloader = document.querySelector(".preloader");
+        preloader.classList.add("unactive");
+      });
+    </script>
+    <!-- Thanh điều hướng -->
+    <div class="navbar">
+      <a href="/" class="navbar-link">Trang Chính</a>
+  </div>
+
+    <!-- Thanh tìm kiếm -->
+    <section class="search-section">
+      <input type="text" id="searchInput" placeholder="Tìm kiếm tài liệu..." />
+    </section>
+
+    <!-- Phần chính -->
+    <main class="main-content">
+      <section class="file-gallery">
+        <h2>Tham Khảo</h2>
+        <div class="file-grid" id="fileGrid">
+          <!-- Các ô tài liệu sẽ được thêm vào đây qua JavaScript -->
+        </div>
+      </section>
+    </main>
+  </body>
+  <script src="/static/js/tailieu.js"></script>
+</html>

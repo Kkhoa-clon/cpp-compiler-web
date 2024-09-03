@@ -1,0 +1,316 @@
+/* Cấu trúc cơ bản */
+body {
+    background-color: #1e1e1e; /* Nền tối gần như đen */
+    color: #f1f1f1; /* Chữ sáng gần như trắng */
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Header và Footer */
+header, footer {
+    background-color: #212529; /* Xám tối cho header và footer */
+    color: #f1f1f1;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+    border-bottom: 4px solid #007bff; /* Đường viền dưới header và footer */
+    position: relative;
+    z-index: 1000;
+}
+
+header h1, footer h1 {
+    font-size: 2rem;
+    margin: 0;
+}
+
+/* Sidebar */
+.sidebar {
+    background-color: #222; /* Xám rất tối cho sidebar */
+    color: #f1f1f1;
+    padding: 2rem;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+    border-radius: 0 20px 20px 0;
+    width: 300px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    transition: transform 0.4s ease;
+    z-index: 900;
+}
+
+.sidebar:hover {
+    transform: translateX(10px); /* Hiệu ứng đẩy nhẹ khi hover */
+}
+
+/* Main Section */
+main {
+    margin-left: 320px; /* Khoảng cách từ sidebar */
+    padding: 2rem;
+    background-color: #222; /* Xám tối cho nền chính */
+    border-radius: 20px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7);
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Các phần tử nội dung */
+section {
+    background-color: #444; /* Xám sáng hơn cho các phần tử nội dung */
+    border-radius: 20px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+    padding: 2rem;
+    margin: 1.5rem 0;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.1));
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+section:hover {
+    transform: translateY(-5px); /* Hiệu ứng nâng nhẹ khi hover */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+}
+
+/* Tiêu đề phần nội dung */
+h2 {
+    color: #007bff; /* Màu chính xanh dương */
+    margin-bottom: 1rem;
+    font-size: 2.5rem;
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 0.5rem;
+    position: relative;
+    text-shadow: 0 3px 8px rgba(0, 0, 0, 0.6); /* Hiệu ứng bóng chữ */
+    background: linear-gradient(90deg, rgba(0, 123, 255, 0.1), rgba(0, 123, 255, 0.2));
+    border-radius: 10px;
+    transition: color 0.3s ease, background 0.3s ease;
+}
+
+h2:hover {
+    color: #0056b3; /* Thay đổi màu khi hover */
+    background: linear-gradient(90deg, rgba(0, 123, 255, 0.2), rgba(0, 123, 255, 0.3));
+}
+
+/* Lựa chọn đáp án */
+label {
+    display: block;
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+    position: relative;
+    padding-left: 3rem;
+    transition: color 0.3s, transform 0.3s;
+}
+
+input[type="radio"] {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+input[type="radio"]:checked + span {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
+}
+
+/* Hiệu ứng chọn đáp án */
+span {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    border: 2px solid #007bff;
+    border-radius: 25px;
+    background-color: #333;
+    color: #f1f1f1;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+    font-size: 1.2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+span::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: rgba(0, 123, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.3s;
+}
+
+span:hover::after {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* Nút bấm */
+button {
+    background-color: #007bff;
+    border: none;
+    border-radius: 30px;
+    color: #f1f1f1;
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 1rem 2.5rem;
+    margin-top: 1.5rem;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+    position: relative;
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7);
+}
+
+button:active {
+    background-color: #004494;
+    transform: translateY(1px);
+}
+
+/* Hiệu ứng loading */
+.loading {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    margin: auto;
+    border: 6px solid #007bff;
+    border-top: 6px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Hiệu ứng ánh sáng */
+.glow {
+    position: relative;
+    display: inline-block;
+    color: #007bff;
+}
+
+.glow::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300%;
+    height: 300%;
+    background: rgba(0, 123, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse 4s infinite;
+    box-shadow: 0 0 25px rgba(0, 123, 255, 0.9);
+    transition: opacity 0.3s;
+}
+
+.glow:hover::before {
+    opacity: 0;
+}
+
+/* Hiệu ứng nhấp nháy */
+.blink {
+    animation: blink 1.5s step-start infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Hiệu ứng gradient cho các phần tử */
+.gradient-bg {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: #fff;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+
+.gradient-bg::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: rgba(0, 123, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse 4s infinite;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        transform: translateX(0);
+        box-shadow: none;
+    }
+
+    main {
+        margin-left: 0;
+        padding: 1rem;
+    }
+
+    header, footer {
+        padding: 1rem;
+        border-bottom: 2px solid #007bff;
+    }
+}
+
+/* Thanh điều hướng */
+.navbar {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: #212529; /* Nền thanh bar xám tối */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+    transition: background 0.5s ease;
+    z-index: 1000;
+}
+
+.navbar:hover {
+    background: #1e1e1e; /* Nền thanh bar đổi khi hover */
+}
+
+.navbar-link {
+    color: #f1f1f1; /* Chữ màu sáng gần như trắng */
+    text-decoration: none;
+    font-size: 1.2em;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background: #212529; /* Nền nút xám tối */
+    display: inline-block;
+    transition: background 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Hiệu ứng bóng đổ */
+    border: 2px solid #007bff; /* Viền xanh dương */
+}
+
+.navbar-link:hover {
+    background: #1e1e1e; /* Nền nút đổi khi hover */
+    transform: scale(1.05); /* Hiệu ứng phóng to khi hover */
+    border-color: #0056b3; /* Viền nút xanh dương đậm hơn khi hover */
+}

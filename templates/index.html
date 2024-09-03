@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en" translate="=no>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeLab - Trang Chủ</title>
+    <link rel="icon" href="/static/images/logo2.jpg" type="image/x-jpg">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <!-- Thêm vào phần <head> của HTML -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/theme/dracula.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/cpp/cpp.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <head>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
+        
+    </head>
+    <script>
+        if (typeof google !== 'undefined' && google.translate) {
+            google.translate.TranslateElement = function () {};
+        }
+    </script>
+    
+    
+    <meta name="google" content="notranslate">
+</head>
+<body>
+    <div id="side-panel">
+        <div id="menu-button">☰</div>
+        <div id="overlay-menu" class="menu-hidden">
+            <h2>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspCộng Đồng Coding</h2>
+            <ul>
+                <li>
+                    <a href="https://www.facebook.com/groups/thihsgtin">
+                        <span class="menu-title">HSG tin học C++ Pascal python</span>
+                        <img src="/static/images/14.jfif" alt="nhom1" id="nhom1" class="menu-image">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/groups/680059883020791/">
+                        <span class="menu-title">Hướng tới các kì thi lập trình</span>
+                        <img src="/static/images/9.png" alt="nhom2" id="nhom2" class="menu-image">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/groups/yugihacker/">
+                        <span class="menu-title">Yugihacker cộng đồng HSG IT</span>
+                        <img src="/static/images/16.jfif" alt="nhom3" id="nhom3" class="menu-image">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/groups/923564888925650/">
+                        <span class="menu-title">Chia sẻ tài liệu ôn HSG</span>
+                        <img src="/static/images/19.jfif" alt="nhom4" id="nhom4" class="menu-image">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/groups/itforbeginners">
+                        <span class="menu-title">Cộng đồng CNTT For Beginners</span>
+                        <img src="/static/images/4.png" alt="nhom6" id="nhom6" class="menu-image">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/groups/itqavn.net">
+                        <span class="menu-title">CNTT hỏi và đáp</span>
+                        <img src="/static/images/17.jfif" alt="nhom9" id="nhom9" class="menu-image">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/groups/790427278627368">
+                        <span class="menu-title">Lập trình python</span>
+                        <img src="/static/images/6.png" alt="nhom10" id="nhom10" class="menu-image">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/groups/hoccungdandev">
+                        <span class="menu-title">Học lập trình web html css js...</span>
+                        <img src="/static/images/21.jfif" alt="nhom11" id="nhom11" class="menu-image">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/groups/705996983385748">
+                        <span class="menu-title">Học lập trình web với html css...</span>
+                        <img src="/static/images/53.jfif" alt="nhom12" id="nhom12" class="menu-image">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/groups/116078792627399">
+                        <span class="menu-title">Lập trình C/C++ cơ bản</span>
+                        <img src="/static/images/1.png" alt="nhom 5" id="nhom5" class="menu-image">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/groups/thuedoancntt">
+                        <span class="menu-title">Code đồ án CNTT app web AI</span>
+                        <img src="/static/images/13.jfif" alt="nhom7" id="nhom7" class="menu-image">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/groups/929813565139988">
+                        <span class="menu-title">Lập trình và Thuật toán</span>
+                        <img src="/static/images/52.jfif" alt="nhom8" id="nhom8" class="menu-image">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/groups/jobsitvietnam">
+                        <span class="menu-title">Backend & Frontend devloper VN</span>
+                        <img src="/static/images/23.gif" alt="nhom14" id="nhom14" class="menu-image">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/groups/congdong.nodejs.vietnam">
+                        <span class="menu-title">Node.js Việt Nam</span>
+                        <img src="/static/images/31.jfif" alt="nhom13" id="nhom13" class="menu-image">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/groups/chuyentinpro">
+                        <span class="menu-title">HSG 9-10 chuyên tin - tin học trẻ</span>
+                        <img src="/static/images/30.jfif" alt="nhom15" id="nhom15" class="menu-image">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/groups/2952419898364551">
+                        <span class="menu-title">Học Lập trình free</span>
+                        <img src="/static/images/15.jfif" alt="nhom16" id="nhom16" class="menu-image">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/groups/661853189014755">
+                        <span class="menu-title">Cộng đồng IT OUTSOURCE</span>
+                        <img src="/static/images/33.jfif" alt="nhom17" id17="nhom17" class="menu-image">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/groups/1001557246671612">
+                        <span class="menu-title">Làm việc và thực tập ngành IT</span>
+                        <img src="/static/images/34.jfif" alt="nhom18" id="nhom18" class="menu-image">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/groups/internships.hcm.hn">
+                        <span class="menu-title">Thực tập sinh viên ngàng IT</span>
+                        <img src="/static/images/35.jfif" alt="nhom19" id="nhom19" class="menu-image">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/groups/titv.vn">
+                        <span class="menu-title">Lập trình với TITV</span>
+                        <img src="/static/images/25.gif" alt="nhom20" id="nhom20" class="menu-image">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/groups/reactnativevietnam">
+                        <span class="menu-title">React Native VietNam</span>
+                        <img src="/static/images/nhom21.jpg" alt="nhom21" id="nhom21" class="menu-image">
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <span class="menu-title">UPDATE</span>
+                        <img src="/static/images/20.jfif" alt="" id="" class="menu-image">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="preloader">
+        <div class="loading"></div>
+        <div class="loading reverse"></div> <!-- Vòng quay ngược chiều -->
+    </div>
+    <script>
+        window.addEventListener("load", () => {
+            const preloader = document.querySelector(".preloader");
+            preloader.classList.add("unactive");
+        });
+    </script>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <h1 style="font-size: 2.5em;" id="codelab">CodeLab</h1>
+                <ul class="nav-menu">
+                    <li><a href="#about">Share</a></li>
+                    <li><a href="https://discord.gg/j6FxujMvyK">Groups</a></li>
+                    <li><a href="/compiler">Compiler</a></li>
+                    <li><a href="/thuthach">Competition</a></li>
+                    <li><a href="https://www.coze.com/store/bot/7408133391264235536?bot_id=true">ChatBot</a></li>
+                    <li><a href="/Tailieu">Document</a></li> 
+                    <li><a href="/Khoahoc">Course</a></li>   
+                </ul>
+            </div>
+        </nav>
+        <div class="nav-buttons" translate="no">
+            {% if current_user.is_authenticated %}
+                <!-- Nếu người dùng đã đăng nhập -->
+                <span id="user-name">{{ current_user.username }}</span>
+                <a id="logout" href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <!-- Nếu người dùng chưa đăng nhập -->
+                <a id="login" href="{{ url_for('login') }}">Login</a>
+                <a id="register" href="{{ url_for('register') }}">Register</a>
+            {% endif %}
+        </div>
+        <nav class="sidebar">
+            <div class="container">
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Tìm kiếm...">
+                </div>
+                <h2>Các Thuật Toán và Thư Viện</h2>
+                <ul>
+                    <!-- Sắp Xếp (Sorting) -->
+                    <ul>
+                        <li><a href="#bubble-sort">Bubble Sort</a></li>
+                        <li><a href="#selection-sort">Selection Sort</a></li>
+                        <li><a href="#insertion-sort">Insertion Sort</a></li>
+                        <li><a href="#merge-sort">Merge Sort</a></li>
+                        <li><a href="#quick-sort">Quick Sort</a></li>
+                        <li><a href="#heap-sort">Heap Sort</a></li>
+                        <li><a href="#radix-sort">Radix Sort</a></li>
+                        <li><a href="#counting-sort">Counting Sort</a></li>
+                    </ul>
+                    <!-- Tìm Kiếm (Searching) -->
+                    <li><a href="">Tìm Kiếm (Searching)</a></li>
+                    <ul>
+                        <li><a href="#linear-search">Linear Search</a></li>
+                        <li><a href="#binary-search">Binary Search</a></li>
+                        <li><a href="#jump-search">Jump Search</a></li>
+                        <li><a href="#exponential-search">Exponential Search</a></li>
+                    </ul>
+                    <!-- Đồ Thị (Graph Algorithms) -->
+                    <ul>
+                        <li><a href="#dfs">Depth First Search (DFS)</a></li>
+                        <li><a href="#bfs">Breadth First Search (BFS)</a></li>
+                        <li><a href="#dijkstra">Dijkstra's Algorithm</a></li>
+                        <li><a href="#bellman-ford">Bellman-Ford Algorithm</a></li>
+                        <li><a href="#kruskal">Kruskal's Algorithm</a></li>
+                        <li><a href="#prim">Prim's Algorithm</a></li>
+                        <li><a href="#floyd-warshall">Floyd-Warshall Algorithm</a></li>
+                    </ul>
+                    <!-- Quy Hoạch Động (Dynamic Programming) -->
+                    <ul>
+                        <li><a href="#knapsack">Knapsack Problem</a></li>
+                        <li><a href="#longest-common-subsequence">Longest Common Subsequence (LCS)</a></li>
+                        <li><a href="#matrix-chain-multiplication">Matrix Chain Multiplication</a></li>
+                        <li><a href="#edit-distance">Edit Distance</a></li>
+                    </ul>
+                    <!-- Cây (Tree Algorithms) -->
+                    <ul>
+                        <li><a href="#binary-tree">Binary Tree</a></li>
+                        <li><a href="#binary-search-tree">Binary Search Tree (BST)</a></li>
+                        <li><a href="#avl-tree">AVL Tree</a></li>
+                        <li><a href="#red-black-tree">Red-Black Tree</a></li>
+                        <li><a href="#segment-tree">Segment Tree</a></li>
+                        <li><a href="#fenwick-tree">Fenwick Tree (Binary Indexed Tree)</a></li>
+                    </ul>
+                    <!-- Toán Học (Mathematical Algorithms) -->
+                    <ul>
+                        <li><a href="#gcd">Greatest Common Divisor (GCD)</a></li>
+                        <li><a href="#lcm">Least Common Multiple (LCM)</a></li>
+                        <li><a href="#prime-checking">Prime Checking</a></li>
+                        <li><a href="#factorization">Factorization</a></li>
+                        <li><a href="#modular-arithmetic">Modular Arithmetic</a></li>
+                    </ul>
+                    <!-- Tham Lam (Greedy Algorithms) -->
+                    
+                    <ul>
+                        <li><a href="#activity-selection">Activity Selection</a></li>
+                        <li><a href="#fractional-knapsack">Fractional Knapsack</a></li>
+                        <li><a href="#huffman-coding">Huffman Coding</a></li>
+                        <li><a href="#job-sequencing">Job Sequencing</a></li>
+                    </ul>
+                    <!-- Số Học (Number Theory) -->
+                    
+                    <ul>
+                        <li><a href="#sieve-of-eratosthenes">Sieve of Eratosthenes</a></li>
+                        <li><a href="#modular-exponentiation">Modular Exponentiation</a></li>
+                        <li><a href="#fermat-test">Fermat's Little Theorem</a></li>
+                        <li><a href="#miller-rabin">Miller-Rabin Primality Test</a></li>
+                    </ul>
+                    <!-- Xử Lý Chuỗi (String Algorithms) -->
+                   
+                    <ul>
+                        <li><a href="#kmp">Knuth-Morris-Pratt (KMP)</a></li>
+                        <li><a href="#rabinkarp">Rabin-Karp</a></li>
+                        <li><a href="#manacher">Manacher's Algorithm</a></li>
+                        <li><a href="#aho-corasick">Aho-Corasick</a></li>
+                    </ul>
+                    <!-- Hình Học (Computational Geometry) -->
+                   
+                    <ul>
+                        <li><a href="#convex-hull">Convex Hull</a></li>
+                        <li><a href="#line-intersection">Line Intersection</a></li>
+                        <li><a href="#polygon-area">Polygon Area</a></li>
+                        <li><a href="#sweep-line">Sweep Line Algorithm</a></li>
+                    </ul>
+                    <!-- Xử Lý Bit (Bit Manipulation) -->
+                    
+                    <ul>
+                        <li><a href="#bitwise-operations">Bitwise Operations</a></li>
+                        <li><a href="#bit-counting">Bit Counting</a></li>
+                        <li><a href="#bit-masking">Bit Masking</a></li>
+                        <li><a href="#bit-swapping">Bit Swapping</a></li>
+                    </ul>
+                    <!-- Cấu Trúc Dữ Liệu (Data Structures) -->
+                    
+                    <ul>
+                        <li><a href="#array">Array</a></li>
+                        <li><a href="#linked-list">Linked List</a></li>
+                        <li><a href="#stack">Stack</a></li>
+                        <li><a href="#queue">Queue</a></li>
+                        <li><a href="#hash-table">Hash Table</a></li>
+                        <li><a href="#heap">Heap</a></li>
+                        <li><a href="#graph">Graph</a></li>
+                        <li><a href="#trie">Trie</a></li>
+                    </ul>
+                    <!-- Thư Viện Chuẩn (Standard Library) -->
+                    <ul>
+                        <li><a href="#iostream">I/O Stream</a></li>
+                        <li><a href="#vector">Vector</a></li>
+                        <li><a href="#map">Map</a></li>
+                        <li><a href="#set">Set</a></li>
+                        <li><a href="#algorithm">Algorithm</a></li>
+                        <li><a href="#string">String</a></li>
+                    </ul>
+                    <!-- Boost Library -->
+                    <li><a href="#boost">Boost Library</a></li>
+                    <!-- STL (Standard Template Library) -->
+                    <li><a href="#stl">STL (Standard Template Library)</a></li>
+                    <!-- POCO C++ Libraries -->
+                    <li><a href="#poco">POCO C++ Libraries</a></li>
+                    <!-- Eigen -->
+                    <li><a href="#eigen">Eigen</a></li>
+                </ul>
+            </div>
+        </nav>
+        <script>
+            document.getElementById('searchInput').addEventListener('input', function() {
+                const searchValue = this.value.toLowerCase();
+                const container = document.querySelector('.sidebar .container'); // Chọn phần tử có class 'container' trong sidebar
+                const listItems = container.querySelectorAll('ul ul li'); // Lấy tất cả các mục <li> trong các danh sách con
+    
+                listItems.forEach(item => {
+                    const text = item.textContent.toLowerCase();
+                    if (text.includes(searchValue) || searchValue === '') {
+                        item.classList.remove('hidden'); // Hiển thị mục nếu khớp hoặc ô tìm kiếm rỗng
+                    } else {
+                        item.classList.add('hidden'); // Ẩn mục nếu không khớp
+                    }
+                });
+            });
+        </script>
+            <!-- Nút để hiển thị thanh tìm kiếm -->
+    <button id="search-toggle">web search</button>
+    <!-- Thanh tìm kiếm từ Google -->
+    <div id="search-container" style="display: none;">
+        <script async src="https://cse.google.com/cse.js?cx=a1684215a7cc742c6"></script>
+        <div class="gcse-search"></div>
+    </div>
+
+    <script>
+        // JavaScript để xử lý hiển thị thanh tìm kiếm
+        document.getElementById('search-toggle').addEventListener('click', function(event) {
+            event.preventDefault(); // Ngăn không chuyển hướng trang
+
+            var searchContainer = document.getElementById('search-container');
+            
+            // Thay đổi hiển thị thanh tìm kiếm
+            if (searchContainer.style.display === 'block') {
+                searchContainer.style.display = 'none';
+            } else {
+                searchContainer.style.display = 'block';
+            }
+        });
+    </script>
+    </header>
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h2 data-aos="fade-up" id="namehome">Website Code Translation</h2>
+            <p data-aos="fade-up" data-aos-delay="300">Học Lập Trình Bằng Website - Nơi Thể Hiện Tư Duy Sáng Tạo</p>
+        </div>
+        <div class="hero-image" data-aos="fade-up" data-aos-delay="600">
+            <img src="/static/images/29.gif" alt="KhoaNguyen">
+        </div>
+    </section>
+    <main>       
+        <section id="features" class="features">
+            <div class="container">
+                <h2 data-aos="fade-up">Tính Năng</h2>
+                <div class="feature" data-aos="fade-up" data-aos-delay="200" style="--feature-img: url('/static/images/');">
+                    <h3><i class="fas fa-cogs"></i> Biên Dịch Nhanh Chóng</h3>
+                    <p>Biên dịch mã nguồn C++ ngay lập tức với tốc độ nhanh và chính xác.</p>
+                    <button class="video-button" data-video-src="/static/videos/video3.webm">View</button>
+                </div>
+                <div class="feature" data-aos="fade-up" data-aos-delay="400" style="--feature-img: url('/static/images/');">
+                    <h3><i class="fas fa-book"></i> Chia Sẻ Khóa học Miễn phí</h3>
+                    <p>Các khóa học tuyển chọn từ các bài giản hay khắp đất nước.</p>
+                    <button class="video-button" data-video-src="/static/videos/video2.webm">View</button>
+                </div>
+                <div class="feature" data-aos="fade-up" data-aos-delay="600" style="--feature-img: url('/static/images/');">
+                    <h3><i class="fas fa-file-alt"></i> Chia sẻ tài liệu học tập miễn phí</h3>
+                    <p>Tài liệu được siu tầm và chọn lọc từ khắp 63 tỉnh thành Việt Nam.</p>
+                    <button class="video-button" data-video-src="/static/videos/video1.webm">View</button>
+                </div>
+                <div class="feature" data-aos="fade-up" data-aos-delay="200" style="--feature-img: url('/static/images/');">
+                    <h3><i class="fas fa-robot"></i> Chat-Bot</h3>
+                    <p>Chat bot hổ trợ học tập chạy trên API KEY GPT-2.</p>
+                    <button class="video-button" data-video-src="/static/videos/video4.webm">View</button>
+                </div>
+                <div class="feature" data-aos="fade-up" data-aos-delay="200" style="--feature-img: url('/static/images/');">
+                    <h3><i class="fas fa-comments"></i> Diễn Đàng</h3>
+                    <p>Cộng đồng thảo luận về các vấn đề cấu trúc giải thuật.</p>
+                    <button class="video-button" data-video-src="/static/videos/video5.mp4">View</button>
+                </div>
+            </div>
+            <div id="video-overlay" class="video-overlay">
+                <div class="video-wrapper">
+                    <video id="video-player" controls></video>
+                    <button id="close-video" class="close-video">X</button>
+                </div>
+            </div>
+        </section>
+        <script>
+               document.querySelectorAll('.video-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const videoSrc = this.getAttribute('data-video-src');
+                    document.getElementById('video-player').src = videoSrc;
+                    document.getElementById('video-overlay').style.display = 'flex';
+                });
+            });
+
+            document.getElementById('close-video').addEventListener('click', function() {
+                document.getElementById('video-player').pause();
+                document.getElementById('video-player').src = '';
+                document.getElementById('video-overlay').style.display = 'none';
+            });
+        </script>        
+        <section id="about" class="about">
+            <div class="container">
+                <h2 data-aos="fade-up">Dev</h2>
+                <p data-aos="fade-up" data-aos-delay="300" id="khoa">
+                    Đỗ Nguyễn Đăng Khoa
+                </p>
+                <div class="profile-image" data-aos="fade-up" data-aos-delay="400">
+                    <img src="/static/images/2.png" alt="Đỗ Nguyễn Đăng Khoa">
+                </div>
+                <p data-aos="fade-up" data-aos-delay="500">
+                    PROGRAMMING
+                </p>
+                <p data-aos="fade-up" data-aos-delay="600">
+                    <!-- Logo Icons -->
+                    <!-- Thay thế các lớp bằng các lớp CSS cụ thể -->
+                        <i class="icon icon-html5" title="HTML5"></i>
+                        <i class="icon icon-css3" title="CSS3"></i>
+                        <i class="icon icon-js-square" title="JavaScript"></i>
+                        <i class="icon icon-python" title="Python"></i>
+                        <i class="icon icon-cplusplus" title="C++"></i>
+                        <i class="icon icon-tailwin" title="tailwin"></i>
+                </p>
+                <small>
+                    <!-- Social Icons -->
+                    <a href="https://www.facebook.com/profile.php?id=100074566060452" target="_blank">
+                        <i class="fab fa-facebook"></i> KhoaNguyen
+                    </a><br>
+                    <a href="https://github.com/Kkhoa-clon" target="_blank">
+                        <i class="fab fa-github"></i> Kkhoa-dev
+                    </a><br>
+                    <a href="https://discord.com/users/yourprofile" target="_blank">
+                        <i class="fab fa-discord"></i> Kkhoa
+                    </a><br>
+                </small>
+            </div>
+        </section>
+        <!-- Font Awesome CDN -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <section id="contact" class="contact">
+            <div class="container">
+                <h2 data-aos="fade-up"><i class="fa fa-envelope"></i> Liên Hệ</h2>
+                <p data-aos="fade-up" data-aos-delay="300">
+                    Tôi luôn tiếp nhận những ý kiến để tiếp tục phát triển dự án, đừng ngần ngại chia sẻ góp ý.
+                    <br> <!-- Ngắt dòng -->
+                    Tôi đang sinh sống và học tập tại Hồng Ngự, Đồng Tháp.
+                    <br>
+                    Tôi đến từ Trường Trung Học Cơ Sở Long Khánh A.
+                    <br>
+                    Để biết thêm thông tin hoặc hỗ trợ, vui lòng liên hệ với tôi qua email: 
+                    <a href="mailto:khoanguyen0916@gmail.com">khoanguyen0916@gmail.com</a>                  
+                </p>
+            </div>
+        </section>
+        <!-- Extended content starts here -->
+        <section id="extended-content" class="extended-content">
+            <div class="container">
+                <h2><i class="fa fa-lightbulb"></i> Ý Tưởng</h2>
+                <p>Tôi tạo ra trang web vào mục đích chia sẻ thông tin học tập về lĩnh vực công nghệ thông tin / mảng cấu trúc và giải thuật giúp những người mới bắt đầu trên con đường lập trình có lộ trình và thông tin chất lượng.</p>
+                <p>Trang web được lên ý tưởng và thực hiện bởi trải nghiệm cá nhân tôi trong khoản thời gian mới bắt đầu học lập trình luôn gặp khó khăn trong việc tìm kiếm thông tin học tập, vì vậy nên tôi luôn chọn những nguồn bài giảng và tài liệu chất lượng để góp phần tạo nên trang web này.</p>
+            </div>
+        </section>
+        <section id="additional-info" class="additional-info">
+            <div class="container">
+                <h2><i class="fas fa-book-open icon-large"></i> Lời Khuyên</h2>                                                
+                <ul>
+                    <li><strong>Chọn ngôn ngữ lập trình phù hợp:</strong> Bắt đầu với ngôn ngữ như C++ để có nền tảng vững chắc.</li>
+                    <li><strong>Thực hành thường xuyên:</strong> Đừng chỉ đọc lý thuyết, hãy thực hành viết mã mỗi ngày để cải thiện kỹ năng.</li>
+                    <li><strong>Xây dựng dự án nhỏ:</strong> Thực hiện các dự án nhỏ để áp dụng kiến thức và giải quyết vấn đề thực tế.</li>
+                    <li><strong>Học cách debug và đọc lỗi:</strong> Hiểu cách xử lý lỗi và gỡ rối mã là kỹ năng quan trọng để phát triển hiệu quả.</li>
+                    <li><strong>Tìm hiểu và sử dụng tài liệu:</strong> Đọc tài liệu và tham khảo cộng đồng lập trình để giải quyết vấn đề và mở rộng kiến thức.</li>
+                </ul>
+                <p>Hy vọng những lưu ý này giúp bạn xây dựng nền tảng vững chắc và tiếp tục phát triển kỹ năng lập trình.</p>
+            </div>
+        </section>           
+        <!-- Extended content ends here -->
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Biên Dịch C++ Online. Tất cả quyền được bảo lưu.</p>
+        </div>
+    </footer>
+    <script src="/static/js/script.js" defer></script>
+</body>
+</html>

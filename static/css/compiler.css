@@ -1,0 +1,182 @@
+/* Đảm bảo rằng phần tử chứa chiếm toàn bộ chiều cao của viewport */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #1e1e1e; /* Nền chung */
+    color: #f1f1f1; /* Chữ sáng */
+    font-family: Arial, sans-serif; /* Phông chữ hiện đại */
+    overflow: hidden; /* Ngăn không cho toàn bộ trang cuộn */
+}
+
+/* Đặt chiều cao của hàng bằng chiều cao của viewport */
+.row {
+    height: 100vh; /* Chiếm toàn bộ chiều cao của viewport */
+    display: flex;
+    flex-direction: row;
+    overflow: hidden; /* Ngăn cuộn trong hàng */
+}
+
+/* Đặt chiều cao của phần tử chứa CodeMirror */
+.col {
+    display: flex;
+    flex-direction: column;
+    padding: 10px; /* Khoảng cách bên trong */
+    height: 100%; /* Chiếm toàn bộ chiều cao của hàng */
+}
+
+/* Phần tử chứa CodeMirror */
+#editor {
+    width: 100%;
+    height: calc(100vh - 150px); /* Chiều cao bằng chiều cao viewport trừ đi chiều cao của thanh tiêu đề và các phần khác */
+    box-sizing: border-box;
+    overflow: hidden; /* Ngăn cuộn ngoài trong #editor */
+}
+
+/* Đảm bảo rằng CodeMirror chiếm toàn bộ chiều cao của phần tử chứa */
+.CodeMirror {
+    height: 100% !important; /* Chiều cao của CodeMirror */
+    width: 100% !important;  /* Chiều rộng của CodeMirror */
+    overflow: hidden; /* Ngăn cuộn ngoài trong CodeMirror */
+}
+
+/* Phần tử cuộn nội bộ của CodeMirror */
+.CodeMirror-scroll {
+    height: 100% !important; /* Chiều cao của phần tử cuộn nội bộ */
+    overflow: auto; /* Hiển thị thanh cuộn khi nội dung dài hơn chiều cao của CodeMirror */
+}
+
+/* CSS cho khung gợi ý lệnh CodeMirror */
+.CodeMirror-hints {
+    background: #333; /* Nền gợi ý lệnh */
+    color: #f1f1f1; /* Màu chữ của gợi ý lệnh */
+    border: 1px solid #007bff; /* Đường viền của gợi ý lệnh */
+    border-radius: 4px; /* Bo tròn góc của khung gợi ý lệnh */
+    padding: 5px; /* Khoảng cách bên trong */
+    font-size: 14px; /* Kích thước chữ của gợi ý lệnh */
+}
+
+/* Đặt màu nền cho mục được chọn trong danh sách gợi ý lệnh */
+.CodeMirror-hints .active {
+    background: #007bff; /* Màu nền khi mục được chọn */
+    color: #fff; /* Màu chữ khi mục được chọn */
+}
+
+/* Đặt màu nền cho khung cuộn của gợi ý lệnh */
+.CodeMirror-hints {
+    max-height: 200px; /* Chiều cao tối đa của khung gợi ý lệnh */
+    overflow-y: auto; /* Hiển thị thanh cuộn khi nội dung dài hơn chiều cao */
+}
+
+/* Các phần tử khác */
+.form-control, .col {
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #333; /* Nền các phần tử nhập liệu */
+    color: #f1f1f1; /* Chữ sáng */
+    border: 1px solid #007bff; /* Đường viền xanh dương */
+    border-radius: 4px; /* Bo tròn góc */
+    padding: 8px; /* Khoảng cách bên trong */
+    font-size: 14px; /* Kích thước chữ */
+    transition: border-color 0.3s ease; /* Hiệu ứng chuyển đổi màu viền khi hover */
+}
+
+/* Nền tối cho Header và Footer */
+.bg-dark {
+    background-color: #212529; /* Nền xám rất tối */
+    border-bottom: 1px solid #444; /* Đường viền xám sáng hơn */
+}
+
+/* Nền tối cho Sidebar */
+.bg-sidebar {
+    background-color: #222; /* Nền xám rất tối */
+}
+
+/* Nền xám tối cho các phần khác */
+.bg-other {
+    background-color: #333; /* Nền xám tối */
+}
+
+/* Đặt màu nền xám sáng hơn một chút cho đường viền */
+.bg-border {
+    background-color: #444; /* Đường viền xám sáng hơn một chút */
+}
+
+/* Đặt màu nền xanh dương cho các nút */
+button {
+
+    transition: background-color 0.3s ease; /* Hiệu ứng chuyển đổi màu nền khi hover */
+    background-color: transparent; /* Nền trong suốt */
+    color: #007bff; /* Màu chữ: xanh dương */
+    border: 2px solid #007bff; /* Đường viền của nút điều khiển */
+    border-radius: 5px; /* Bo tròn góc của nút điều khiển */
+    padding: 10px 15px; /* Khoảng cách bên trong của nút điều khiển */
+    font-size: 1.2em; /* Kích thước chữ của nút điều khiển */
+    cursor: pointer; /* Con trỏ chuột khi hover lên nút điều khiển */
+    z-index: 1001; /* Đảm bảo nút điều khiển nằm trên các phần tử khác */
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease; /* Hiệu ứng chuyển màu nền, chữ và biến đổi khi hover */
+}
+
+button:hover {
+    background-color: #0056b3; /* Màu nền khi hover */
+    color: #fff; /* Màu chữ khi hover */
+    transform: scale(1); /* Tăng kích thước của nút khi hover */
+}
+
+/* Đảm bảo kích thước bằng nhau cho các nút */
+button {
+    flex: 1; /* Các nút có kích thước bằng nhau */
+    margin: 0 4px; /* Khoảng cách giữa các nút */
+    display: inline-flex; /* Đặt các nút nằm trên cùng một hàng */
+    align-items: center; /* Căn giữa các nút */
+    padding: 10px 20px; /* Padding */
+}
+
+/* Đặt màu nền xám đen cho các phần tử input và output */
+#input, #output {
+    background-color: #222; /* Màu nền xám rất tối */
+    color: #f1f1f1; /* Chữ trắng */
+    border: 1px solid #007bff; /* Đường viền xanh dương */
+    border-radius: 4px; /* Bo tròn góc */
+    padding: 8px; /* Khoảng cách bên trong */
+}
+
+/* Đặt màu nền xám tối cho select */
+.bg-dark .form-select {
+    background-color: #333; /* Nền xám tối cho select */
+    color: #f1f1f1; /* Chữ sáng */
+    border: 1px solid #007bff; /* Đường viền xanh dương */
+    border-radius: 4px; /* Bo tròn góc */
+}
+
+/* Hiệu ứng Hover cho các phần tử nhập liệu */
+.form-control:hover {
+    border-color: #0056b3; /* Đổi màu viền khi hover */
+}
+
+/* Nâng cao kiểu dáng cho các label */
+label {
+    font-weight: bold;
+    color: #f1f1f1; /* Màu chữ sáng */
+}
+
+/* Thanh cuộn cho trình duyệt Webkit (Chrome, Safari) */
+::-webkit-scrollbar {
+    width: 12px; /* Chiều rộng của thanh cuộn dọc */
+}
+
+::-webkit-scrollbar-thumb {
+    background: #444; /* Màu của phần cuộn chính (xám sáng hơn một chút) */
+    border-radius: 6px; /* Bo tròn góc phần cuộn chính */
+}
+
+::-webkit-scrollbar-track {
+    background: #333; /* Màu nền của thanh cuộn (xám tối) */
+}
+
+/* Thanh cuộn cho Firefox */
+html {
+    scrollbar-width: thin; /* Kích thước thanh cuộn */
+    scrollbar-color: #444 #333; /* Màu phần cuộn và nền thanh cuộn */
+}

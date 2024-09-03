@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Khóa Học</title>
+    <link rel="stylesheet" href="/static/css/Khoahoc.css" />
+    <link rel="icon" href="/static/images/logo2.jpg" type="image/x-jpg">
+  </head>
+  <body>
+    <div class="preloader">
+      <div class="loading"></div>
+      <div class="loading reverse"></div>
+      <!-- Vòng quay ngược chiều -->
+    </div>
+    <script>
+      window.addEventListener("load", () => {
+        const preloader = document.querySelector(".preloader");
+        preloader.classList.add("unactive");
+      });
+    </script>
+    <header>
+      <div class="navbar">
+        <a href="/" class="navbar-link">Trang Chính</a>
+        
+    </div>
+      <h1>Share Khóa Học</h1>
+    </header>
+    <div class="main-content">
+      <div class="search-container">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Nhập từ khóa tìm kiếm..."
+        />
+      </div>
+      <div class="course-container" id="courseContainer">
+        <!-- Các khóa học sẽ được thêm vào đây -->
+      </div>
+    </div>
+    <script src="/static/js/Khoahoc.js"></script>
+  </body>
+</html>

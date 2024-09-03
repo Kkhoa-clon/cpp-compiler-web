@@ -1,0 +1,1472 @@
+/* General Styles */
+body {
+  font-family: "Arial", sans-serif; /* Phông chữ Arial cho toàn bộ trang */
+  background-color: #1e1e1e; /* Màu nền của trang: xám tối gần như đen */
+  color: #f1f1f1; /* Màu chữ: sáng gần như trắng */
+  margin: 0; /* Loại bỏ khoảng cách bên ngoài */
+  padding: 0; /* Loại bỏ khoảng cách bên trong */
+  box-sizing: border-box; /* Bao gồm padding và border trong kích thước tổng của phần tử */
+  overflow-x: hidden; /* Ẩn thanh cuộn ngang */
+}
+
+/* Header */
+header {
+  background: #212529; /* Màu nền của header: xám tối */
+  color: white; /* Màu chữ trong header: trắng */
+  padding: 20px 0; /* Khoảng cách bên trong header */
+  position: sticky; /* Đặt header ở vị trí cố định khi cuộn trang */
+  top: 0; /* Vị trí trên cùng */
+  z-index: 1000; /* Đảm bảo header nằm trên các phần tử khác */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Đổ bóng cho header */
+}
+
+/* Cấu trúc chính của navbar */
+.navbar {
+  display: flex; /* Sử dụng Flexbox cho navbar */
+  justify-content: center; /* Căn giữa nội dung theo chiều ngang */
+  align-items: center; /* Căn giữa nội dung theo chiều dọc */
+  background: #1e1e1e; /* Nền tối gần như đen cho navbar */
+  padding: 15px 0; /* Khoảng cách trên và dưới của navbar */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Đổ bóng nhẹ cho navbar */
+  border-radius: 3px; /* Giảm độ bo tròn cho navbar */
+}
+
+/* Container để căn chỉnh nội dung của navbar */
+.navbar .container {
+  max-width: 1200px; /* Chiều rộng tối đa của container */
+  margin: 0 auto; /* Căn giữa container */
+  padding: 0 20px; /* Khoảng cách bên trong container */
+  display: flex; /* Sử dụng Flexbox cho container */
+  justify-content: space-between; /* Phân bố đều không gian giữa các phần tử */
+  align-items: center; /* Căn giữa nội dung theo chiều dọc */
+}
+
+/* Tiêu đề trong navbar */
+.navbar h1 {
+  margin: 0; /* Loại bỏ khoảng cách bên ngoài của tiêu đề */
+  font-size: 2.5em; /* Kích thước chữ của tiêu đề */
+  letter-spacing: 1px; /* Khoảng cách giữa các chữ cái */
+  color: #f1f1f1; /* Màu chữ sáng gần như trắng */
+}
+
+/* Danh sách menu trong navbar */
+.nav-menu {
+  list-style: none; /* Loại bỏ gạch đầu dòng của danh sách */
+  margin: 0; /* Loại bỏ khoảng cách bên ngoài của danh sách */
+  padding: 0; /* Loại bỏ khoảng cách bên trong của danh sách */
+  display: flex; /* Sử dụng Flexbox cho danh sách */
+}
+
+/* Mỗi mục trong menu */
+.nav-menu li {
+  margin-left: 30px; /* Khoảng cách bên trái của mỗi mục trong danh sách */
+  position: relative; /* Để thêm hiệu ứng cho các mục menu */
+}
+
+/* Liên kết trong menu */
+.nav-menu li a {
+  color: #f1f1f1; /* Màu chữ của liên kết trong menu: trắng */
+  text-decoration: none; /* Loại bỏ gạch chân của liên kết */
+  font-size: 1.2em; /* Kích thước chữ của liên kết */
+  padding: 10px 15px; /* Khoảng cách bên trong liên kết */
+  border-radius: 3px; /* Bo tròn góc của liên kết */
+  transition: color 0.3s ease, background-color 0.3s ease, transform 0.3s ease; /* Hiệu ứng chuyển màu nền và màu chữ khi hover */
+}
+
+/* Hiệu ứng hover cho liên kết trong menu */
+.nav-menu li a:hover {
+  color: #007bff; /* Màu chữ khi hover: xanh dương */
+  background-color: rgba(0, 123, 255, 0.1); /* Màu nền nhẹ khi hover */
+  transform: scale(1.05); /* Tăng kích thước liên kết khi hover */
+}
+
+/* Hiệu ứng khi có submenu */
+.nav-menu li:hover::after {
+  content: ""; /* Thêm nội dung giả để tạo hiệu ứng */
+  position: absolute; /* Đặt ở vị trí tuyệt đối */
+  bottom: -10px; /* Đặt ở dưới cùng của mục menu */
+  left: 0; /* Đặt ở bên trái của mục menu */
+  width: 100%; /* Chiếm toàn bộ chiều rộng của mục menu */
+  height: 4px; /* Chiều cao của thanh hiệu ứng */
+  background: #007bff; /* Màu nền của thanh hiệu ứng */
+  border-radius: 2px; /* Bo tròn góc của thanh hiệu ứng */
+}
+
+/* Đảm bảo menu hoạt động tốt trên di động */
+@media (max-width: 768px) {
+  .navbar .container {
+    flex-direction: column; /* Sắp xếp theo chiều dọc trên màn hình nhỏ */
+  }
+  .nav-menu {
+    flex-direction: column; /* Sắp xếp các mục menu theo cột */
+    width: 100%; /* Chiều rộng 100% của menu */
+  }
+  .nav-menu li {
+    margin-left: 0; /* Xóa khoảng cách bên trái của mục menu */
+    margin-bottom: 10px; /* Thêm khoảng cách dưới mỗi mục menu */
+  }
+}
+
+/* Sidebar Menu */
+.sidebar {
+  background: #222; /* Màu nền của sidebar: xám rất tối */
+  color: #f1f1f1; /* Màu chữ trong sidebar: sáng gần như trắng */
+  padding: 20px; /* Khoảng cách bên trong sidebar */
+  position: fixed; /* Đặt sidebar ở vị trí cố định */
+  top: 80px; /* Vị trí từ trên cùng */
+  left: 0; /* Vị trí từ bên trái */
+  width: 300px; /* Chiều rộng của sidebar */
+  height: calc(
+    100% - 80px
+  ); /* Chiều cao của sidebar, giảm trừ chiều cao phần trên */
+  overflow-y: auto; /* Thêm thanh cuộn dọc khi cần */
+  z-index: 1000; /* Đảm bảo sidebar nằm trên các phần tử khác */
+  transform: translateX(-100%); /* Đưa sidebar ra ngoài khỏi màn hình */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Hiệu ứng chuyển đổi cho sidebar khi mở và đổ bóng */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Đổ bóng cho sidebar */
+}
+
+/* Khi mở thanh menu */
+.sidebar.open {
+  transform: translateX(0); /* Hiển thị sidebar khi mở */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.7); /* Đổ bóng đậm hơn khi mở */
+}
+
+.sidebar .container {
+  display: flex; /* Sử dụng Flexbox cho container trong sidebar */
+  flex-direction: column; /* Sắp xếp các phần tử theo cột */
+}
+
+.sidebar h2 {
+  margin: 0; /* Loại bỏ khoảng cách bên ngoài của tiêu đề */
+  font-size: 1.5em; /* Kích thước chữ của tiêu đề */
+  padding-bottom: 15px; /* Khoảng cách bên dưới của tiêu đề */
+  border-bottom: 2px solid #007bff; /* Đường viền dưới tiêu đề */
+  width: 100%; /* Chiều rộng của tiêu đề */
+  text-align: center; /* Căn giữa nội dung tiêu đề */
+}
+
+/* Phân nhóm menu */
+.sidebar ul {
+  list-style: none; /* Loại bỏ gạch đầu dòng của danh sách */
+  padding: 0; /* Loại bỏ khoảng cách bên trong của danh sách */
+  margin: 0; /* Loại bỏ khoảng cách bên ngoài của danh sách */
+  display: flex; /* Sử dụng Flexbox cho danh sách */
+  flex-direction: column; /* Sắp xếp các mục trong danh sách theo cột */
+}
+
+.sidebar ul li {
+  margin: 10px 0; /* Khoảng cách trên và dưới của mỗi mục trong danh sách */
+}
+
+.sidebar ul li a {
+  color: #f1f1f1; /* Màu chữ của liên kết trong danh sách: sáng gần như trắng */
+  text-decoration: none; /* Loại bỏ gạch chân của liên kết */
+  font-size: 1.1em; /* Kích thước chữ của liên kết */
+  padding: 10px; /* Khoảng cách bên trong của liên kết */
+  display: block; /* Hiển thị liên kết dưới dạng khối */
+  transition: color 0.3s ease, background-color 0.3s ease, transform 0.3s ease; /* Hiệu ứng chuyển màu, nền và biến đổi khi hover */
+  border-radius: 5px; /* Bo tròn góc của liên kết */
+}
+
+.sidebar ul li a:hover {
+  background-color: #007bff; /* Màu nền khi hover: xanh dương */
+  color: white; /* Màu chữ khi hover: trắng */
+  transform: translateX(5px); /* Di chuyển liên kết sang phải khi hover */
+}
+
+/* Sidebar Toggle Button */
+.sidebar-toggle {
+  position: fixed; /* Đặt nút điều khiển thanh sidebar ở vị trí cố định */
+  top: 35px; /* Vị trí từ trên cùng */
+  left: 20px; /* Vị trí từ bên trái */
+  background-color: transparent; /* Nền trong suốt */
+  color: #007bff; /* Màu chữ: xanh dương */
+  border: 2px solid #007bff; /* Đường viền của nút điều khiển */
+  border-radius: 5px; /* Bo tròn góc của nút điều khiển */
+  padding: 10px 15px; /* Khoảng cách bên trong của nút điều khiển */
+  font-size: 1.2em; /* Kích thước chữ của nút điều khiển */
+  cursor: pointer; /* Con trỏ chuột khi hover lên nút điều khiển */
+  z-index: 1001; /* Đảm bảo nút điều khiển nằm trên các phần tử khác */
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease; /* Hiệu ứng chuyển màu nền, chữ và biến đổi khi hover */
+}
+
+/* Hiệu ứng hover */
+.sidebar-toggle:hover {
+  background-color: #007bff; /* Màu nền khi hover */
+  color: #fff; /* Màu chữ khi hover */
+  transform: scale(1.05); /* Tăng kích thước của nút khi hover */
+}
+
+
+#login {
+  position: fixed;
+  top: 35px;
+  right: 20px;
+  text-decoration: none; /* Loại bỏ gạch chân của liên kết */
+  background-color: transparent;
+  color: #007bff;
+  border: 2px solid #007bff;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 1.2em;
+  cursor: pointer;
+  z-index: 1001;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#register {
+  position: fixed;
+  top: 35px;
+  text-decoration: none; /* Loại bỏ gạch chân của liên kết */
+  right: 115px;
+  background-color: transparent;
+  color: #007bff;
+  border: 2px solid #007bff;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 1.2em;
+  cursor: pointer;
+  z-index: 1001;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#user-name {
+  position: fixed;
+  text-decoration: none; /* Loại bỏ gạch chân của liên kết */
+  top: 35px;
+  right: 120px;
+  background-color: transparent;
+  color: #007bff;
+  border: 2px solid #007bff;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 1.2em;
+  cursor: default;
+  z-index: 1001;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#logout {
+  text-decoration: none; /* Loại bỏ gạch chân của liên kết */
+  position: fixed;
+  top: 35px;
+  right: 20px;
+  background-color: transparent;
+  color: #007bff;
+  border: 2px solid #007bff;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 1.2em;
+  cursor: pointer;
+  z-index: 1001;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hiệu ứng hover và active cho các nút */
+#login:hover,
+#register:hover,
+#logout:hover {
+  background-color: #007bff;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+}
+
+
+#login:active,
+#register:active,
+#logout:active {
+  transform: scale(0.95);
+}
+
+
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(
+    to bottom,
+    #0056b3 0%,
+    #001f3f 100%
+  ); /* Nền gradient của phần hero */
+  color: white; /* Màu chữ trong phần hero: trắng */
+  text-align: center; /* Căn giữa nội dung trong phần hero */
+  padding: 120px 20px; /* Khoảng cách bên trong phần hero */
+  position: relative; /* Đặt phần hero ở vị trí tương đối */
+  overflow: hidden; /* Ẩn phần tràn */
+}
+
+.hero-content {
+  max-width: 800px; /* Chiều rộng tối đa của nội dung hero */
+  z-index: 1; /* Đảm bảo nội dung nằm trên nền hero */
+  position: relative; /* Đặt nội dung hero ở vị trí tương đối */
+  margin: 0 auto; /* Căn giữa nội dung hero */
+}
+
+.hero-content h2 {
+  font-size: 4em; /* Kích thước chữ của tiêu đề hero */
+  margin: 0; /* Loại bỏ khoảng cách bên ngoài tiêu đề */
+  animation: fadeIn 2s ease-out; /* Hiệu ứng fadeIn cho tiêu đề */
+}
+
+.hero-content p {
+  font-size: 1.8em; /* Kích thước chữ của đoạn văn trong hero */
+  margin-top: 10px; /* Khoảng cách trên đoạn văn */
+}
+
+.hero-image {
+  margin-top: 40px; /* Khoảng cách trên phần hình ảnh trong hero */
+  position: relative; /* Đặt phần hình ảnh ở vị trí tương đối */
+  overflow: hidden; /* Ẩn phần tràn */
+}
+
+.hero-image img {
+  width: 100%; /* Chiều rộng của hình ảnh: 100% */
+  max-width: 600px; /* Chiều rộng tối đa của hình ảnh */
+  height: auto; /* Chiều cao tự động để duy trì tỷ lệ khung hình */
+  border-radius: 15px; /* Bo tròn góc của hình ảnh */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3), /* Bóng đổ nhẹ phía dưới */
+              0 10px 30px rgba(0, 0, 0, 0.2), /* Bóng đổ lớn hơn phía dưới */
+              0 0 20px rgba(0, 0, 0, 0.5); /* Bóng đổ quanh các cạnh */
+  filter: brightness(80%); /* Tối giảm độ sáng của hình ảnh */
+  animation: float 3s ease-in-out infinite; /* Hiệu ứng lơ lửng */
+}
+
+/* Định nghĩa hiệu ứng lơ lửng */
+@keyframes float {
+  0% {
+    transform: translateY(0); /* Vị trí ban đầu */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3), /* Bóng đổ nhẹ phía dưới */
+                0 10px 30px rgba(0, 0, 0, 0.2), /* Bóng đổ lớn hơn phía dưới */
+                0 0 20px rgba(0, 0, 0, 0.5); /* Bóng đổ quanh các cạnh */
+  }
+  50% {
+    transform: translateY(-20px); /* Di chuyển lên 20px */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4), /* Bóng đổ nhẹ hơn khi lơ lửng */
+                0 15px 40px rgba(0, 0, 0, 0.3), /* Bóng đổ lớn hơn khi lơ lửng */
+                0 5px 30px rgba(0, 0, 0, 0.6); /* Bóng đổ quanh các cạnh mạnh hơn */
+  }
+  100% {
+    transform: translateY(0); /* Quay trở lại vị trí ban đầu */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3), /* Bóng đổ nhẹ phía dưới */
+                0 10px 30px rgba(0, 0, 0, 0.2), /* Bóng đổ lớn hơn phía dưới */
+                0 0 20px rgba(0, 0, 0, 0.5); /* Bóng đổ quanh các cạnh */
+  }
+}
+
+
+.container {
+  max-width: 1700px; /* Chiều rộng tối đa của container */
+  margin: 0 auto; /* Canh giữa container */
+  padding: 50px; /* Khoảng cách bên trong container */
+  background: #212529; /* Nền của container: xám tối */
+  border-radius: 25px; /* Bo tròn góc của container */
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.7); /* Đổ bóng cho container */
+}
+
+/* Phần về và liên hệ */
+.about,
+.contact {
+  padding: 50px 20px; /* Khoảng cách bên trong phần về và liên hệ */
+  background: #333; /* Màu nền của phần về và liên hệ: xám tối */
+}
+
+/* Chân trang */
+footer {
+  background: #212529; /* Màu nền của chân trang: xám tối */
+  color: white; /* Màu chữ của chân trang: trắng */
+  padding: 20px 0; /* Khoảng cách bên trong chân trang */
+  text-align: center; /* Căn giữa nội dung trong chân trang */
+}
+
+/* Các keyframes cho hiệu ứng fadeIn */
+@keyframes fadeIn {
+  from {
+    opacity: 0; /* Độ mờ bắt đầu từ 0 */
+    transform: translateY(20px); /* Di chuyển bắt đầu từ 20px xuống dưới */
+  }
+  to {
+    opacity: 1; /* Độ mờ kết thúc là 1 */
+    transform: translateY(0); /* Di chuyển kết thúc ở vị trí ban đầu */
+  }
+}
+
+/* Toàn bộ sidebar */
+.sidebar {
+  background: #1e1e1e; /* Nền tối cho sidebar */
+  padding: 30px; /* Padding để tạo khoảng cách bên trong */
+  border-radius: 12px; /* Bo tròn góc của sidebar */
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5); /* Đổ bóng để tạo chiều sâu */
+  width: 24vw; /* Chiếm toàn bộ chiều rộng của cửa sổ */
+  height: 100%; /* Chiều cao tự động theo nội dung */
+  display: flex; /* Sử dụng Flexbox để căn giữa nội dung */
+  flex-direction: column; /* Sắp xếp các phần tử theo chiều dọc */
+  align-items: center; /* Căn giữa theo chiều ngang */
+  border-bottom: 4px solid #007bff; /* Viền dưới màu xanh dương cho sidebar */
+  box-sizing: border-box; /* Đảm bảo padding và border không làm thay đổi kích thước tổng thể */
+}
+
+/* Thanh tìm kiếm */
+.search-container {
+  width: 100%; /* Chiều rộng 100% của sidebar */
+  margin-bottom: 30px; /* Khoảng cách dưới thanh tìm kiếm */
+}
+
+#searchInput {
+  width: 100%; /* Chiều rộng 100% của thanh tìm kiếm */
+  padding: 10px; /* Khoảng cách bên trong thanh tìm kiếm */
+  border-radius: 8px; /* Bo tròn góc của thanh tìm kiếm */
+  border: 1px solid #007bff; /* Viền màu xanh dương cho thanh tìm kiếm */
+  background: #333; /* Nền xám tối cho thanh tìm kiếm */
+  color: #f1f1f1; /* Màu chữ sáng */
+  font-size: 1em; /* Kích thước chữ */
+  transition: background-color 0.3s ease, border-color 0.3s ease; /* Hiệu ứng chuyển đổi khi focus */
+}
+
+/* Hiệu ứng khi focus vào thanh tìm kiếm */
+#searchInput:focus {
+  background-color: #444; /* Nền xám sáng hơn khi focus */
+  border-color: #0056b3; /* Viền màu xanh dương đậm khi focus */
+  outline: none; /* Loại bỏ viền outline mặc định của trình duyệt */
+}
+
+/* Các phần của menu bên */
+.sidebar .section {
+  margin-bottom: 30px; /* Khoảng cách giữa các phần */
+  padding: 18px; /* Padding để tạo khoảng cách bên trong phần */
+  border-radius: 12px; /* Bo tròn góc của từng phần */
+  background: #2c2c2c; /* Nền xám tối cho từng phần */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4); /* Đổ bóng nhẹ hơn để tạo chiều sâu */
+  width: 80%; /* Giới hạn chiều rộng của các phần bên trong menu */
+  max-width: 600px; /* Giới hạn chiều rộng tối đa của phần */
+  transition: box-shadow 0.3s ease, transform 0.3s ease; /* Hiệu ứng chuyển đổi cho đổ bóng và kích thước khi hover */
+}
+
+/* Tiêu đề của từng phần */
+.sidebar .section h2 {
+  font-size: 2em; /* Tăng kích thước chữ của tiêu đề */
+  color: #f1f1f1; /* Màu chữ sáng */
+  border-bottom: 3px solid #007bff; /* Đường viền dưới màu xanh dương */
+  padding-bottom: 15px; /* Tăng khoảng cách dưới tiêu đề */
+  margin-bottom: 20px; /* Tăng khoảng cách dưới tiêu đề */
+  font-weight: bold; /* Độ đậm của tiêu đề */
+}
+
+/* Danh sách các mục trong phần */
+.sidebar .section ul {
+  display: flex; /* Hiển thị danh sách theo dạng flex */
+  flex-direction: column; /* Sắp xếp các phần tử theo cột */
+  padding-left: 0; /* Loại bỏ padding mặc định của danh sách */
+  margin: 0; /* Loại bỏ margin mặc định của danh sách */
+}
+
+/* Các mục trong danh sách */
+.sidebar .section ul li {
+  list-style: none; /* Loại bỏ bullet points */
+  margin-bottom: 15px; /* Tăng khoảng cách dưới các mục trong phần */
+}
+
+/* Liên kết trong danh sách */
+.sidebar .section ul li a {
+  display: block; /* Hiển thị như block */
+  padding: 15px 20px; /* Tăng padding để làm liên kết cảm giác lớn hơn */
+  font-size: 1.2em; /* Tăng kích thước chữ */
+  color: #f1f1f1; /* Màu chữ của các liên kết */
+  border-radius: 8px; /* Bo tròn góc của các liên kết */
+  background: #333; /* Nền xám tối cho liên kết */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Hiệu ứng chuyển đổi khi hover */
+  text-decoration: none; /* Loại bỏ gạch chân của liên kết */
+  text-align: center; /* Căn giữa chữ */
+  width: 100%; /* Chiều rộng 100% của phần chứa liên kết */
+}
+
+/* Hiệu ứng hover trên các liên kết */
+.sidebar .section ul li a:hover {
+  background-color: #0056b3; /* Nền xanh dương đậm khi hover */
+  transform: scale(1.05); /* Tăng kích thước nhẹ khi hover */
+}
+
+/* Hiệu ứng khi liên kết được chọn (active) */
+.sidebar .section ul li a.active {
+  background-color: #007bff; /* Nền xanh dương khi liên kết được chọn */
+  color: #ffffff; /* Màu chữ khi liên kết được chọn */
+  font-weight: bold; /* Chữ đậm khi liên kết được chọn */
+  box-shadow: 0 0 15px rgba(0, 123, 255, 0.7); /* Đổ bóng nhẹ cho liên kết được chọn */
+}
+.hidden {
+  display: none; /* Ẩn các phần tử có lớp 'hidden' */
+}
+
+/* Biểu tượng mạng xã hội */
+small a {
+  display: inline-block; /* Hiển thị các liên kết dưới dạng khối nội tuyến */
+  margin: 10px 0; /* Khoảng cách giữa các dòng */
+  color: #000; /* Màu chữ và biểu tượng: đen */
+  text-decoration: none; /* Loại bỏ gạch chân */
+  font-size: 18px; /* Kích thước chữ */
+}
+
+small i {
+  margin-right: 10px; /* Khoảng cách giữa biểu tượng và tên mạng xã hội */
+  font-size: 24px; /* Kích thước biểu tượng */
+}
+
+small a:hover {
+  color: inherit; /* Màu chữ khi hover (tuỳ chọn) */
+}
+
+/* Phần về */
+.about {
+  padding: 50px 20px; /* Khoảng cách bên trong phần về */
+  background: #333; /* Màu nền của phần về: xám tối */
+  color: #f1f1f1; /* Màu chữ của phần về: sáng gần như trắng */
+  text-align: center; /* Căn giữa nội dung trong phần về */
+}
+
+/* Hình ảnh hồ sơ */
+.profile-image {
+  margin: 20px 0; /* Khoảng cách trên và dưới hình ảnh hồ sơ */
+  display: flex; /* Hiển thị hình ảnh hồ sơ dưới dạng flex */
+  justify-content: center; /* Căn giữa hình ảnh hồ sơ */
+}
+
+.profile-image img {
+  width: 200px; /* Chiều rộng của hình ảnh hồ sơ */
+  height: 150px; /* Chiều cao của hình ảnh hồ sơ để làm nó thành hình chữ nhật */
+  object-fit: cover; /* Đảm bảo hình ảnh không bị biến dạng */
+  border-radius: 10px; /* Bo tròn góc của hình ảnh hồ sơ */
+  border: 3px solid #007bff; /* Màu viền của hình ảnh hồ sơ */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Đổ bóng cho hình ảnh hồ sơ */
+  transition: transform 0.3s ease; /* Hiệu ứng chuyển đổi cho kích thước khi hover */
+}
+
+.profile-image img:hover {
+  transform: scale(1.05); /* Tăng kích thước hình ảnh hồ sơ khi hover */
+}
+
+/* Biểu tượng trong thẻ nhỏ */
+small {
+  font-size: 1.1em; /* Kích thước chữ lớn hơn một chút để dễ đọc */
+  display: flex; /* Hiển thị các biểu tượng dưới dạng flex */
+  justify-content: center; /* Căn giữa các biểu tượng */
+  gap: 20px; /* Khoảng cách giữa các biểu tượng */
+  flex-wrap: wrap; /* Cho phép gói lại nếu cần */
+  margin-top: 20px; /* Khoảng cách trên để tạo không gian */
+}
+
+small a {
+  color: #f1f1f1; /* Màu chữ của liên kết: sáng gần như trắng */
+  text-decoration: none; /* Loại bỏ gạch chân */
+  display: flex; /* Hiển thị liên kết dưới dạng flex */
+  align-items: center; /* Căn giữa các phần tử theo chiều dọc */
+  transition: color 0.3s ease, transform 0.3s ease; /* Hiệu ứng chuyển đổi cho màu sắc và kích thước khi hover */
+}
+
+small a:hover {
+  color: #007bff; /* Màu chữ khi hover: xanh dương */
+  transform: scale(1.1); /* Tăng kích thước khi hover */
+}
+
+small i {
+  font-size: 1.5em; /* Kích thước biểu tượng lớn hơn */
+  margin-right: 10px; /* Khoảng cách giữa biểu tượng và văn bản */
+}
+
+/* CSS cho các logo */
+.fa-html5,
+.fa-css3,
+.fa-js-square,
+.fa-python,
+.fa-node-js,
+.fa-cplusplus {
+  display: inline-block; /* Hiển thị các logo dưới dạng khối nội tuyến */
+  width: 32px; /* Kích thước của logo */
+  height: 32px; /* Kích thước của logo */
+  background-size: contain; /* Đảm bảo hình ảnh không bị cắt xén */
+  vertical-align: middle; /* Căn giữa với các phần tử văn bản khác */
+  margin: 0 10px; /* Khoảng cách giữa các biểu tượng */
+}
+
+/* Thay thế URL dưới đây bằng URL hình ảnh cho các logo */
+/* Đặt kích thước và loại bỏ các yếu tố không mong muốn */
+.icon {
+  display: inline-block; /* Hiển thị biểu tượng dưới dạng khối nội tuyến */
+  width: 48px; /* Kích thước của biểu tượng */
+  height: 48px; /* Kích thước của biểu tượng */
+  background-size: contain; /* Đảm bảo hình ảnh không bị cắt xén */
+  background-repeat: no-repeat; /* Không lặp lại hình ảnh */
+  background-position: center; /* Căn giữa hình ảnh */
+  text-align: center; /* Căn giữa nội dung */
+  line-height: 0; /* Loại bỏ khoảng cách dòng */
+  border: none; /* Loại bỏ đường viền */
+  margin: 0; /* Loại bỏ khoảng cách ngoài */
+  padding: 0; /* Loại bỏ khoảng cách trong */
+  box-shadow: none; /* Loại bỏ đổ bóng */
+  background-color: transparent; /* Đảm bảo nền trong suốt */
+  font-size: 0; /* Loại bỏ khoảng cách thêm từ chữ cái */
+}
+/* HTML5 */
+.icon-html5 {
+  background: url("https://img.icons8.com/color/48/000000/html-5.png") no-repeat
+    center center; /* Biểu tượng HTML5 */
+}
+
+/* CSS3 */
+.icon-css3 {
+  background: url("https://img.icons8.com/color/48/000000/css3.png") no-repeat
+    center center; /* Biểu tượng CSS3 */
+}
+
+/* JavaScript */
+.icon-js-square {
+  background: url("https://img.icons8.com/color/48/000000/javascript.png")
+    no-repeat center center; /* Biểu tượng JavaScript */
+}
+
+/* Python */
+.icon-python {
+  background: url("https://img.icons8.com/color/48/000000/python.png") no-repeat
+    center center; /* Biểu tượng Python */
+}
+
+/* Node.js */
+.icon-tailwin {
+  background: url("https://img.icons8.com/color/48/000000/tailwindcss.png") no-repeat
+    center center; /* Biểu tượng tailwin css */
+}
+
+/* C++ */
+.icon-cplusplus {
+  background: url("https://img.icons8.com/color/48/000000/c-plus-plus-logo.png")
+    no-repeat center center; /* Biểu tượng C++ */
+}
+
+
+
+.about {
+  padding: 40px 0; /* Khoảng cách bên trong phần về */
+  background: #1e1e1e; /* Nền tối */
+  color: #f1f1f1; /* Chữ sáng */
+}
+
+.profile {
+  display: flex; /* Hiển thị phần tử hồ sơ dưới dạng flex */
+  align-items: center; /* Căn giữa theo chiều dọc */
+  justify-content: center; /* Căn giữa theo chiều ngang */
+  gap: 20px; /* Khoảng cách giữa các phần tử trong hồ sơ */
+}
+
+.profile-image img {
+  width: 150px; /* Chiều rộng của hình ảnh hồ sơ */
+  height: 150px; /* Chiều cao của hình ảnh hồ sơ */
+  border-radius: 50%; /* Bo tròn hình ảnh thành hình tròn */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Đổ bóng cho hình ảnh hồ sơ */
+}
+
+.profile-info {
+  max-width: 600px; /* Chiều rộng tối đa của thông tin hồ sơ */
+}
+
+.profile-info i {
+  margin: 0 5px; /* Khoảng cách giữa các biểu tượng */
+  font-size: 24px; /* Kích thước biểu tượng */
+  color: #00ff00; /* Màu chữ xanh lá cây cho các biểu tượng */
+}
+
+.profile-info small {
+  display: block; /* Hiển thị nhỏ dưới dạng khối */
+  margin-top: 10px; /* Khoảng cách trên của phần nhỏ */
+}
+
+.profile-info small a {
+  color: #00bfff; /* Màu xanh sáng cho các liên kết */
+  text-decoration: none; /* Loại bỏ gạch chân của liên kết */
+}
+
+.profile-info small a:hover {
+  text-decoration: underline; /* Gạch chân khi hover trên liên kết */
+}
+
+/* Cơ bản */
+body {
+  background-color: #1e1e1e; /* Màu nền của toàn bộ trang: xám tối */
+  color: #f1f1f1; /* Màu chữ của toàn bộ trang: sáng gần như trắng */
+  font-family: Arial, sans-serif; /* Font chữ của toàn bộ trang */
+  margin: 0; /* Loại bỏ margin mặc định */
+  padding: 0; /* Loại bỏ padding mặc định */
+}
+
+/* Phần căn bar*/
+.container {
+  width: 80%; /* Chiều rộng của container */
+  margin: 0 auto; /* Căn giữa container */
+}
+/* Tiêu đề chính */
+h2 {
+  color: #007bff; /* Màu chữ tiêu đề chính: xanh dương */
+  border-bottom: 2px solid #007bff; /* Đường viền dưới tiêu đề chính */
+  padding-bottom: 10px; /* Khoảng cách dưới tiêu đề chính */
+  margin-bottom: 20px; /* Khoảng cách dưới tiêu đề chính */
+  font-size: 1.8rem; /* Kích thước chữ tiêu đề chính */
+}
+
+#contact p {
+  line-height: 1.6; /* Chiều cao dòng của văn bản trong phần liên hệ */
+}
+
+#contact a {
+  color: #007bff; /* Màu chữ của liên kết trong phần liên hệ */
+  text-decoration: none; /* Loại bỏ gạch chân của liên kết */
+}
+
+#contact a:hover {
+  text-decoration: underline; /* Gạch chân khi hover trên liên kết */
+}
+
+/* CSS cho phần liên hệ */
+#contact {
+  background: #1e1e1e; /* Nền gần như đen của phần liên hệ */
+  color: #f1f1f1; /* Chữ sáng gần như trắng của phần liên hệ */
+  padding: 40px 20px; /* Khoảng cách bên trong phần liên hệ */
+  border-radius: 12px; /* Bo tròn góc của phần liên hệ */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6); /* Đổ bóng cho phần liên hệ */
+}
+
+#contact h2 {
+  font-size: 2em; /* Kích thước chữ tiêu đề trong phần liên hệ */
+  margin-bottom: 20px; /* Khoảng cách dưới tiêu đề trong phần liên hệ */
+  position: relative; /* Đặt tiêu đề ở vị trí tương đối */
+  overflow: hidden; /* Ẩn phần tràn của tiêu đề */
+  padding-bottom: 10px; /* Khoảng cách dưới tiêu đề trong phần liên hệ */
+}
+
+#contact h2::before {
+  content: ""; /* Tạo nội dung giả cho hiệu ứng */
+  position: absolute; /* Đặt nội dung giả ở vị trí tuyệt đối */
+  bottom: 0; /* Đặt ở đáy tiêu đề */
+  left: 0; /* Đặt ở phía trái tiêu đề */
+  width: 100%; /* Chiều rộng của hiệu ứng */
+  height: 4px; /* Chiều cao của hiệu ứng */
+  background: #007bff; /* Màu chính của hiệu ứng */
+  transform: scaleX(0); /* Tỷ lệ hiệu ứng ban đầu */
+  transform-origin: bottom right; /* Điểm gốc của hiệu ứng */
+  transition: transform 0.3s ease; /* Hiệu ứng chuyển đổi cho tỷ lệ */
+}
+#contact h2:hover::before {
+  transform: scaleX(1); /* Hiệu ứng mở rộng khi hover */
+  transform-origin: bottom left; /* Điểm gốc của hiệu ứng mở rộng */
+}
+
+#contact p {
+  font-size: 1.1em; /* Kích thước chữ của đoạn văn trong phần liên hệ */
+  line-height: 1.6; /* Chiều cao dòng của đoạn văn trong phần liên hệ */
+}
+
+#contact a {
+  color: #007bff; /* Màu chính của liên kết */
+  text-decoration: none; /* Loại bỏ gạch chân của liên kết */
+  border-bottom: 1px solid #007bff; /* Đường viền dưới liên kết */
+  transition: color 0.3s ease, border-color 0.3s ease; /* Hiệu ứng chuyển đổi màu và đường viền khi hover */
+}
+
+#contact a:hover {
+  color: #f1f1f1; /* Màu chữ sáng gần như trắng khi hover */
+  border-color: #f1f1f1; /* Màu đường viền dưới khi hover */
+}
+
+
+/* CSS cho phần ý tưởng */
+#extended-content {
+  background: #1e1e1e; /* Nền gần như đen của phần ý tưởng */
+  color: #f1f1f1; /* Chữ sáng gần như trắng của phần ý tưởng */
+  padding: 40px 20px; /* Khoảng cách bên trong phần ý tưởng */
+  border-radius: 12px; /* Bo tròn góc của phần ý tưởng */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6); /* Đổ bóng cho phần ý tưởng */
+}
+
+#extended-content h2 {
+  font-size: 2em; /* Kích thước chữ tiêu đề trong phần ý tưởng */
+  margin-bottom: 20px; /* Khoảng cách dưới tiêu đề trong phần ý tưởng */
+  position: relative; /* Đặt tiêu đề ở vị trí tương đối */
+  overflow: hidden; /* Ẩn phần tràn của tiêu đề */
+  padding-bottom: 10px; /* Khoảng cách dưới tiêu đề trong phần ý tưởng */
+}
+
+#extended-content h2::before {
+  content: ""; /* Tạo nội dung giả cho hiệu ứng */
+  position: absolute; /* Đặt nội dung giả ở vị trí tuyệt đối */
+  bottom: 0; /* Đặt ở đáy tiêu đề */
+  left: 0; /* Đặt ở phía trái tiêu đề */
+  width: 100%; /* Chiều rộng của hiệu ứng */
+  height: 4px; /* Chiều cao của hiệu ứng */
+  background: #007bff; /* Màu chính của hiệu ứng */
+  transform: scaleX(0); /* Tỷ lệ hiệu ứng ban đầu */
+  transform-origin: bottom right; /* Điểm gốc của hiệu ứng */
+  transition: transform 0.3s ease; /* Hiệu ứng chuyển đổi cho tỷ lệ */
+}
+
+#extended-content h2:hover::before {
+  transform: scaleX(1); /* Hiệu ứng mở rộng khi hover */
+  transform-origin: bottom left; /* Điểm gốc của hiệu ứng mở rộng */
+}
+
+#extended-content p {
+  font-size: 1.1em; /* Kích thước chữ của đoạn văn trong phần ý tưởng */
+  line-height: 1.6; /* Chiều cao dòng của đoạn văn trong phần ý tưởng */
+}
+
+/* CSS cho phần lời khuyên */
+#additional-info {
+  background: #1e1e1e; /* Nền gần như đen của phần lời khuyên */
+  color: #f1f1f1; /* Chữ sáng gần như trắng của phần lời khuyên */
+  padding: 40px 20px; /* Khoảng cách bên trong phần lời khuyên */
+  border-radius: 12px; /* Bo tròn góc của phần lời khuyên */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6); /* Đổ bóng cho phần lời khuyên */
+}
+
+#additional-info h2 {
+  font-size: 2em; /* Kích thước chữ tiêu đề trong phần lời khuyên */
+  margin-bottom: 20px; /* Khoảng cách dưới tiêu đề trong phần lời khuyên */
+  position: relative; /* Đặt tiêu đề ở vị trí tương đối */
+  overflow: hidden; /* Ẩn phần tràn của tiêu đề */
+  padding-bottom: 10px; /* Khoảng cách dưới tiêu đề trong phần lời khuyên */
+}
+
+#additional-info h2::before {
+  content: ""; /* Tạo nội dung giả cho hiệu ứng */
+  position: absolute; /* Đặt nội dung giả ở vị trí tuyệt đối */
+  bottom: 0; /* Đặt ở đáy tiêu đề */
+  left: 0; /* Đặt ở phía trái tiêu đề */
+  width: 100%; /* Chiều rộng của hiệu ứng */
+  height: 4px; /* Chiều cao của hiệu ứng */
+  background: #007bff; /* Màu chính của hiệu ứng */
+  transform: scaleX(0); /* Tỷ lệ hiệu ứng ban đầu */
+  transform-origin: bottom right; /* Điểm gốc của hiệu ứng */
+  transition: transform 0.3s ease; /* Hiệu ứng chuyển đổi cho tỷ lệ */
+}
+
+#additional-info h2:hover::before {
+  transform: scaleX(1); /* Hiệu ứng mở rộng khi hover */
+  transform-origin: bottom left; /* Điểm gốc của hiệu ứng mở rộng */
+}
+
+#additional-info ul {
+  list-style: none; /* Loại bỏ dấu chấm của danh sách */
+  padding: 0; /* Loại bỏ padding của danh sách */
+}
+
+#additional-info li {
+  font-size: 1.1em; /* Kích thước chữ của các mục trong danh sách */
+  margin-bottom: 10px; /* Khoảng cách dưới mỗi mục trong danh sách */
+  position: relative; /* Đặt các mục trong danh sách ở vị trí tương đối */
+  padding-left: 25px; /* Khoảng cách bên trái của các mục trong danh sách */
+}
+
+#additional-info li::before {
+  content: "•"; /* Dấu chấm trước mỗi mục trong danh sách */
+  position: absolute; /* Đặt dấu chấm ở vị trí tuyệt đối */
+  left: 0; /* Đặt dấu chấm ở phía trái */
+  color: #007bff; /* Màu chính của dấu chấm */
+  font-size: 1.5em; /* Kích thước của dấu chấm */
+  top: 0; /* Đặt dấu chấm ở phía trên */
+}
+
+#additional-info p {
+  font-size: 1.1em; /* Kích thước chữ của đoạn văn trong phần lời khuyên */
+  line-height: 1.6; /* Chiều cao dòng của đoạn văn trong phần lời khuyên */
+}
+
+
+/* Phần tính năng */
+.features {
+  background: #1e1e1e; /* Nền của phần tính năng: xám gần như đen */
+  padding: 50px 20px; /* Khoảng cách bên trong phần tính năng */
+  position: relative; /* Đặt phần tính năng ở vị trí tương đối */
+  overflow: hidden; /* Ẩn phần tràn */
+}
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 64, 128, 0.5); /* Nền mờ có thể nhìn xuyên qua */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.5s ease;
+}
+
+.preloader.unactive {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loading {
+  width: 100px;
+  height: 100px;
+  border: 8px solid #0056b3;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  animation: reloader 1s infinite linear;
+}
+
+/* Thêm vòng quay ngược chiều */
+.loading.reverse {
+  position: absolute;
+  width: 120px; /* Kích thước khác một chút để phân biệt */
+  height: 120px;
+  border-width: 6px;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  animation: reloader-reverse 1.5s infinite linear;
+}
+
+@keyframes reloader {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes reloader-reverse {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+/* phần của tác giả khoa*/
+.contact h2 {
+  font-size: 24px; /* Kích thước font của tiêu đề */
+  display: flex; /* Sử dụng flexbox để căn chỉnh biểu tượng và tiêu đề */
+  align-items: center; /* Căn chỉnh theo chiều dọc */
+}
+
+.contact h2 i {
+  margin-right: 10px; /* Khoảng cách giữa biểu tượng và tiêu đề */
+  font-size: 28px; /* Kích thước của biểu tượng */
+  color: #007bff; /* Màu của biểu tượng */
+}
+
+/* Mỗi phần tính năng */
+.feature {
+  background: #333; /* Màu nền của mỗi phần tính năng: xám tối */
+  padding: 20px; /* Khoảng cách bên trong mỗi phần tính năng */
+  margin-bottom: 20px; /* Khoảng cách dưới mỗi phần tính năng */
+  transition: transform 0.5s ease, box-shadow 0.5s ease, background 0.5s ease,
+    border 0.5s ease; /* Hiệu ứng chuyển đổi cho kích thước, đổ bóng, màu nền và viền */
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.8); /* Đổ bóng cho mỗi phần tính năng */
+  border-radius: 20px; /* Bo góc cho mỗi phần tính năng */
+  position: relative; /* Đặt phần tính năng ở vị trí tương đối */
+  overflow: hidden; /* Ẩn phần tràn bên ngoài góc bo */
+  background: linear-gradient(
+    135deg,
+    #333,
+    #004080
+  ); /* Gradient nền cho mỗi phần tính năng */
+  z-index: 1; /* Đặt phần tử ở trên cùng để hiển thị hiệu ứng ánh sáng */
+  border: 1px solid transparent; /* Viền trong suốt để thêm hiệu ứng viền khi hover */
+}
+
+/* Lấy ảnh từ thuộc tính data-img */
+.feature {
+  --feature-img: attr(data-img);
+}
+
+.feature h3 {
+  position: relative; /* Đặt vị trí tương đối để biểu tượng có thể được định vị tuyệt đối */
+  padding-left: 40px; /* Khoảng cách bên trái để tạo không gian cho biểu tượng */
+}
+
+.feature h3::before {
+  content: "\f0e8"; /* Unicode của biểu tượng (thay đổi tùy thuộc vào biểu tượng bạn chọn) */
+  font-family: 'Font Awesome 5 Free'; /* Chọn font của FontAwesome */
+  font-weight: 900; /* Đảm bảo biểu tượng được hiển thị đúng */
+  position: absolute; /* Đặt vị trí tuyệt đối để định vị biểu tượng */
+  left: 0; /* Đặt biểu tượng ở phía bên trái */
+  top: 50%; /* Đặt biểu tượng ở giữa tiêu đề */
+  transform: translateY(-50%); /* Canh giữa biểu tượng theo chiều dọc */
+  font-size: 24px; /* Kích thước biểu tượng (có thể thay đổi theo nhu cầu) */
+  color: #007bff; /* Màu sắc của biểu tượng */
+}
+
+.video-overlay {
+  display: none; /* Ẩn video overlay mặc định */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8); /* Nền tối với độ mờ */
+  z-index: 1000; /* Đặt trên tất cả các phần tử khác */
+  align-items: center; /* Căn giữa theo chiều dọc */
+  justify-content: center; /* Căn giữa theo chiều ngang */
+}
+
+.video-wrapper {
+  position: relative;
+}
+
+#video-player {
+  max-width: 90%;
+  max-height: 80vh; /* Chiều cao tối đa của video */
+  background-color: #333; /* Nền video với màu xám tối */
+  border: 5px solid #007bff; /* Viền xanh dương */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Hiệu ứng đổ bóng */
+}
+
+.close-video {
+  position: absolute;
+  top: -15px; /* Đưa nút sát lên trên video */
+  right: -15px; /* Đưa nút sát về phía bên phải */
+  background: #000; /* Màu nền */
+  border: 2px solid #007bff; /* Viền xanh dương */
+  width: 40px; /* Kích thước lớn hơn */
+  height: 40px; /* Kích thước lớn hơn */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 20px; /* Kích thước chữ lớn hơn */
+  font-weight: bold;
+  color: #007bff; /* Màu chính xanh dương */
+  border-radius: 4px; /* Hình vuông với góc hơi bo tròn */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Thêm hiệu ứng đổ bóng */
+}
+
+.close-video:hover {
+  background: #000; /* Màu nền khi hover */
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5); /* Tăng hiệu ứng đổ bóng khi hover */
+}
+
+.video-button {
+  background: #007bff; /* Màu nền của nút */
+  color: #f1f1f1; /* Màu chữ của nút */
+  border: 2px solid #007bff; /* Viền nút cùng màu với nền */
+  padding: 12px 24px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Hiệu ứng chuyển đổi mượt mà */
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 6px #0056b3, 0 8px 15px rgba(0, 0, 0, 0.1); /* Hiệu ứng 3D */
+}
+
+.video-button:active {
+  transform: translateY(4px); /* Khi click, nút sẽ hạ xuống */
+  box-shadow: 0 2px #0056b3, 0 4px 10px rgba(0, 0, 0, 0.1); /* Giảm bóng để tạo hiệu ứng nhấn */
+}
+
+
+.feature {
+  position: relative;
+  width: 97%; /* Điều chỉnh kích thước của phần tử chứa nếu cần */
+  height: 150px; /* Kích thước cố định hoặc tỷ lệ chiều cao mong muốn */
+  background-image: var(--feature-img); /* Sử dụng biến CSS để đặt ảnh nền */
+  background-size: cover; /* Đảm bảo ảnh nền phủ toàn bộ phần tử */
+  background-repeat: no-repeat; /* Không lặp lại ảnh nền */
+  background-position: center; /* Căn giữa ảnh nền trong phần tử */
+  overflow: hidden; /* Ẩn phần ảnh vượt quá kích thước phần tử */
+  border: 2px solid #007bff; /* Viền xanh dương cho phần tử */
+  padding: 20px; /* Thêm padding nếu cần để nội dung không bị dính vào viền */
+  border-radius: 20px; /* Bo góc cho phần tử nếu cần */
+  overflow: hidden; /* Đảm bảo phần tử không bị tràn ra ngoài viền */
+}
+
+.feature {
+  position: relative; /* Đặt vị trí của phần tử theo hệ tọa độ của phần tử cha */
+  background: var(--feature-img) no-repeat center center; /* Sử dụng biến CSS cho hình nền, căn giữa và không lặp lại */
+  background-size: cover; /* Kích thước hình nền bao phủ toàn bộ phần tử */
+  overflow: hidden; /* Ẩn nội dung vượt ra ngoài phần tử */
+  padding: 20px; /* Thêm khoảng cách bên trong phần tử để nội dung không bị chồng lên lớp hiệu ứng */
+}
+
+.feature::before {
+  content: ""; /* Tạo nội dung giả để thêm lớp overlay */
+  position: absolute; /* Vị trí tuyệt đối để lớp overlay nằm trên phần tử .feature */
+  top: 0; /* Đặt lớp overlay ở vị trí trên cùng của phần tử */
+  left: 0; /* Đặt lớp overlay ở vị trí bên trái của phần tử */
+  width: 100%; /* Chiếm toàn bộ chiều rộng của phần tử */
+  height: 100%; /* Chiếm toàn bộ chiều cao của phần tử */
+  background: rgba(0, 0, 0, 0.4); /* Màu nền đen với độ mờ 0.4 */
+  opacity: 0.9; /* Độ mờ của lớp overlay */
+  transition: opacity 0.5s ease, background 0.5s ease; /* Hiệu ứng chuyển đổi cho độ mờ và màu nền của lớp overlay */
+  z-index: 1; /* Đặt lớp overlay dưới nội dung chính */
+}
+
+.feature:hover::before {
+  opacity: 0.1; /* Thay đổi độ mờ khi hover */
+}
+
+.feature .content {
+  position: relative; /* Đặt nội dung chính trên lớp overlay */
+  z-index: 2; /* Đặt nội dung chính ở trên lớp overlay */
+  color: #fff; /* Màu chữ của nội dung chính */
+}
+
+/* Đảm bảo nút có thể tương tác được */
+.feature .video-button {
+  background: #007bff; /* Màu nền của nút */
+  color: #f1f1f1; /* Màu chữ của nút */
+  border: 2px solid #007bff; /* Viền nút cùng màu với nền */
+  padding: 10px 20px; /* Khoảng cách bên trong nút */
+  cursor: pointer; /* Thay đổi con trỏ thành hình bàn tay khi hover */
+  margin-top: 10px; /* Khoảng cách phía trên của nút */
+  transition: background 0.3s ease, color 0.3s ease; /* Thêm hiệu ứng chuyển đổi cho màu nền và màu chữ */
+  position: relative; /* Đảm bảo nút nằm trên lớp overlay */
+  z-index: 3; /* Đặt nút trên lớp overlay */
+}
+
+.feature .video-button:hover {
+  background: #0056b3; /* Màu nền của nút khi hover */
+  color: #f1f1f1; /* Màu chữ của nút khi hover */
+  border-color: #0056b3; /* Màu viền của nút khi hover */
+}
+
+
+/* Định nghĩa hiệu ứng chuyển động */
+@keyframes float {
+  0% {
+    transform: translateY(0); /* Vị trí ban đầu */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Đổ bóng cho phần tử */
+  }
+  50% {
+    transform: translateY(-10px); /* Di chuyển phần tử lên 10px */
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.4); /* Thay đổi đổ bóng */
+  }
+  100% {
+    transform: translateY(0); /* Quay trở lại vị trí ban đầu */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Đổ bóng cho phần tử */
+  }
+}
+
+.feature {
+  position: relative; /* Đặt vị trí của phần tử theo hệ tọa độ của phần tử cha */
+  background: var(--feature-img) no-repeat center center; /* Sử dụng biến CSS cho hình nền, căn giữa và không lặp lại */
+  background-size: cover; /* Kích thước hình nền bao phủ toàn bộ phần tử */
+  border-radius: 10px; /* Bo tròn góc của phần tử */
+  overflow: hidden; /* Ẩn nội dung vượt ra ngoài phần tử */
+  transition: box-shadow 0.3s ease, transform 0.3s ease; /* Thêm hiệu ứng chuyển đổi cho đổ bóng và chuyển động */
+}
+
+.feature:hover {
+  animation: float 1.5s ease-in-out infinite; /* Chạy hiệu ứng chuyển động khi hover */
+}
+
+.feature-image {
+  width: 100%;
+  height: auto; /* Đảm bảo ảnh giữ tỷ lệ */
+  border-radius: 10px;
+  filter: sepia(100%) hue-rotate(180deg) saturate(200%); /* Thay đổi màu sắc ảnh */
+}
+
+
+html {
+  zoom: 90%; /* Điều chỉnh mức zoom theo nhu cầu */
+}
+
+html {
+  -webkit-user-select: none; /* Vô hiệu hóa chọn văn bản */
+  user-select: none; /* Vô hiệu hóa chọn văn bản */
+}
+
+
+/* Thanh cuộn cho trình duyệt Webkit (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 12px; /* Chiều rộng của thanh cuộn dọc */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #444; /* Màu của phần cuộn chính (xám sáng hơn một chút) */
+  border-radius: 6px; /* Bo tròn góc phần cuộn chính */
+}
+
+::-webkit-scrollbar-track {
+  background: #333; /* Màu nền của thanh cuộn (xám tối) */
+}
+
+/* Thanh cuộn cho Firefox */
+html {
+  scrollbar-width: thin; /* Kích thước thanh cuộn */
+  scrollbar-color: #444 #333; /* Màu phần cuộn và nền thanh cuộn */
+}
+
+/* Các phần khác của trang web vẫn giữ nguyên */
+
+#typing-effect {
+  text-align: center;
+  
+}
+
+#typing-effect {
+  font-size: 3em; /* Điều chỉnh kích thước chữ */
+  font-family: 'JetBrains Mono', monospace;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid rgb(255, 255, 255); /* Cursor effect */
+  display: inline-block; /* Đảm bảo phần tử không kéo dài toàn bộ chiều rộng */
+}
+
+#typing-effect {
+  font-size: 2vw; /* Tự động thay đổi kích thước phông chữ dựa trên chiều rộng của viewport */
+  white-space: nowrap; /* Không xuống dòng khi gõ văn bản */
+  text-align: center;
+  width: 100%;
+  display: block;
+  margin: 0 auto; /* Căn giữa phần tử */
+}
+
+
+/* Giao diện nút tìm kiếm */
+#search-toggle {
+  background-color: transparent; /* Nền trong suốt để nhìn thấy nền của phần tử chứa nếu có */
+  color: #007bff; /* Màu chữ xanh dương */
+  border: 2px solid #007bff; /* Viền xanh dương cho nút */
+  border-radius: 5px; /* Bo góc cho nút */
+  padding: 10px 15px; /* Thêm padding cho nút */
+  font-size: 1.2em; /* Kích thước chữ trong nút */
+  cursor: pointer; /* Con trỏ khi di chuột lên nút */
+  position: fixed; /* Vị trí cố định trên màn hình */
+  top: 35px; /* Khoảng cách từ cạnh trên của cửa sổ */
+  left: 117px; /* Khoảng cách từ cạnh trái của cửa sổ, thay vì right */
+  z-index: 1001; /* Đảm bảo nút nằm trên các phần tử khác */
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; /* Hiệu ứng chuyển tiếp */
+  text-decoration: none; /* Loại bỏ gạch chân của liên kết */
+}
+
+/* Hiệu ứng khi di chuột qua nút */
+#search-toggle:hover {
+  background-color: #007bff; /* Nền xanh dương khi di chuột qua nút */
+  color: white; /* Màu chữ trắng khi di chuột qua nút */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Thêm bóng khi di chuột qua nút */
+  transform: scale(1.05); /* Tăng kích thước một chút khi di chuột qua nút */
+}
+
+/* Hiệu ứng khi nút được nhấn */
+#search-toggle:active {
+  transform: scale(0.95); /* Giảm kích thước khi nhấn nút */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Thay đổi bóng khi nhấn nút */
+}
+
+/* Giao diện phần chứa thanh tìm kiếm */
+#search-container {
+  position: absolute;
+  top: 100px; /* Đặt thanh tìm kiếm dưới nút */
+  left: 0%; /* Căn giữa theo chiều ngang */
+  background-color: #1e1e1e; /* Nền tối cho phần chứa thanh tìm kiếm */
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Thêm bóng cho phần chứa thanh tìm kiếm */
+  width: 100000px; /* Giảm chiều rộng của thanh tìm kiếm */
+  max-width: 100%; /* Đảm bảo không vượt quá chiều rộng màn hình nhỏ */
+}
+
+/* Đặt nền tối cho thanh tìm kiếm */
+.gcse-search {
+    background-color: #333; /* Nền tối cho thanh tìm kiếm */
+}
+
+/* Thay đổi màu sắc của nút tìm kiếm */
+.gcse-search input.gsc-search-button {
+    background-color: #007bff; /* Màu nền của nút tìm kiếm */
+    color: #fff; /* Màu chữ của nút tìm kiếm */
+    border: none; /* Loại bỏ viền nút tìm kiếm */
+}
+#khoa {
+  font-size: 20px; /* Kích thước chữ */
+  color: #007bff; /* Màu chữ xanh dương đậm */
+  text-align: center; /* Căn giữa chữ */
+  font-weight: 600; /* Đậm chữ một chút */
+  transition: color 0.3s ease, text-shadow 0.3s ease; /* Hiệu ứng chuyển màu và bóng chữ */
+}
+
+#khoa:hover {
+  color: #00bfff; /* Màu chữ khi hover */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Bóng chữ khi hover */
+}
+
+/* Thanh cuộn bên phải */
+#side-panel {
+  position: fixed; /* Cố định vị trí trên màn hình */
+  top: 0; /* Đặt ở vị trí đầu trang */
+  right: 0; /* Đặt ở cạnh phải của màn hình */
+  height: 100%; /* Chiều cao chiếm toàn bộ màn hình */
+  width: 50px; /* Kích thước thanh cuộn khi ẩn */
+  background-color: #1e1e1e; /* Màu nền của thanh cuộn */
+  display: flex; /* Sử dụng flex để căn chỉnh nội dung */
+  align-items: center; /* Căn giữa theo chiều dọc */
+  justify-content: center; /* Căn giữa theo chiều ngang */
+  transition: width 0.3s ease; /* Hiệu ứng chuyển đổi khi mở rộng */
+  z-index: 999 /* Đảm bảo thanh cuộn nằm trên các phần tử khác */
+}
+
+/* Nút bấm mở menu */
+#menu-button {
+  color: #f1f1f1; /* Màu chữ của nút bấm */
+  font-size: 24px; /* Kích thước chữ của nút bấm */
+  cursor: pointer; /* Thay đổi con trỏ khi di chuột qua nút */
+  z-index: 1002; /* Đảm bảo nút bấm nằm trên menu */
+}
+
+/* Menu ẩn */
+#overlay-menu {
+  position: fixed; /* Cố định vị trí trên màn hình */
+  top: 109px; /* Đặt ở vị trí đầu trang */
+  right: 0; /* Đặt ở cạnh phải của màn hình */
+  width: 400px; /* Kích thước menu hình chữ nhật */
+  height: 100%; /* Chiều cao menu tương ứng với chiều cao màn hình */
+  background-color: #212529; /* Màu nền của menu */
+  padding: 15px; /* Khoảng cách nội dung cách biên menu */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.7); /* Đổ bóng cho menu */
+  border-radius: 10px; /* Bo góc cho menu */
+  transform: translateX(100%); /* Đưa menu ra ngoài màn hình khi ẩn */
+  transition: transform 0.3s ease; /* Hiệu ứng chuyển đổi khi hiện menu */
+  z-index: 1000; /* Đảm bảo menu nằm dưới nút bấm */
+}
+
+
+#overlay-menu button:hover {
+  background-color: #0056b3; /* Màu nền khi di chuột qua nút đóng */
+}
+
+/* Danh sách liên kết trong menu */
+#overlay-menu ul {
+  list-style: none; /* Loại bỏ dấu chấm đầu mục */
+  padding: 0; /* Loại bỏ padding */
+  margin: 0; /* Loại bỏ margin */
+  margin-top: 50px; /* Khoảng cách từ nút đóng đến danh sách liên kết */
+}
+
+#overlay-menu li {
+  margin: 15px 0; /* Khoảng cách giữa các mục trong danh sách */
+}
+
+#overlay-menu a {
+  color: #f1f1f1; /* Màu chữ của liên kết */
+  text-decoration: none; /* Loại bỏ gạch chân của liên kết */
+  display: block; /* Hiển thị liên kết như khối */
+  font-size: 25px; /* Kích thước chữ của liên kết */
+}
+
+#overlay-menu a:hover {
+  color: #007bff; /* Màu chữ khi di chuột qua liên kết */
+}
+
+/* Lớp khi mở menu */
+#side-panel.open {
+  width: 500px; /* Mở rộng thanh cuộn khi menu hiện */
+}
+
+/* Menu hiện ra khi mở */
+#side-panel.open #overlay-menu {
+  transform: translateX(0); /* Hiện menu bằng cách đưa nó vào màn hình */
+}
+
+/* Nút bấm khi menu mở */
+#side-panel.open #menu-button {
+  width: 450px; /* Kéo dài nút bấm theo kích thước của thanh cuộn khi menu mở */
+}
+
+/* Liên kết trong menu */
+#overlay-menu a {
+  display: flex; /* Sử dụng flexbox để căn chỉnh hình ảnh và tiêu đề */
+  flex-direction: column; /* Sắp xếp hình ảnh và tiêu đề theo chiều dọc */
+  align-items: center; /* Căn giữa nội dung theo chiều ngang */
+  text-decoration: none; /* Loại bỏ gạch chân của liên kết */
+  color: #f1f1f1; /* Màu chữ của liên kết */
+  padding: 10px 0; /* Padding dọc để tạo khoảng cách giữa các mục */
+}
+
+
+/* Menu ẩn */
+#overlay-menu {
+  overflow-y: auto; /* Thêm thanh cuộn dọc khi cần thiết */
+  scrollbar-width: thin; /* Kích thước thanh cuộn trên Firefox */
+  scrollbar-color: transparent #212529; /* Màu của thanh cuộn trên Firefox */
+}
+
+/* Thanh cuộn dọc - Chrome, Safari */
+#overlay-menu::-webkit-scrollbar {
+  width: 0px; /* Độ rộng của thanh cuộn dọc */
+}
+
+#nhom1:hover {
+  content: url('/static/images/nhom1.png'); /* Đổi ảnh khi hover */
+}
+#nhom2:hover {
+  content: url('/static/images/nhom2.png'); /* Đổi ảnh khi hover */
+}
+#nhom3:hover {
+  content: url('/static/images/nhom3.png'); /* Đổi ảnh khi hover */
+}
+#nhom4:hover {
+  content: url('/static/images/nhom4.jpg'); /* Đổi ảnh khi hover */
+}
+#nhom5:hover {
+  content: url('/static/images/nhom5.jpg'); /* Đổi ảnh khi hover */
+}
+#nhom6:hover {
+  content: url('/static/images/nhom6.jpg'); /* Đổi ảnh khi hover */
+}
+#nhom7:hover {
+  content: url('/static/images/nhom7.jpg'); /* Đổi ảnh khi hover */
+}
+#nhom8:hover {
+  content: url('/static/images/nhom8.jpg'); /* Đổi ảnh khi hover */
+}
+#nhom9:hover {
+  content: url('/static/images/nhom9.jpg'); /* Đổi ảnh khi hover */
+}
+#nhom10:hover {
+  content: url('/static/images/nhom10.jpg'); /* Đổi ảnh khi hover */
+}
+#nhom11:hover {
+  content: url('/static/images/nhom11.jpg'); /* Đổi ảnh khi hover */
+}
+#nhom12:hover {
+  content: url('/static/images/nhom12.jpg'); /* Đổi ảnh khi hover */
+}
+#nhom13:hover {
+  content: url('/static/images/nhom13.jpg'); /* Đổi ảnh khi hover */
+}
+#nhom14:hover {
+  content: url('/static/images/nhom14.jpg'); /* Đổi ảnh khi hover */
+}
+#nhom15:hover {
+  content: url('/static/images/nhom15.jpg'); /* Đổi ảnh khi hover */
+}
+#nhom16:hover {
+  content: url('/static/images/nhom16.jpg'); /* Đổi ảnh khi hover */
+}
+#nhom17:hover {
+  content: url('/static/images/nhom17.jpg'); /* Đổi ảnh khi hover */
+}
+#nhom18:hover {
+  content: url('/static/images/nhom18.jpg'); /* Đổi ảnh khi hover */
+}
+#nhom19:hover {
+  content: url('/static/images/nhom19.jpg'); /* Đổi ảnh khi hover */
+}
+#nhom20:hover {
+  content: url('/static/images/nhom20.jpg'); /* Đổi ảnh khi hover */
+}
+
+/* Tiêu đề trong liên kết */
+.menu-title {
+  font-size: 22px; /* Kích thước chữ của tiêu đề */
+  font-weight: bold; /* Đặt tiêu đề thành đậm */
+  color: #007bff; /* Màu chữ của tiêu đề */
+  border: 2px solid #007bff; /* Viền xanh cho tiêu đề */
+  border-radius: 5px; /* Bo góc cho viền */
+  padding: 5px 10px; /* Padding để tạo không gian xung quanh chữ */
+  background-color: #222; /* Màu nền để nổi bật hơn */
+}
+
+/* Hình ảnh trong liên kết */
+.menu-image {
+  width: 300px; /* Kích thước hình ảnh */
+  height: 200px; /* Kích thước hình ảnh */
+}
+
