@@ -623,23 +623,43 @@ small i {
     no-repeat center center; /* Biểu tượng JavaScript */
 }
 
+.icon-sql {
+  background: url("https://img.icons8.com/?size=100&id=vR6XrZzQr1CN&format=png&color=000000")
+    no-repeat center center;
+    background-size: contain; /* Đảm bảo biểu tượng không bị biến dạng */
+}
+
 /* Python */
 .icon-python {
   background: url("https://img.icons8.com/color/48/000000/python.png") no-repeat
     center center; /* Biểu tượng Python */
 }
 
-/* Node.js */
+
 .icon-tailwin {
-  background: url("https://img.icons8.com/color/48/000000/tailwindcss.png") no-repeat
+  background: url("https://img.icons8.com/?size=100&id=x7XMNGh2vdqA&format=png&color=000000") no-repeat
     center center; /* Biểu tượng tailwin css */
+    background-size: contain;
+    width: 48px;
+    height: 48px;
 }
 
-/* C++ */
 .icon-cplusplus {
   background: url("https://img.icons8.com/color/48/000000/c-plus-plus-logo.png")
     no-repeat center center; /* Biểu tượng C++ */
 }
+
+
+.icon-linux {
+  background: url("https://img.icons8.com/?size=100&id=qBWtR72kluCU&format=png&color=000000")
+  no-repeat center center;
+  background-size: contain;
+  width: 50px;
+  height: 50px;
+}
+
+
+
 
 
 
