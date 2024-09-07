@@ -14,7 +14,11 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
-
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
+from datetime import datetime
 
 
 
@@ -36,7 +40,93 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(150), unique=True, nullable=False)
     password = db.Column(db.String(150), nullable=False)
 
+# Đảm bảo rằng bạn chỉ khởi tạo một đối tượng Admin
+admin = Admin(app, name='MyApp', template_mode='bootstrap3', endpoint='adminkhoa', url='/adminkhoa')
+admin.add_view(ModelView(User, db.session))
+class Contest(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(150), nullable=False)
+    start_time = db.Column(db.DateTime, nullable=False)
+    end_time = db.Column(db.DateTime, nullable=False)
+    problems = db.relationship('Problem', backref='contest', lazy=True)
 
+class Problem(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(150), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    contest_id = db.Column(db.Integer, db.ForeignKey('contest.id'), nullable=False)
+    test_cases = db.relationship('TestCase', backref='problem', lazy=True)
+
+class TestCase(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    input_data = db.Column(db.Text, nullable=False)
+    expected_output = db.Column(db.Text, nullable=False)
+    problem_id = db.Column(db.Integer, db.ForeignKey('problem.id'), nullable=False)
+
+class Submission(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    problem_id = db.Column(db.Integer, db.ForeignKey('problem.id'), nullable=False)
+    code = db.Column(db.Text, nullable=False)
+    result = db.Column(db.String(50))  # Example: "Correct", "Wrong Answer", "Runtime Error"
+    submitted_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+class ContestModelView(ModelView):
+    column_list = ['name', 'start_time', 'end_time']
+
+class ProblemModelView(ModelView):
+    column_list = ['title', 'description', 'contest.name']
+
+class TestCaseModelView(ModelView):
+    column_list = ['problem.title', 'input_data', 'expected_output']
+
+class SubmissionModelView(ModelView):
+    column_list = ['user.username', 'problem.title', 'result', 'submitted_at']
+
+admin.add_view(ContestModelView(Contest, db.session))
+admin.add_view(ProblemModelView(Problem, db.session))
+admin.add_view(TestCaseModelView(TestCase, db.session))
+admin.add_view(SubmissionModelView(Submission, db.session))
+
+
+@app.route('/admin/contest/create', methods=['GET', 'POST'])
+def create_contest():
+    if request.method == 'POST':
+        name = request.form['name']
+        start_time = request.form['start_time']
+        end_time = request.form['end_time']
+        contest = Contest(name=name, start_time=start_time, end_time=end_time)
+        db.session.add(contest)
+        db.session.commit()
+        return redirect(url_for('admin.index'))
+    return render_template('create_contest.html')
+
+@app.route('/admin/problem/create/<int:contest_id>', methods=['GET', 'POST'])
+def create_problem(contest_id):
+    if request.method == 'POST':
+        title = request.form['title']
+        description = request.form['description']
+        problem = Problem(title=title, description=description, contest_id=contest_id)
+        db.session.add(problem)
+        db.session.commit()
+        return redirect(url_for('admin.index'))
+    return render_template('create_problem.html', contest_id=contest_id)
+
+@app.route('/admin/testcase/create/<int:problem_id>', methods=['GET', 'POST'])
+def create_testcase(problem_id):
+    if request.method == 'POST':
+        input_data = request.form['input_data']
+        expected_output = request.form['expected_output']
+        test_case = TestCase(input_data=input_data, expected_output=expected_output, problem_id=problem_id)
+        db.session.add(test_case)
+        db.session.commit()
+        return redirect(url_for('admin.index'))
+    return render_template('create_testcase.html', problem_id=problem_id)
+
+@app.route('/submissions')
+def submissions():
+    all_submissions = Submission.query.all()
+    return render_template('submissions.html', submissions=all_submissions)
 
 @login_manager.user_loader
 def load_user(user_id):
