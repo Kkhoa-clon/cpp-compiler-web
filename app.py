@@ -1,33 +1,25 @@
-from flask import Flask, request, render_template, jsonify, redirect, url_for, session, send_from_directory
+from flask import Flask, request, render_template, jsonify, redirect, url_for, session
 import subprocess
 import os
 import re
-import requests
-import time
-from datetime import datetime
-import jwt
-import random
 import platform
-import string
-import json
-from flask_migrate import Migrate
+from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import UserMixin
-from datetime import datetime
-
-
+from wtforms import Form, StringField, TextAreaField, DateTimeField
+from wtforms.validators import DataRequired
+from flask_migrate import Migrate
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-app.config['SECRET_KEY'] = 'khoa'  # Thay 'your_secret_key' bằng một giá trị bí mật
+app.config['SECRET_KEY'] = 'khoa'  # Thay bằng giá trị bí mật của bạn
 app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
     'pool_timeout': 10,
-    'pool_recycle': 3600
+    'pool_recycle': 3600,
+    'connect_args': {'check_same_thread': False}  # Đối với SQLite
 }
 
 db = SQLAlchemy(app)
@@ -35,14 +27,12 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 migrate = Migrate(app, db)
 
+# Models
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), unique=True, nullable=False)
     password = db.Column(db.String(150), nullable=False)
 
-# Đảm bảo rằng bạn chỉ khởi tạo một đối tượng Admin
-admin = Admin(app, name='MyApp', template_mode='bootstrap3', endpoint='adminkhoa', url='/adminkhoa')
-admin.add_view(ModelView(User, db.session))
 class Contest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(150), nullable=False)
@@ -55,13 +45,7 @@ class Problem(db.Model):
     title = db.Column(db.String(150), nullable=False)
     description = db.Column(db.Text, nullable=False)
     contest_id = db.Column(db.Integer, db.ForeignKey('contest.id'), nullable=False)
-    test_cases = db.relationship('TestCase', backref='problem', lazy=True)
-
-class TestCase(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    input_data = db.Column(db.Text, nullable=False)
-    expected_output = db.Column(db.Text, nullable=False)
-    problem_id = db.Column(db.Integer, db.ForeignKey('problem.id'), nullable=False)
+    test_cases = db.Column(db.Text, nullable=False)  # Lưu trữ test cases dưới dạng văn bản
 
 class Submission(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -71,78 +55,53 @@ class Submission(db.Model):
     result = db.Column(db.String(50))  # Example: "Correct", "Wrong Answer", "Runtime Error"
     submitted_at = db.Column(db.DateTime, default=datetime.utcnow)
 
-class ContestModelView(ModelView):
-    column_list = ['name', 'start_time', 'end_time']
+# Admin Forms
+class ProblemForm(Form):
+    title = StringField('Title', validators=[DataRequired()])
+    description = TextAreaField('Description', validators=[DataRequired()])
+    contest_id = StringField('Contest ID', validators=[DataRequired()])
+    test_cases = TextAreaField('Test Cases', validators=[DataRequired()])  # Nhập test cases dưới dạng văn bản
 
+class ContestForm(Form):
+    name = StringField('Name', validators=[DataRequired()])
+    start_time = DateTimeField('Start Time', format='%Y-%m-%d %H:%M:%S', validators=[DataRequired()])
+    end_time = DateTimeField('End Time', format='%Y-%m-%d %H:%M:%S', validators=[DataRequired()])
+
+# Admin Views
 class ProblemModelView(ModelView):
+    form = ProblemForm
     column_list = ['title', 'description', 'contest.name']
+    form_columns = ['title', 'description', 'contest', 'test_cases']  # Thêm trường test_cases
 
-class TestCaseModelView(ModelView):
-    column_list = ['problem.title', 'input_data', 'expected_output']
+    def on_model_change(self, form, model, is_created):
+        # Lưu test cases dưới dạng văn bản
+        model.test_cases = form.test_cases.data
+        db.session.commit()
+
+class ContestModelView(ModelView):
+    form = ContestForm
+    column_list = ['name', 'start_time', 'end_time']
+    form_columns = ['name', 'start_time', 'end_time']
 
 class SubmissionModelView(ModelView):
     column_list = ['user.username', 'problem.title', 'result', 'submitted_at']
 
+# Admin setup
+admin = Admin(app, name='MyApp', template_mode='bootstrap3', endpoint='adminkhoa', url='/adminkhoa')
+admin.add_view(ModelView(User, db.session))
 admin.add_view(ContestModelView(Contest, db.session))
 admin.add_view(ProblemModelView(Problem, db.session))
-admin.add_view(TestCaseModelView(TestCase, db.session))
 admin.add_view(SubmissionModelView(Submission, db.session))
 
-
-@app.route('/admin/contest/create', methods=['GET', 'POST'])
-def create_contest():
-    if request.method == 'POST':
-        name = request.form['name']
-        start_time = request.form['start_time']
-        end_time = request.form['end_time']
-        contest = Contest(name=name, start_time=start_time, end_time=end_time)
-        db.session.add(contest)
-        db.session.commit()
-        return redirect(url_for('admin.index'))
-    return render_template('create_contest.html')
-
-@app.route('/admin/problem/create/<int:contest_id>', methods=['GET', 'POST'])
-def create_problem(contest_id):
-    if request.method == 'POST':
-        title = request.form['title']
-        description = request.form['description']
-        problem = Problem(title=title, description=description, contest_id=contest_id)
-        db.session.add(problem)
-        db.session.commit()
-        return redirect(url_for('admin.index'))
-    return render_template('create_problem.html', contest_id=contest_id)
-
-@app.route('/admin/testcase/create/<int:problem_id>', methods=['GET', 'POST'])
-def create_testcase(problem_id):
-    if request.method == 'POST':
-        input_data = request.form['input_data']
-        expected_output = request.form['expected_output']
-        test_case = TestCase(input_data=input_data, expected_output=expected_output, problem_id=problem_id)
-        db.session.add(test_case)
-        db.session.commit()
-        return redirect(url_for('admin.index'))
-    return render_template('create_testcase.html', problem_id=problem_id)
-
-@app.route('/submissions')
-def submissions():
-    all_submissions = Submission.query.all()
-    return render_template('submissions.html', submissions=all_submissions)
-
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
-
-@app.teardown_appcontext
-def shutdown_session(exception=None):
-    db.session.remove()
-
+# Routes
 @app.route('/')
 def index():
     return render_template('index.html')
 
 @app.route('/thuthach')
 def thuthach():
-    return render_template('thuthach.html')
+    contests = Contest.query.all()  # Lấy tất cả contest từ cơ sở dữ liệu
+    return render_template('thuthach.html', contests=contests)
 
 @app.route('/Tailieu')
 def tailieu():
@@ -151,6 +110,18 @@ def tailieu():
 @app.route('/Khoahoc')
 def Khoahoc():
     return render_template('Khoahoc.html')
+
+@app.route('/contest/<int:contest_id>')
+def contest_detail(contest_id):
+    contest = Contest.query.get_or_404(contest_id)
+    problems = Problem.query.filter_by(contest_id=contest_id).all()
+    return render_template('contest_detail.html', contest=contest, problems=problems)
+
+@app.route('/problem/<int:problem_id>')
+def problem_detail(problem_id):
+    problem = Problem.query.get_or_404(problem_id)
+    test_cases = problem.test_cases  # Dữ liệu test cases dưới dạng văn bản
+    return render_template('problem_detail.html', problem=problem, test_cases=test_cases)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -162,11 +133,11 @@ def register():
         if username and password and confirm_password:
             if password != confirm_password:
                 return render_template('register.html', error='Mật khẩu xác nhận không khớp.')
-            
+
             existing_user = User.query.filter_by(username=username).first()
             if existing_user:
                 return render_template('register.html', error='Tên người dùng đã tồn tại.')
-            
+
             hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
             try:
                 new_user = User(username=username, password=hashed_password)
@@ -176,9 +147,9 @@ def register():
             except Exception as e:
                 db.session.rollback()
                 return render_template('register.html', error='Có lỗi xảy ra khi đăng ký người dùng.')
-        
+
         return render_template('register.html', error='Vui lòng cung cấp tất cả thông tin.')
-    
+
     return render_template('register.html')
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -191,7 +162,7 @@ def login():
             login_user(user)
             return redirect(url_for('index'))
         else:
-            return 'sai mật khẩu hoặc tên người dùng'
+            return 'Sai mật khẩu hoặc tên người dùng'
     return render_template('login.html')
 
 @app.route('/logout')
@@ -199,8 +170,6 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('index'))
-
-
 
 @app.route('/compiler')
 def compiler():
@@ -215,7 +184,7 @@ def run_code():
         return jsonify({'error': 'No code provided'}), 400
 
     if re.search(r'[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]', code):
-        return jsonify({'error': 'chung toi khong ho tro cac ghi chu co dau'}), 400
+        return jsonify({'error': 'Chúng tôi không hỗ trợ các ghi chú có dấu'}), 400
 
     # Xác định thư mục tạm thời và tên file thực thi dựa trên hệ điều hành
     if platform.system() == 'Windows':
@@ -226,7 +195,7 @@ def run_code():
         exec_path = '/tmp/temp/program'
 
     os.makedirs(temp_dir, exist_ok=True)
-    
+
     file_path = os.path.join(temp_dir, 'program.cpp')
 
     with open(file_path, 'w', encoding='utf-8') as file:
@@ -249,9 +218,10 @@ def run_code():
 
     return jsonify({'output': run_result.stdout.decode() if run_result.returncode == 0 else run_result.stderr.decode()})
 
-
-
-
+# Flask-Login user loader
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

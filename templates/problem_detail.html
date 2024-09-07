@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi Tiết Problem</title>
+</head>
+<body>
+    <h1>{{ problem.title }}</h1>
+    <p>{{ problem.description }}</p>
+    <h2>Test Cases</h2>
+    <pre>{{ test_cases }}</pre> <!-- Hiển thị test cases dưới dạng văn bản -->
+    <a href="{{ url_for('contest_detail', contest_id=problem.contest_id) }}">Trở về contest</a>
+</body>
+</html>

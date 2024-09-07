@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh Sách Contest</title>
+</head>
+<body>
+    <h1>Danh Sách Contest</h1>
+    <ul>
+        {% for contest in contests %}
+            <li>
+                <a href="{{ url_for('contest_detail', contest_id=contest.id) }}">{{ contest.name }}</a>
+                <br>
+                Thời gian: {{ contest.start_time }} - {{ contest.end_time }}
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('index') }}">Trở về trang chủ</a>
+</body>
+</html>
