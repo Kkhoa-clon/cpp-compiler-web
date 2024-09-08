@@ -9,7 +9,13 @@
     <h1>{{ problem.title }}</h1>
     <p>{{ problem.description }}</p>
     <h2>Test Cases</h2>
-    <pre>{{ test_cases }}</pre> <!-- Hiển thị test cases dưới dạng văn bản -->
+
+    <h3>Input Cases:</h3>
+    <pre>{{ input_cases }}</pre> <!-- Hiển thị input cases dưới dạng văn bản -->
+
+    <h3>Output Cases:</h3>
+    <pre>{{ output_cases }}</pre> <!-- Hiển thị output cases dưới dạng văn bản -->
+
     <a href="{{ url_for('contest_detail', contest_id=problem.contest_id) }}">Trở về contest</a>
 </body>
 </html>

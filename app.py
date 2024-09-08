@@ -45,7 +45,8 @@ class Problem(db.Model):
     title = db.Column(db.String(150), nullable=False)
     description = db.Column(db.Text, nullable=False)
     contest_id = db.Column(db.Integer, db.ForeignKey('contest.id'), nullable=False)
-    test_cases = db.Column(db.Text, nullable=False)  # Lưu trữ test cases dưới dạng văn bản
+    input_cases = db.Column(db.Text, nullable=False)  # Lưu trữ input cases
+    output_cases = db.Column(db.Text, nullable=False)  # Lưu trữ output cases
 
 class Submission(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -60,7 +61,8 @@ class ProblemForm(Form):
     title = StringField('Title', validators=[DataRequired()])
     description = TextAreaField('Description', validators=[DataRequired()])
     contest_id = StringField('Contest ID', validators=[DataRequired()])
-    test_cases = TextAreaField('Test Cases', validators=[DataRequired()])  # Nhập test cases dưới dạng văn bản
+    input_cases = TextAreaField('Input Cases', validators=[DataRequired()])  # Nhập input cases
+    output_cases = TextAreaField('Output Cases', validators=[DataRequired()])  # Nhập output cases
 
 class ContestForm(Form):
     name = StringField('Name', validators=[DataRequired()])
@@ -71,11 +73,12 @@ class ContestForm(Form):
 class ProblemModelView(ModelView):
     form = ProblemForm
     column_list = ['title', 'description', 'contest.name']
-    form_columns = ['title', 'description', 'contest', 'test_cases']  # Thêm trường test_cases
+    form_columns = ['title', 'description', 'contest', 'input_cases', 'output_cases']  # Thêm trường input và output cases
 
     def on_model_change(self, form, model, is_created):
-        # Lưu test cases dưới dạng văn bản
-        model.test_cases = form.test_cases.data
+        # Lưu input và output cases
+        model.input_cases = form.input_cases.data
+        model.output_cases = form.output_cases.data
         db.session.commit()
 
 class ContestModelView(ModelView):
@@ -120,8 +123,9 @@ def contest_detail(contest_id):
 @app.route('/problem/<int:problem_id>')
 def problem_detail(problem_id):
     problem = Problem.query.get_or_404(problem_id)
-    test_cases = problem.test_cases  # Dữ liệu test cases dưới dạng văn bản
-    return render_template('problem_detail.html', problem=problem, test_cases=test_cases)
+    input_cases = problem.input_cases  # Dữ liệu input cases dưới dạng văn bản
+    output_cases = problem.output_cases  # Dữ liệu output cases dưới dạng văn bản
+    return render_template('problem_detail.html', problem=problem, input_cases=input_cases, output_cases=output_cases)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
