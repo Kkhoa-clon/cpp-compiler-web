@@ -1,13 +1,14 @@
 {
   "test_cases": [
-    {
-      "input": "5",
-      "output": "25\n"
-    },
-    {
-      "input": "2",
-      "output": "4\n"
-    }
+    {"input": "2\n", "output": "4\n"},
+    {"input": "3\n", "output": "9\n"},
+    {"input": "2\n", "output": "4\n"},
+    {"input": "2\n", "output": "4\n"},
+    {"input": "2\n", "output": "4\n"},
+    {"input": "2\n", "output": "4\n"},
+    {"input": "2\n", "output": "4\n"},
+    {"input": "2\n", "output": "4\n"},
+    {"input": "2\n", "output": "4\n"}
   ]
 }
 

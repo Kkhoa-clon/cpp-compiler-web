@@ -14,6 +14,7 @@ from wtforms import Form, StringField, TextAreaField, DateTimeField
 from wtforms.validators import DataRequired
 from flask_migrate import Migrate
 
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 app.config['SECRET_KEY'] = 'khoa'  # Thay bằng giá trị bí mật của bạn
@@ -223,6 +224,40 @@ def run_code():
 
     return jsonify({'output': run_result.stdout.decode() if run_result.returncode == 0 else run_result.stderr.decode()})
 
+import tempfile
+import os
+import subprocess
+
+def run_code_with_params(code, input_data):
+    # Tạo thư mục tạm thời
+    with tempfile.TemporaryDirectory() as temp_dir:
+        # Đường dẫn tới file mã nguồn C++
+        file_path = os.path.join(temp_dir, 'program.cpp')
+
+        # Ghi mã nguồn vào file
+        with open(file_path, 'w', encoding='utf-8') as file:
+            file.write(code)
+
+        # Đường dẫn tới file thực thi sau khi biên dịch
+        exec_path = os.path.join(temp_dir, 'program')
+
+        # Biên dịch mã nguồn
+        compile_command = ['g++', file_path, '-o', exec_path]
+        compile_result = subprocess.run(compile_command, capture_output=True)
+
+        if compile_result.returncode != 0:
+            return {'error': compile_result.stderr.decode()}
+
+        # Thực thi mã nguồn với đầu vào
+        run_command = [exec_path]
+        run_result = subprocess.run(run_command, input=input_data.encode(), capture_output=True)
+
+        if run_result.returncode == 0:
+            return {'output': run_result.stdout.decode()}
+        else:
+            return {'error': run_result.stderr.decode()}
+
+# Gọi hàm run_code_with_params trong route /test/<int:problem_id>
 @app.route('/test/<int:problem_id>', methods=['POST'])
 def test_code(problem_id):
     code = request.json.get('code')
@@ -244,12 +279,10 @@ def test_code(problem_id):
         input_data = case['input']
         expected_output = case['output']
 
-        # Gọi hàm run_code trực tiếp
-        run_response = run_code()
-        run_response_json = run_response.get_json()
-        
-        output = run_response_json.get('output')
-        error = run_response_json.get('error')
+        # Gọi hàm run_code_with_params để chạy mã nguồn
+        run_response = run_code_with_params(code=code, input_data=input_data)
+        output = run_response.get('output')
+        error = run_response.get('error')
 
         if error:
             results.append({'input': input_data, 'result': 'error', 'details': error})
@@ -259,6 +292,7 @@ def test_code(problem_id):
             results.append({'input': input_data, 'result': 'fail', 'details': output})
 
     return jsonify(results)
+
 
 # Flask-Login user loader
 @login_manager.user_loader
