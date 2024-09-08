@@ -3,6 +3,7 @@ import subprocess
 import os
 import re
 import platform
+import json
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
@@ -221,6 +222,43 @@ def run_code():
     run_result = subprocess.run(run_command, input=input_data.encode(), capture_output=True)
 
     return jsonify({'output': run_result.stdout.decode() if run_result.returncode == 0 else run_result.stderr.decode()})
+
+@app.route('/test/<int:problem_id>', methods=['POST'])
+def test_code(problem_id):
+    code = request.json.get('code')
+    problem = Problem.query.get_or_404(problem_id)
+    
+    # Đọc test cases từ file JSON
+    test_cases_path = f'test_cases/{problem_id}.json'
+    if not os.path.exists(test_cases_path):
+        return jsonify({'error': 'Test cases file not found'}), 404
+    
+    try:
+        with open(test_cases_path, 'r') as f:
+            test_cases = json.load(f)['test_cases']
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    
+    results = []
+    for case in test_cases:
+        input_data = case['input']
+        expected_output = case['output']
+
+        # Gọi hàm run_code trực tiếp
+        run_response = run_code()
+        run_response_json = run_response.get_json()
+        
+        output = run_response_json.get('output')
+        error = run_response_json.get('error')
+
+        if error:
+            results.append({'input': input_data, 'result': 'error', 'details': error})
+        elif output.strip() == expected_output.strip():
+            results.append({'input': input_data, 'result': 'pass'})
+        else:
+            results.append({'input': input_data, 'result': 'fail', 'details': output})
+
+    return jsonify(results)
 
 # Flask-Login user loader
 @login_manager.user_loader

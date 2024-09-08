@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chi Tiết Problem</title>
+    <script src="{{ url_for('static', filename='js/problem_detail.js') }}" defer></script>
 </head>
 <body>
     <h1>{{ problem.title }}</h1>
@@ -17,5 +18,10 @@
     <pre>{{ output_cases }}</pre> <!-- Hiển thị output cases dưới dạng văn bản -->
 
     <a href="{{ url_for('contest_detail', contest_id=problem.contest_id) }}">Trở về contest</a>
+    <form id="submissionForm" data-problem-id="{{ problem.id }}">
+        <textarea name="code" placeholder="Paste your code here"></textarea>
+        <button type="submit">Submit</button>
+    </form>
+    <div id="result"></div>
 </body>
 </html>
