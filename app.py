@@ -3,6 +3,7 @@ import subprocess
 import os
 import re
 import platform
+import time
 import json
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
@@ -13,7 +14,8 @@ from flask_admin.contrib.sqla import ModelView
 from wtforms import Form, StringField, TextAreaField, DateTimeField
 from wtforms.validators import DataRequired
 from flask_migrate import Migrate
-
+import tempfile
+import resource
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
@@ -225,10 +227,9 @@ def run_code():
     return jsonify({'output': run_result.stdout.decode() if run_result.returncode == 0 else run_result.stderr.decode()})
 
 import tempfile
-import os
 import subprocess
 
-def run_code_with_params(code, input_data):
+def run_code_with_time_limit(code, input_data, time_limit):
     # Tạo thư mục tạm thời
     with tempfile.TemporaryDirectory() as temp_dir:
         # Đường dẫn tới file mã nguồn C++
@@ -248,18 +249,21 @@ def run_code_with_params(code, input_data):
         if compile_result.returncode != 0:
             return {'error': compile_result.stderr.decode()}
 
-        # Thực thi mã nguồn với đầu vào
-        run_command = [exec_path]
-        run_result = subprocess.run(run_command, input=input_data.encode(), capture_output=True)
+        try:
+            # Chạy mã nguồn với giới hạn thời gian
+            run_response = subprocess.run([exec_path], input=input_data.encode(),
+                                          capture_output=True, timeout=time_limit)
+            output = run_response.stdout.decode().strip()
+            if run_response.returncode == 0:
+                return {'output': output}
+            else:
+                return {'error': run_response.stderr.decode()}
+        except subprocess.TimeoutExpired:
+            return {'error': 'Time Limit Exceeded'}
 
-        if run_result.returncode == 0:
-            return {'output': run_result.stdout.decode()}
-        else:
-            return {'error': run_result.stderr.decode()}
 
-# Gọi hàm run_code_with_params trong route /test/<int:problem_id>
 @app.route('/test/<int:problem_id>', methods=['POST'])
-def test_code(problem_id):
+def test_code_with_constraints(problem_id):
     code = request.json.get('code')
     problem = Problem.query.get_or_404(problem_id)
     
@@ -278,14 +282,14 @@ def test_code(problem_id):
     for case in test_cases:
         input_data = case['input']
         expected_output = case['output']
+        time_limit = case.get('time_limit', 1.0)  # Mặc định 1 giây
 
-        # Gọi hàm run_code_with_params để chạy mã nguồn
-        run_response = run_code_with_params(code=code, input_data=input_data)
-        output = run_response.get('output')
-        error = run_response.get('error')
+        result = run_code_with_time_limit(code, input_data, time_limit)
+        output = result.get('output', '')
+        error = result.get('error', '')
 
         if error:
-            results.append({'input': input_data, 'result': 'error', 'details': error})
+            results.append({'input': input_data, 'result': 'fail', 'details': error})
         elif output.strip() == expected_output.strip():
             results.append({'input': input_data, 'result': 'pass'})
         else:
