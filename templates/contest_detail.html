@@ -36,7 +36,7 @@
     
     <!-- Bộ đếm thời gian -->
     <div id="countdown" class="countdown">
-      <h3>Thời gian còn lại trước khi cuộc thi bắt đầu</h3>
+      <h3 id="countdown-header">Thời gian còn lại trước khi cuộc thi bắt đầu</h3>
       <div class="timer" id="timer"></div>
     </div>
 
@@ -55,7 +55,7 @@
             </li>
         {% endfor %}
     </ul>
-    <a href="{{ url_for('thuthach') }}">Trở về danh sách contest</a>
+    <a href="{{ url_for('thuthach') }}" class="back-link">Trở về danh sách contest</a>
     <div class="social-share">
         <a href="https://facebook.com/sharer/sharer.php?u={{ url_for('contest_detail', contest_id=contest.id, _external=True) }}" target="_blank">Chia sẻ trên Facebook</a>
     </div>
@@ -63,17 +63,19 @@
     <script>
       // JavaScript cho bộ đếm thời gian
       document.addEventListener('DOMContentLoaded', function () {
-        const contestStartTime = new Date('{{ contest.start_time }}').getTime();
+        const contestEndTime = new Date('{{ contest.end_time }}').getTime();
         const countdownElement = document.getElementById('countdown');
         const timerElement = document.getElementById('timer');
+        const countdownHeader = document.getElementById('countdown-header');
 
         function updateCountdown() {
           const now = new Date().getTime();
-          const distance = contestStartTime - now;
+          const distance = contestEndTime - now;
 
           if (distance < 0) {
-            // Nếu thời gian đã qua, ẩn bộ đếm thời gian
-            countdownElement.style.display = 'none';
+            // Nếu thời gian đã qua, hiển thị thông báo và ẩn bộ đếm thời gian
+            countdownHeader.innerHTML = 'Cuộc thi đã kết thúc';
+            timerElement.innerHTML = ''; // Xóa bộ đếm thời gian
             return;
           }
 

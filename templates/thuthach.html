@@ -3,19 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/thuthach.css') }}">
     <title>Danh Sách Contest</title>
 </head>
 <body>
-    <h1>Danh Sách Contest</h1>
-    <ul>
-        {% for contest in contests %}
-            <li>
-                <a href="{{ url_for('contest_detail', contest_id=contest.id) }}">{{ contest.name }}</a>
-                <br>
-                Thời gian: {{ contest.start_time }} - {{ contest.end_time }}
-            </li>
-        {% endfor %}
-    </ul>
-    <a href="{{ url_for('index') }}">Trở về trang chủ</a>
+    <div class="container">
+        <h1>Danh Sách Contest</h1>
+        <div class="search-container">
+          <input type="text" id="search" placeholder="Tìm kiếm contest...">
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Tên Contest</th>
+                <th>Thời gian</th>
+              </tr>
+            </thead>
+            <tbody id="contest-table-body">
+              {% for contest in contests %}
+                <tr>
+                  <td><a href="{{ url_for('contest_detail', contest_id=contest.id) }}">{{ contest.name }}</a></td>
+                  <td>{{ contest.start_time }} - {{ contest.end_time }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <a href="{{ url_for('index') }}" class="back-link">Trở về trang chủ</a>
+      </div>
+      
+    <script src="{{ url_for('static', filename='js/thuthach.js') }}"></script>
 </body>
 </html>
