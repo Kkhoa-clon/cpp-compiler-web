@@ -5,11 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chi Tiết Contest</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/contest_detail.css') }}">
+    <style>
+      /* Thêm CSS cho bộ đếm thời gian */
+      .countdown {
+        margin: 20px 0;
+        padding: 20px;
+        border: 1px solid var(--primary);
+        border-radius: 10px;
+        background-color: var(--section-background-dark);
+        box-shadow: 0 4px 8px var(--shadow-light);
+        text-align: center;
+        color: var(--text);
+      }
+
+      .countdown h3 {
+        margin: 0;
+        color: var(--primary);
+        font-size: 2em;
+      }
+
+      .countdown .timer {
+        font-size: 1.5em;
+        margin-top: 10px;
+      }
+    </style>
 </head>
 <body>
     <h1>{{ contest.name }}</h1>
     <p>Thời gian: {{ contest.start_time }} - {{ contest.end_time }}</p>
-    <h2>Các Problem</h2>
+    
+    <!-- Bộ đếm thời gian -->
+    <div id="countdown" class="countdown">
+      <h3>Thời gian còn lại trước khi cuộc thi bắt đầu</h3>
+      <div class="timer" id="timer"></div>
+    </div>
+
+    <div class="user-info">
+        {% if current_user.is_authenticated %}
+          <p>Xin chào, {{ current_user.username }}!</p>
+        {% else %}
+          <a href="{{ url_for('login') }}">Đăng nhập</a>
+        {% endif %}
+    </div>
+    
     <ul>
         {% for problem in problems %}
             <li>
@@ -18,5 +56,40 @@
         {% endfor %}
     </ul>
     <a href="{{ url_for('thuthach') }}">Trở về danh sách contest</a>
+    <div class="social-share">
+        <a href="https://facebook.com/sharer/sharer.php?u={{ url_for('contest_detail', contest_id=contest.id, _external=True) }}" target="_blank">Chia sẻ trên Facebook</a>
+    </div>
+
+    <script>
+      // JavaScript cho bộ đếm thời gian
+      document.addEventListener('DOMContentLoaded', function () {
+        const contestStartTime = new Date('{{ contest.start_time }}').getTime();
+        const countdownElement = document.getElementById('countdown');
+        const timerElement = document.getElementById('timer');
+
+        function updateCountdown() {
+          const now = new Date().getTime();
+          const distance = contestStartTime - now;
+
+          if (distance < 0) {
+            // Nếu thời gian đã qua, ẩn bộ đếm thời gian
+            countdownElement.style.display = 'none';
+            return;
+          }
+
+          // Tính toán thời gian còn lại
+          const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+          // Cập nhật nội dung bộ đếm thời gian
+          timerElement.innerHTML = `${days} ngày ${hours} giờ ${minutes} phút ${seconds} giây`;
+        }
+
+        // Cập nhật bộ đếm thời gian mỗi giây
+        setInterval(updateCountdown, 1000);
+      });
+    </script>
 </body>
 </html>

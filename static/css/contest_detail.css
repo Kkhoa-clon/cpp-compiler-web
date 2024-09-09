@@ -1,93 +1,168 @@
 /* Thiết lập các màu sắc */
 :root {
-    --background: #1e1e1e; /* Màu nền của trang */
-    --text: #f1f1f1; /* Màu văn bản chính */
-    --header-footer: #212529; /* Màu nền của header và footer */
-    --primary: #007bff; /* Màu chính của giao diện */
-    --secondary: #0056b3; /* Màu phụ của giao diện */
-    --sidebar: #222; /* Màu nền của sidebar */
-    --section-background-dark: #333; /* Màu nền tối cho các phần tối */
-    --section-background-light: #444; /* Màu nền xám gần như đen cho các phần sáng */
-    --highlight: rgba(0, 123, 255, 0.2); /* Màu nền highlight */
-  }
-  
-  /* Đặt kiểu cho toàn bộ trang */
-  body {
-    font-family: Arial, sans-serif;
-    background-color: var(--background);
-    color: var(--text);
-    margin: 0;
-    padding: 0;
-  }
-  
-  /* Đặt kiểu cho tiêu đề chính */
-  h1 {
-    background-color: var(--header-footer);
-    color: var(--text);
-    padding: 20px;
-    text-align: center;
-    margin: 0;
-  }
-  
-  /* Đặt kiểu cho phần thông tin contest */
-  .container {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: var(--section-background-dark);
-    border-radius: 8px;
-  }
-  
-  /* Đặt kiểu cho phần thời gian contest */
-  p {
-    text-align: center;
-    font-size: 1.2em;
-    margin: 20px 0;
-  }
-  
-  /* Đặt kiểu cho danh sách các problem */
-  h2 {
-    color: var(--primary);
-    border-bottom: 2px solid var(--highlight);
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-  }
-  
-  ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  li {
-    background-color: var(--section-background-light);
-    border: 1px solid var(--section-background-dark);
-    border-radius: 4px;
-    margin: 10px 0;
-    padding: 10px;
-  }
-  
-  a {
-    text-decoration: none;
-    color: var(--primary);
-    display: block;
-  }
-  
-  a:hover {
-    color: var(--secondary);
-    text-decoration: underline;
-  }
-  
-  /* Đặt kiểu cho liên kết trở về danh sách contest */
-  a[href*="thuthach"] {
-    display: block;
-    margin: 20px auto;
-    text-align: center;
-    font-weight: bold;
-    color: var(--secondary);
-  }
-  
-  a[href*="thuthach"]:hover {
-    text-decoration: underline;
-  }
-  
+  --background: #282c34; /* Màu nền của trang */
+  --text: #f5f5f5; /* Màu văn bản chính */
+  --header-footer: #1c1e22; /* Màu nền của header và footer */
+  --primary: #007bff; /* Màu chính của giao diện */
+  --secondary: #007bff; /* Màu phụ của giao diện */
+  --sidebar: #2d2d2d; /* Màu nền của sidebar */
+  --section-background-dark: #333; /* Màu nền tối cho các phần tối */
+  --border-color: #555; /* Màu border */
+  --transition: 0.3s ease; /* Hiệu ứng chuyển động */
+  --shadow-light: rgba(0, 0, 0, 0.3); /* Đổ bóng nhẹ */
+  --shadow-dark: rgba(0, 0, 0, 0.6); /* Đổ bóng đậm */
+}
+
+/* Đặt kiểu cho toàn bộ trang */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: radial-gradient(circle at top left, #1c1e22, #282c34); /* Gradient nền phong phú */
+  color: var(--text);
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Căn giữa theo chiều ngang */
+}
+
+/* Đặt kiểu cho tiêu đề chính */
+h1 {
+  background-color: var(--header-footer);
+  color: var(--text);
+  padding: 30px; /* Tăng padding để tiêu đề lớn hơn */
+  text-align: center;
+  margin: 0;
+  font-size: 3em; /* Tăng kích thước font tiêu đề */
+  border-bottom: 5px solid var(--primary);
+  width: 100%; /* Để tiêu đề chiếm toàn bộ chiều ngang */
+  box-shadow: 0 6px 10px var(--shadow-dark); /* Đổ bóng cho tiêu đề */
+}
+
+/* Đặt kiểu cho phần thông tin contest */
+.container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px; /* Tăng padding để container lớn hơn */
+  background-color: var(--section-background-dark);
+  border-radius: 15px;
+  box-shadow: 0 6px 12px var(--shadow-dark);
+  width: 100%; /* Để container chiếm toàn bộ chiều ngang */
+  position: relative; /* Để sử dụng hiệu ứng trang trí */
+  overflow: hidden; /* Đảm bảo các phần tử trang trí không ra ngoài */
+}
+
+/* Hiệu ứng trang trí cho container */
+.container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+/* Đặt kiểu cho phần thời gian contest */
+p {
+  text-align: center;
+  font-size: 1.5em; /* Tăng kích thước font cho đoạn văn */
+  margin: 20px 0;
+}
+
+/* Đặt kiểu cho danh sách các problem */
+h2 {
+  color: var(--primary);
+  border-bottom: 3px solid var(--highlight);
+  padding-bottom: 12px; /* Tăng padding cho tiêu đề */
+  margin-bottom: 25px; /* Tăng margin dưới tiêu đề */
+  font-size: 2em; /* Tăng kích thước font tiêu đề */
+}
+
+/* Đặt kiểu cho danh sách problem */
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  background-color: var(--section-background-light);
+  border: 1px solid var(--border-color);
+  border-radius: 10px; /* Tăng độ bo góc */
+  margin: 15px 0; /* Tăng khoảng cách giữa các phần tử */
+  padding: 20px; /* Tăng padding để các phần tử lớn hơn */
+  transition: all var(--transition);
+  box-shadow: 0 4px 8px var(--shadow-light);
+}
+
+li:hover {
+  background-color: var(--highlight);
+  box-shadow: 0 8px 16px var(--shadow-dark);
+  transform: translateY(-4px); /* Hiệu ứng nổi lên */
+}
+
+/* Đặt kiểu cho liên kết */
+a {
+  text-decoration: none; /* Không gạch chân */
+  color: var(--primary); /* Màu văn bản liên kết */
+  display: block;
+  font-size: 1.1em; /* Tăng kích thước font của liên kết */
+}
+
+a:hover {
+  color: var(--primary); /* Giữ nguyên màu sắc khi hover */
+  text-decoration: none; /* Không gạch chân khi hover */
+}
+
+/* Đặt kiểu cho liên kết trở về danh sách contest */
+a[href*="thuthach"] {
+  display: block;
+  margin: 25px auto; /* Tăng margin để liên kết cách xa hơn */
+  text-align: center;
+  font-weight: bold;
+  color: var(--secondary);
+  font-size: 1.2em; /* Tăng kích thước font của liên kết */
+}
+
+a[href*="thuthach"]:hover {
+  color: var(--secondary); /* Giữ nguyên màu sắc khi hover */
+  text-decoration: none; /* Không gạch chân khi hover */
+}
+
+html, body {
+  overflow: hidden; /* Ẩn thanh cuộn trên toàn bộ trang */
+}
+/* Đặt kiểu cho phần thông tin người dùng */
+.user-info {
+  text-align: center;
+  margin: 20px 0;
+  font-size: 1.2em;
+  color: var(--text);
+}
+
+/* Đặt kiểu cho phần xin chào người dùng */
+.user-info p {
+  margin: 0;
+}
+
+/* Đặt kiểu cho liên kết đăng nhập/đăng xuất */
+.user-info a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: bold;
+  margin-left: 10px;
+  transition: color var(--transition);
+}
+
+.user-info a:hover {
+  color: var(--secondary);
+  text-decoration: underline;
+}
+
+/* Ẩn nút đăng xuất nếu người dùng đã đăng nhập */
+.user-info .logout {
+  display: none;
+}
+
