@@ -1,0 +1,14 @@
+{
+    "test_cases": [
+        {
+            "input": "admin\n",
+            "output": "admin",
+            "time_limit": 0.5
+        },
+        {
+            "input": "hello world\n",
+            "output": "hello world",
+            "time_limit": 0.5
+        }
+    ]
+}

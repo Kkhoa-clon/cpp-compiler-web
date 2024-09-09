@@ -1,0 +1,93 @@
+/* Thiết lập các màu sắc */
+:root {
+    --background: #1e1e1e; /* Màu nền của trang */
+    --text: #f1f1f1; /* Màu văn bản chính */
+    --header-footer: #212529; /* Màu nền của header và footer */
+    --primary: #007bff; /* Màu chính của giao diện */
+    --secondary: #0056b3; /* Màu phụ của giao diện */
+    --sidebar: #222; /* Màu nền của sidebar */
+    --section-background-dark: #333; /* Màu nền tối cho các phần tối */
+    --section-background-light: #444; /* Màu nền xám gần như đen cho các phần sáng */
+    --highlight: rgba(0, 123, 255, 0.2); /* Màu nền highlight */
+  }
+  
+  /* Đặt kiểu cho toàn bộ trang */
+  body {
+    font-family: Arial, sans-serif;
+    background-color: var(--background);
+    color: var(--text);
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Đặt kiểu cho tiêu đề chính */
+  h1 {
+    background-color: var(--header-footer);
+    color: var(--text);
+    padding: 20px;
+    text-align: center;
+    margin: 0;
+  }
+  
+  /* Đặt kiểu cho phần thông tin contest */
+  .container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: var(--section-background-dark);
+    border-radius: 8px;
+  }
+  
+  /* Đặt kiểu cho phần thời gian contest */
+  p {
+    text-align: center;
+    font-size: 1.2em;
+    margin: 20px 0;
+  }
+  
+  /* Đặt kiểu cho danh sách các problem */
+  h2 {
+    color: var(--primary);
+    border-bottom: 2px solid var(--highlight);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  li {
+    background-color: var(--section-background-light);
+    border: 1px solid var(--section-background-dark);
+    border-radius: 4px;
+    margin: 10px 0;
+    padding: 10px;
+  }
+  
+  a {
+    text-decoration: none;
+    color: var(--primary);
+    display: block;
+  }
+  
+  a:hover {
+    color: var(--secondary);
+    text-decoration: underline;
+  }
+  
+  /* Đặt kiểu cho liên kết trở về danh sách contest */
+  a[href*="thuthach"] {
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    font-weight: bold;
+    color: var(--secondary);
+  }
+  
+  a[href*="thuthach"]:hover {
+    text-decoration: underline;
+  }
+  

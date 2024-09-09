@@ -288,8 +288,6 @@ def test_code_with_constraints(problem_id):
 
     return jsonify(results)
 
-
-
 # Flask-Login user loader
 @login_manager.user_loader
 def load_user(user_id):
