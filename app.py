@@ -52,14 +52,6 @@ class Problem(db.Model):
     input_cases = db.Column(db.Text, nullable=False)  # Lưu trữ input cases
     output_cases = db.Column(db.Text, nullable=False)  # Lưu trữ output cases
 
-class Submission(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    problem_id = db.Column(db.Integer, db.ForeignKey('problem.id'), nullable=False)
-    code = db.Column(db.Text, nullable=False)
-    result = db.Column(db.String(50))  # Example: "Correct", "Wrong Answer", "Runtime Error"
-    submitted_at = db.Column(db.DateTime, default=datetime.utcnow)
-
 # Admin Forms
 class ProblemForm(Form):
     title = StringField('Title', validators=[DataRequired()])
@@ -98,7 +90,6 @@ admin = Admin(app, name='MyApp', template_mode='bootstrap3', endpoint='adminkhoa
 admin.add_view(ModelView(User, db.session))
 admin.add_view(ContestModelView(Contest, db.session))
 admin.add_view(ProblemModelView(Problem, db.session))
-admin.add_view(SubmissionModelView(Submission, db.session))
 
 # Routes
 @app.route('/')
@@ -296,6 +287,7 @@ def test_code_with_constraints(problem_id):
             results.append({'input': input_data, 'result': 'fail', 'details': output})
 
     return jsonify(results)
+
 
 
 # Flask-Login user loader

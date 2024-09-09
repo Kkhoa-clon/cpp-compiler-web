@@ -1,15 +1,54 @@
 {
     "test_cases": [
         {
+            "input": "1\n",
+            "output": "0",
+            "time_limit": 0.5
+        },
+        {
+            "input": "2\n",
+            "output": "0 1",
+            "time_limit": 0.5
+        },
+        {
+            "input": "3\n",
+            "output": "0 1 2",
+            "time_limit": 0.5
+        },
+        {
+            "input": "4\n",
+            "output": "0 1 2 3",
+            "time_limit": 0.5
+        },
+        {
             "input": "5\n",
-            "output": "0\n1\n2\n3\n4\n",
-            "time_limit": 0.0
+            "output": "0 1 2 3 4",
+            "time_limit": 0.5
+        },
+        {
+            "input": "6\n",
+            "output": "0 1 2 3 4 5",
+            "time_limit": 0.5
+        },
+        {
+            "input": "7\n",
+            "output": "0 1 2 3 4 5 6",
+            "time_limit": 0.5
+        },
+        {
+            "input": "8\n",
+            "output": "0 1 2 3 4 5 6 7",
+            "time_limit": 0.5
+        },
+        {
+            "input": "9\n",
+            "output": "0 1 2 3 4 5 6 7 8",
+            "time_limit": 0.5
         },
         {
             "input": "10\n",
-            "output": "0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n",
-            "time_limit": 0.5  
+            "output": "0 1 2 3 4 5 6 7 8 9",
+            "time_limit": 0.5
         }
     ]
 }
-
