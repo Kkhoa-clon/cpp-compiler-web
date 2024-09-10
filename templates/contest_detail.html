@@ -28,6 +28,12 @@
         font-size: 1.5em;
         margin-top: 10px;
       }
+
+      /* CSS để làm liên kết không hoạt động */
+      .disabled-link {
+        pointer-events: none;
+        color: grey;
+      }
     </style>
 </head>
 <body>
@@ -48,7 +54,7 @@
         {% endif %}
     </div>
     
-    <ul>
+    <ul id="problemList">
         {% for problem in problems %}
             <li>
                 <a href="{{ url_for('problem_detail', problem_id=problem.id) }}">{{ problem.title }}</a>
@@ -63,33 +69,51 @@
     <script>
       // JavaScript cho bộ đếm thời gian
       document.addEventListener('DOMContentLoaded', function () {
+        const contestStartTime = new Date('{{ contest.start_time }}').getTime();
         const contestEndTime = new Date('{{ contest.end_time }}').getTime();
+        const now = new Date().getTime();
         const countdownElement = document.getElementById('countdown');
         const timerElement = document.getElementById('timer');
         const countdownHeader = document.getElementById('countdown-header');
+        const problemList = document.getElementById('problemList');
 
         function updateCountdown() {
           const now = new Date().getTime();
-          const distance = contestEndTime - now;
+          const distance = contestStartTime - now;
 
-          if (distance < 0) {
-            // Nếu thời gian đã qua, hiển thị thông báo và ẩn bộ đếm thời gian
-            countdownHeader.innerHTML = 'Cuộc thi đã kết thúc';
-            timerElement.innerHTML = ''; // Xóa bộ đếm thời gian
-            return;
+          if (distance > 0) {
+            // Nếu cuộc thi chưa bắt đầu, hiển thị thời gian đếm ngược
+            countdownHeader.innerHTML = 'Thời gian còn lại trước khi cuộc thi bắt đầu';
+            
+            // Tính toán thời gian còn lại
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Cập nhật nội dung bộ đếm thời gian
+            timerElement.innerHTML = `${days} ngày ${hours} giờ ${minutes} phút ${seconds} giây`;
+
+            // Vô hiệu hóa các liên kết
+            const links = problemList.getElementsByTagName('a');
+            for (let i = 0; i < links.length; i++) {
+              links[i].classList.add('disabled-link');  // Thêm class để vô hiệu hóa liên kết
+            }
+
+          } else {
+            // Nếu cuộc thi đã bắt đầu, xóa thông báo đếm ngược và kích hoạt các liên kết
+            countdownHeader.innerHTML = 'Cuộc thi đã bắt đầu!';
+            timerElement.innerHTML = '';
+
+            const links = problemList.getElementsByTagName('a');
+            for (let i = 0; i < links.length; i++) {
+              links[i].classList.remove('disabled-link');  // Kích hoạt lại các liên kết
+            }
           }
-
-          // Tính toán thời gian còn lại
-          const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-          const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-          const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-          const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-          // Cập nhật nội dung bộ đếm thời gian
-          timerElement.innerHTML = `${days} ngày ${hours} giờ ${minutes} phút ${seconds} giây`;
         }
 
         // Cập nhật bộ đếm thời gian mỗi giây
+        updateCountdown();  // Gọi ngay lần đầu để cập nhật
         setInterval(updateCountdown, 1000);
       });
     </script>

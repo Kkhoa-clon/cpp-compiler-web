@@ -1,0 +1,140 @@
+:root {
+    --background: #1e1e1e; /* Màu nền của trang */
+    --text: #e0e0e0; /* Màu văn bản chính */
+    --header-footer: #2c2c2c; /* Màu nền của header và footer */
+    --primary: #007bff; /* Màu chính của giao diện */
+    --secondary: #007bff; /* Màu phụ của giao diện */
+    --section-background-dark: #333; /* Màu nền tối cho các phần tối */
+    --border-color: #444; /* Màu border */
+    --transition: 0.3s ease; /* Hiệu ứng chuyển động */
+    --shadow-light: rgba(0, 0, 0, 0.3); /* Đổ bóng nhẹ */
+    --shadow-dark: rgba(0, 0, 0, 0.5); /* Đổ bóng đậm */
+}
+
+/* Đặt nền cho toàn bộ trang */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background); /* Sử dụng màu nền từ biến CSS */
+    color: var(--text); /* Màu chữ chính */
+}
+
+/* Định dạng container chính để căn giữa nội dung */
+.container {
+    max-width: 1450px; /* Tăng kích thước tối đa của container */
+    margin: 40px auto; /* Thêm khoảng cách trên và dưới container */
+    padding: 40px; /* Thêm padding để tạo không gian hơn */
+    background-color: var(--header-footer); /* Nền cho container */
+    border-radius: 12px; /* Làm tròn góc container */
+    box-shadow: 0 0 15px var(--shadow-light); /* Đổ bóng nhẹ */
+}
+
+/* Định dạng tiêu đề chính */
+h1 {
+    color: var(--primary); /* Màu chữ tiêu đề chính */
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Định dạng đoạn văn bản mô tả */
+p {
+    line-height: 1.6;
+    color: var(--text); /* Màu chữ sáng cho đoạn văn */
+    margin-bottom: 20px;
+}
+
+/* Định dạng tiêu đề phụ */
+h3 {
+    border-bottom: 2px solid var(--primary); /* Đường kẻ dưới tiêu đề phụ */
+    padding-bottom: 5px;
+    color: var(--primary); /* Màu chữ tiêu đề phụ */
+    margin-top: 0;
+}
+
+/* Định dạng các thẻ pre */
+pre {
+    background-color: var(--section-background-dark); /* Nền tối cho thẻ pre */
+    border: 1px solid var(--border-color); /* Màu border */
+    border-radius: 6px; /* Làm tròn góc cho thẻ pre */
+    padding: 15px;
+    overflow-x: auto;
+    font-size: 1em;
+    color: var(--text); /* Màu chữ sáng cho thẻ pre */
+    margin-bottom: 20px;
+}
+
+/* Định dạng liên kết */
+a {
+    color: var(--primary); /* Màu liên kết */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Định dạng form nộp mã nguồn */
+form {
+    margin-top: 30px;
+}
+
+textarea {
+    width: 100%;
+    padding: 15px; /* Thêm padding cho textarea */
+    border-radius: 6px; /* Làm tròn góc cho textarea */
+    border: 1px solid var(--border-color); /* Màu border */
+    background-color: var(--section-background-dark); /* Nền tối cho textarea */
+    color: var(--text); /* Màu chữ sáng cho textarea */
+    box-sizing: border-box;
+    margin-bottom: 20px; /* Thêm khoảng cách dưới textarea */
+}
+
+/* Định dạng nút */
+button {
+    background-color: var(--primary); /* Màu nền cho nút */
+    color: var(--text);
+    border: none;
+    padding: 12px 24px; /* Thêm padding cho nút */
+    border-radius: 6px; /* Làm tròn góc cho nút */
+    cursor: pointer;
+    font-size: 1.1em; /* Tăng kích thước font cho nút */
+    transition: var(--transition); /* Hiệu ứng chuyển động */
+    margin-top: 20px; /* Thêm khoảng cách trên nút */
+}
+
+button:hover {
+    background-color: var(--secondary); /* Màu nền khi di chuột qua nút */
+}
+
+/* Định dạng kết quả test case */
+#result {
+    margin-top: 30px;
+    color: var(--text); /* Màu chữ sáng cho kết quả */
+}
+
+#result > div {
+    background-color: var(--section-background-dark); /* Nền tối cho các phần tử kết quả */
+    border: 1px solid var(--border-color); /* Màu border */
+    border-radius: 6px; /* Làm tròn góc cho các phần tử kết quả */
+    padding: 15px;
+    margin-bottom: 20px; /* Thêm khoảng cách dưới các kết quả */
+    box-shadow: 0 0 10px var(--shadow-light); /* Đổ bóng nhẹ hơn */
+}
+
+#result strong {
+    color: var(--primary); /* Màu chữ cho các tiêu đề trong kết quả */
+}
+
+/* Định dạng lỗi */
+.error {
+    color: #ff4d4d; /* Màu đỏ cho thông báo lỗi */
+    font-weight: bold;
+}
+
+
+.container {
+    border: 2px solid #007bff; /* Thêm viền màu xanh dương */
+}

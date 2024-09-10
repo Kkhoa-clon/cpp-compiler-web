@@ -5,26 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chi Tiết Problem</title>
     <script src="{{ url_for('static', filename='js/problem_detail.js') }}" defer></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/problem_detail.css') }}">
 </head>
 <body>
-    <h1>{{ problem.title }}</h1>
-    <p>{{ problem.description }}</p>
-    <h3>Input</h3>
-    <pre>{{ input_cases }}</pre> <!-- Hiển thị input cases dưới dạng văn bản -->
+    <div class="container">
+        <header>
+            <h1>{{ problem.title }}</h1>
+            <a href="{{ url_for('contest_detail', contest_id=problem.contest_id) }}" class="back-link">Trở về </a>
+        </header>
 
-    <h3>Output</h3>
-    <pre>{{ output_cases }}</pre> <!-- Hiển thị output cases dưới dạng văn bản -->
+        <main>
+            <section class="description">
+                <h2>Mô tả</h2>
+                <p>{{ problem.description }}</p>
+            </section>
 
-    <a href="{{ url_for('contest_detail', contest_id=problem.contest_id) }}">Trở về contest</a>
+            <section class="io-cases">
+                <div class="io-case">
+                    <h3>Input</h3>
+                    <pre id="input">{{ input_cases }}</pre>
+                </div>
+                <div class="io-case">
+                    <h3>Output</h3>
+                    <pre id="output">{{ output_cases }}</pre>
+                </div>
+            </section>
 
-    <!-- Form để nộp mã nguồn -->
-    <form id="submissionForm" data-problem-id="{{ problem.id }}">
-        <textarea name="code" placeholder="Paste your code here" rows="10" cols="50"></textarea>
-        <button type="submit">Submit</button>
-    </form>
+            <section class="submission">
+                <h2>Gửi mã nguồn</h2>
+                <form id="submissionForm" data-problem-id="{{ problem.id }}">
+                    <textarea name="code" placeholder="Paste your code here" rows="10"></textarea>
+                    <button type="submit">Submit</button>
+                </form>
+            </section>
 
-    <!-- Div để hiển thị kết quả sau khi chạy test case -->
-    <div id="result"></div>
+            <section id="result">
+                <!-- Kết quả sẽ được hiển thị ở đây -->
+            </section>
+        </main>
+    </div>
 
     <!-- JavaScript -->
     <script>
@@ -62,6 +81,5 @@
             });
         });
     </script>
-    
 </body>
 </html>
