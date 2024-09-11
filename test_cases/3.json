@@ -1,0 +1,9 @@
+{
+    "test_cases": [
+        {
+            "input": "12\n",
+            "output": "1 2 3 4 6 12\n2 3",
+            "time_limit": 1.0
+        }
+    ]
+}

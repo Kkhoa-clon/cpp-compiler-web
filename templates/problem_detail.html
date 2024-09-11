@@ -11,7 +11,7 @@
     <div class="container">
         <header>
             <h1>{{ problem.title }}</h1>
-            <a href="{{ url_for('contest_detail', contest_id=problem.contest_id) }}" class="back-link">Trở về </a>
+            <a href="{{ url_for('contest_detail', contest_id=problem.contest_id) }}" class="back-link">↩</a>
         </header>
 
         <main>
@@ -31,6 +31,9 @@
                 </div>
             </section>
 
+   
+
+            <!-- Submission Section -->
             <section class="submission">
                 <h2>Gửi mã nguồn</h2>
                 <form id="submissionForm" data-problem-id="{{ problem.id }}">
@@ -38,9 +41,10 @@
                     <button type="submit">Submit</button>
                 </form>
             </section>
-
+            
+            <!-- Result Section -->
             <section id="result">
-                <!-- Kết quả sẽ được hiển thị ở đây -->
+                <!-- Result content will be inserted here dynamically -->
             </section>
         </main>
     </div>

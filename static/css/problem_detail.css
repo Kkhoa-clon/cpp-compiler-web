@@ -138,3 +138,19 @@ button:hover {
 .container {
     border: 2px solid #007bff; /* Thêm viền màu xanh dương */
 }
+
+textarea {
+    resize: none;
+}
+
+.back-link {
+    font-size: 30px;
+    
+    
+}
+textarea {
+    display: block; /* Đảm bảo phần tử mở rộng theo chiều dài nội dung */
+    width: 100%; /* Hoặc điều chỉnh kích thước theo nhu cầu */
+    box-sizing: border-box; /* Bao gồm padding và border trong kích thước tổng thể */
+    resize: vertical; /* Cho phép điều chỉnh chiều cao */
+}
