@@ -335,3 +335,73 @@ h2::before {
   }
 }
 
+/* Thiết lập cơ bản */
+body {
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+  background-color: var(--background);
+  color: var(--text);
+  scroll-behavior: smooth;
+}
+
+/* Thanh điều hướng */
+.navbar {
+  position: fixed; /* Thay đổi thành fixed */
+  top: 20px;
+  left: 20px;
+  background: #212529;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+  transition: background 0.5s ease;
+  z-index: 1000;
+}
+
+.navbar-link {
+  padding: 10px 20px;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+/* Media Queries cho kích thước màn hình khác nhau */
+@media (max-width: 768px) {
+  .navbar {
+    left: 10px; /* Giảm khoảng cách với lề cho màn hình nhỏ hơn */
+  }
+
+  .file-item {
+    flex: 1 1 calc(50% - 20px); /* 2 ô mỗi hàng trên màn hình nhỏ */
+  }
+
+  h2 {
+    font-size: 32px; /* Giảm kích thước tiêu đề */
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-link {
+    font-size: 1em; /* Điều chỉnh kích thước chữ cho thiết bị di động */
+    padding: 8px 15px; /* Giảm padding */
+  }
+
+  .file-item {
+    flex: 1 1 100%; /* 1 ô mỗi hàng trên di động */
+  }
+
+  h2 {
+    font-size: 24px; /* Giảm thêm kích thước tiêu đề */
+  }
+}
+
+/* Flexbox cho lưới */
+.file-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 10px;
+}
+
+/* Đảm bảo hình ảnh không vượt quá kích thước ô */
+.file-item img {
+  max-width: 100%;
+  height: auto;
+}

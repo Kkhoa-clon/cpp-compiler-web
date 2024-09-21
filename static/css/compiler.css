@@ -32,6 +32,7 @@ html, body {
     height: calc(100vh - 150px); /* Chiều cao bằng chiều cao viewport trừ đi chiều cao của thanh tiêu đề và các phần khác */
     box-sizing: border-box;
     overflow: hidden; /* Ngăn cuộn ngoài trong #editor */
+    transition: height 0.3s ease; /* Hiệu ứng chuyển tiếp cho chiều cao */
 }
 
 /* Đảm bảo rằng CodeMirror chiếm toàn bộ chiều cao của phần tử chứa */
@@ -55,6 +56,7 @@ html, body {
     border-radius: 4px; /* Bo tròn góc của khung gợi ý lệnh */
     padding: 5px; /* Khoảng cách bên trong */
     font-size: 14px; /* Kích thước chữ của gợi ý lệnh */
+    transition: background-color 0.3s; /* Hiệu ứng chuyển tiếp cho gợi ý lệnh */
 }
 
 /* Đặt màu nền cho mục được chọn trong danh sách gợi ý lệnh */
@@ -79,7 +81,7 @@ html, body {
     border-radius: 4px; /* Bo tròn góc */
     padding: 8px; /* Khoảng cách bên trong */
     font-size: 14px; /* Kích thước chữ */
-    transition: border-color 0.3s ease; /* Hiệu ứng chuyển đổi màu viền khi hover */
+    transition: border-color 0.3s ease, background-color 0.3s ease; /* Hiệu ứng chuyển đổi màu viền và nền khi hover */
 }
 
 /* Nền tối cho Header và Footer */
@@ -105,8 +107,7 @@ html, body {
 
 /* Đặt màu nền xanh dương cho các nút */
 button {
-
-    transition: background-color 0.3s ease; /* Hiệu ứng chuyển đổi màu nền khi hover */
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease; /* Hiệu ứng chuyển màu nền, chữ và biến đổi khi hover */
     background-color: transparent; /* Nền trong suốt */
     color: #007bff; /* Màu chữ: xanh dương */
     border: 2px solid #007bff; /* Đường viền của nút điều khiển */
@@ -115,13 +116,12 @@ button {
     font-size: 1.2em; /* Kích thước chữ của nút điều khiển */
     cursor: pointer; /* Con trỏ chuột khi hover lên nút điều khiển */
     z-index: 1001; /* Đảm bảo nút điều khiển nằm trên các phần tử khác */
-    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease; /* Hiệu ứng chuyển màu nền, chữ và biến đổi khi hover */
 }
 
 button:hover {
     background-color: #0056b3; /* Màu nền khi hover */
     color: #fff; /* Màu chữ khi hover */
-    transform: scale(1); /* Tăng kích thước của nút khi hover */
+    transform: scale(1.05); /* Tăng kích thước của nút khi hover */
 }
 
 /* Đảm bảo kích thước bằng nhau cho các nút */
@@ -140,6 +140,7 @@ button {
     border: 1px solid #007bff; /* Đường viền xanh dương */
     border-radius: 4px; /* Bo tròn góc */
     padding: 8px; /* Khoảng cách bên trong */
+    transition: border-color 0.3s ease; /* Hiệu ứng chuyển đổi màu viền khi hover */
 }
 
 /* Đặt màu nền xám tối cho select */
@@ -148,11 +149,14 @@ button {
     color: #f1f1f1; /* Chữ sáng */
     border: 1px solid #007bff; /* Đường viền xanh dương */
     border-radius: 4px; /* Bo tròn góc */
+    transition: border-color 0.3s ease; /* Hiệu ứng chuyển đổi màu viền khi hover */
 }
 
 /* Hiệu ứng Hover cho các phần tử nhập liệu */
-.form-control:hover {
+.form-control:hover,
+.form-select:hover {
     border-color: #0056b3; /* Đổi màu viền khi hover */
+    background-color: #444; /* Đổi màu nền khi hover */
 }
 
 /* Nâng cao kiểu dáng cho các label */
@@ -181,3 +185,37 @@ html {
     scrollbar-color: #444 #333; /* Màu phần cuộn và nền thanh cuộn */
 }
 
+/* Media Queries cho các kích thước màn hình khác nhau */
+
+/* Thiết bị di động */
+@media (max-width: 767px) {
+    .row {
+        flex-direction: column; /* Chuyển hướng hàng thành cột */
+    }
+
+    #editor {
+        height: calc(100vh - 100px); /* Điều chỉnh chiều cao cho màn hình nhỏ hơn */
+    }
+
+    button {
+        margin: 10px 0; /* Thêm khoảng cách giữa các nút */
+    }
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .row {
+        flex-direction: row; /* Quay lại hướng hàng */
+    }
+
+    #editor {
+        height: calc(100vh - 120px); /* Điều chỉnh chiều cao cho tablet */
+    }
+}
+
+/* Desktop */
+@media (min-width: 1025px) {
+    #editor {
+        height: calc(100vh - 150px); /* Đảm bảo chiều cao như cũ cho desktop */
+    }
+}

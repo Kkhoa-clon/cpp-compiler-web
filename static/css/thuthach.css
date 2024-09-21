@@ -157,3 +157,67 @@
     scrollbar-color: #555 #333; /* Màu của thanh cuộn (thumb và track) */
   }
   
+  /* Thiết lập quy tắc cho thiết bị di động */
+@media (max-width: 768px) {
+  .container {
+      padding: 10px; /* Giảm padding trên thiết bị nhỏ hơn */
+  }
+
+  h1 {
+      font-size: 2em; /* Giảm kích thước tiêu đề */
+  }
+
+  #search {
+      width: 100%; /* Đảm bảo thanh tìm kiếm chiếm toàn bộ chiều ngang */
+  }
+
+  .back-link {
+      font-size: 0.9em; /* Giảm kích thước liên kết */
+      padding: 8px 15px; /* Giảm padding */
+  }
+
+  table {
+      font-size: 0.9em; /* Giảm kích thước font trong bảng */
+  }
+
+  th, td {
+      padding: 10px; /* Giảm padding trong ô */
+  }
+}
+
+/* Thiết lập quy tắc cho các thiết bị lớn hơn */
+@media (min-width: 769px) {
+  .container {
+      padding: 30px; /* Tăng padding trên thiết bị lớn hơn */
+  }
+
+  h1 {
+      font-size: 3em; /* Tăng kích thước tiêu đề */
+  }
+
+  #search {
+      width: 70%; /* Đảm bảo thanh tìm kiếm rộng hơn trên thiết bị lớn */
+  }
+}
+/* Đặt kiểu cho liên kết trở về trang chủ */
+.back-link {
+  position: fixed; /* Đặt liên kết ở vị trí cố định trên trang */
+  top: 20px; /* Khoảng cách từ trên cùng của trang */
+  left: 20px; /* Khoảng cách từ bên trái của trang */
+  padding: 10px 20px; /* Padding nhỏ gọn, đủ để dễ nhấn */
+  background-color: #282c34; /* Nền xám đen */
+  color: #007bff; /* Màu văn bản xanh */
+  border: 2px solid #007bff; /* Đường viền màu xanh */
+  text-align: center; /* Căn giữa văn bản trong liên kết */
+  text-decoration: none; /* Không gạch chân liên kết */
+  font-weight: bold; /* Đặt chữ đậm để nổi bật hơn */
+  font-size: 1em; /* Kích thước font vừa phải */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Thêm hiệu ứng chuyển màu khi hover */
+  border-radius: 4px; /* Bo góc một chút để làm mềm mại nút */
+  z-index: 1000; /* Đảm bảo liên kết luôn nằm trên các phần tử khác */
+}
+
+/* Điều chỉnh khoảng cách giữa tiêu đề và nút trở về */
+.container {
+  padding-top: 60px; /* Thêm khoảng cách trên để tránh chồng chéo */
+}

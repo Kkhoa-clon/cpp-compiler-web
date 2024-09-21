@@ -26,11 +26,85 @@
             google.translate.TranslateElement = function () {};
         }
     </script>
-    
-    
     <meta name="google" content="notranslate">
 </head>
 <body>
+    <div id="mobile-warning" class="warning hidden">
+        <button id="close-warning" class="close-btn">✖</button>
+        <div class="warning-content">
+            <h2>Thông báo</h2>
+            <p>Hiện tại web chỉ hỗ trợ giao diện máy tính thôi</p>
+            <p>Khoa sẽ phát triển trong tương lai</p>
+        </div>
+    </div>
+    
+    <style>
+    
+        .warning {
+            background-color: rgba(6, 67, 108, 0.9); /* Màu nền cho cảnh báo */
+            color: #fff;
+            display: flex; /* Sử dụng flexbox để căn giữa */
+            justify-content: center; /* Căn giữa theo chiều ngang */
+            align-items: center; /* Căn giữa theo chiều dọc */
+            position: fixed;
+            top: 0; /* Căn lên trên cùng */
+            left: 0; /* Căn sang bên trái */
+            width: 100vw; /* Chiếm toàn bộ chiều rộng */
+            height: 100vh; /* Chiếm toàn bộ chiều cao */
+            z-index: 9999; /* Đặt lớp cao nhất */
+            text-align: center; /* Căn giữa nội dung */
+            flex-direction: column; /* Xếp theo chiều dọc */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Bóng đổ nhẹ */
+            padding: 20px;
+        }
+    
+        .hidden {
+            display: none;
+        }
+    
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 30px;
+            cursor: pointer;
+            z-index: 10000; /* Đảm bảo nút nằm trên cùng */
+        }
+    
+        .warning-content {
+            margin-top: 50px; /* Khoảng cách từ nút đóng */
+        }
+    
+        h2 {
+            font-size: 2em; /* Kích thước chữ tiêu đề lớn hơn */
+            margin-bottom: 20px; /* Khoảng cách dưới tiêu đề */
+        }
+    
+        p {
+            font-size: 1.2em; /* Kích thước chữ lớn hơn cho dễ đọc */
+            margin: 0; /* Bỏ margin để căn giữa chính xác */
+        }
+    </style>
+    
+    <script>
+        window.onload = function() {
+            // Kiểm tra chiều rộng màn hình
+            if (window.innerWidth <= 768) {
+                document.body.style.overflow = 'hidden'; // Ngăn chặn cuộn trang
+                document.getElementById('mobile-warning').classList.remove('hidden'); // Hiển thị thông báo
+            }
+        };
+    
+        document.getElementById('close-warning').onclick = function() {
+            document.getElementById('mobile-warning').classList.add('hidden'); // Ẩn thông báo
+            document.body.style.overflow = ''; // Khôi phục cuộn trang
+        };
+    </script>
+    
+    
     <div id="side-panel">
         <div id="menu-button">☰</div>
         <div id="overlay-menu" class="menu-hidden">

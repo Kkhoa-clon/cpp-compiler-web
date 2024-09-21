@@ -1,6 +1,6 @@
 /* Thiết lập các màu sắc */
 :root {
-  --background: #1e1e1e; /* Màu nền của trang */
+  --background: #212529; /* Màu nền của trang */
   --text: #f1f1f1; /* Màu văn bản chính */
   --header-footer: #212529; /* Màu nền của header và footer */
   --primary: #007bff; /* Màu chính của giao diện */
@@ -209,35 +209,7 @@ header h1 {
   background: var(--secondary); /* Màu nền của liên kết khi hover */
   transform: scale(1.05); /* Tăng kích thước của liên kết khi hover */
 }
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #1e1e1e, #007bff); /* Nền gradient từ màu tối gần như đen sang màu xanh dương */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
-/* Hiệu ứng ánh sáng động cho nền */
-@keyframes gradientAnimation {
-  0% {
-      background-position: 0% 0%;
-  }
-  50% {
-      background-position: 100% 100%;
-  }
-  100% {
-      background-position: 0% 0%;
-  }
-}
-
-body {
-  background: linear-gradient(135deg, #1e1e1e, #222, #333);
-  background-size: 200% 200%;
-  animation: gradientAnimation 10s ease infinite; /* Hiệu ứng nền động */
-}
 
 /* Thanh điều hướng */
 .navbar {
@@ -320,4 +292,33 @@ html {
   background-color: #003580; /* Màu nền khi nhấn nút */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Bóng đổ đậm hơn khi nhấn */
   transform: scale(0.98); /* Hiệu ứng thu nhỏ nhẹ khi nhấn */
+}
+
+/* Cải thiện .course-container */
+.course-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Sử dụng space-between để tạo khoảng cách */
+  gap: 15px; /* Khoảng cách giữa các thẻ */
+}
+
+/* Điều chỉnh kích thước thẻ card */
+.course-card {
+  flex: 1 1 calc(25% - 15px); /* Tối ưu hóa chiều rộng thẻ */
+  max-width: calc(25% - 15px); /* Đảm bảo chiều rộng tối đa */
+}
+
+/* Thêm media query để điều chỉnh cho các màn hình nhỏ hơn */
+@media (max-width: 768px) {
+  .course-card {
+    flex: 1 1 calc(50% - 10px); /* 2 thẻ trên màn hình nhỏ */
+    max-width: calc(50% - 10px);
+  }
+}
+
+@media (max-width: 480px) {
+  .course-card {
+    flex: 1 1 100%; /* 1 thẻ trên màn hình rất nhỏ */
+    max-width: 100%;
+  }
 }
