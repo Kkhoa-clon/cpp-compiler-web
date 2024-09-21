@@ -112,12 +112,17 @@ def tailieu():
 def Khoahoc():
     return render_template('Khoahoc.html')
 
+# Biến toàn cục để lưu tin nhắn
+messages = []
+
 @app.route('/test')
 def test():
-    return render_template('test.html')
+    return render_template('test.html', messages=messages)
 
 @socketio.on('send_message')
 def handle_message(data):
+    # Lưu tin nhắn vào biến toàn cục
+    messages.append(data)
     emit('receive_message', data, broadcast=True)
 
 @app.route('/contest/<int:contest_id>')

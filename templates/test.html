@@ -22,7 +22,18 @@
     </style>
 </head>
 <body>
-    <div id="messages"></div>
+    <div id="messages">
+        {% for message in messages %}
+            <div>{{ message.msg }}</div>
+            {% if message.type == 'image' %}
+                <img src="{{ message.data }}" alt="{{ message.name }}">
+            {% elif message.type == 'video' %}
+                <video controls src="{{ message.data }}" alt="{{ message.name }}"></video>
+            {% elif message.type == 'file' %}
+                <a href="{{ message.data }}" download="{{ message.name }}">Download {{ message.name }}</a>
+            {% endif %}
+        {% endfor %}
+    </div>
     <input id="message_input" placeholder="Type your message here..."/>
     <input type="file" id="file_input" />
     <button id="send_button">Send</button>
@@ -48,6 +59,7 @@
                 };
                 reader.readAsDataURL(file);
             } else {
+                messageData.type = null; // Không có file
                 socket.emit('send_message', messageData);
             }
 
