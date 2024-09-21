@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat App</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"></script>
+    <style>
+        #messages {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        img, video {
+            max-width: 200px;
+            display: block;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="messages"></div>
+    <input id="message_input" placeholder="Type your message here..."/>
+    <input type="file" id="file_input" />
+    <button id="send_button">Send</button>
+
+    <script>
+        const socket = io();
+
+        $('#send_button').click(() => {
+            const message = $('#message_input').val();
+            const fileInput = document.getElementById('file_input');
+            const file = fileInput.files[0];
+
+            const messageData = { msg: message, replyTo: null };
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    messageData.type = file.type.startsWith('image/') ? 'image' :
+                                       file.type.startsWith('video/') ? 'video' : 'file';
+                    messageData.name = file.name;
+                    messageData.data = event.target.result;
+                    socket.emit('send_message', messageData);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                socket.emit('send_message', messageData);
+            }
+
+            $('#message_input').val('');
+            fileInput.value = '';  // Reset file input
+        });
+
+        socket.on('receive_message', data => {
+            const messageElement = $('<div>').text(data.msg || '');
+
+            // Hiển thị hình ảnh hoặc video
+            if (data.type === 'image') {
+                const imgElement = $('<img>').attr('src', data.data).attr('alt', data.name);
+                messageElement.append(imgElement);
+            } else if (data.type === 'video') {
+                const videoElement = $('<video controls>').attr('src', data.data).attr('alt', data.name);
+                messageElement.append(videoElement);
+            } else if (data.type === 'file') {
+                const linkElement = $('<a>').attr('href', data.data).attr('download', data.name).text('Download');
+                messageElement.append(`File: ${data.name} `).append(linkElement);
+            }
+
+            // Tính năng trả lời
+            if (data.replyTo) {
+                const replyMessage = $('<div>').text(`Replying to: ${data.replyTo}`).css({ fontWeight: 'bold' });
+                messageElement.prepend(replyMessage);
+            }
+
+            const replyButton = $('<button>').text('Reply').click(() => {
+                const replyTo = data.msg ? data.msg : data.name;
+                $('#message_input').val(`Replying to: ${replyTo}`);
+            });
+
+            messageElement.append(replyButton);
+            $('#messages').append(messageElement);
+        });
+    </script>
+</body>
+</html>

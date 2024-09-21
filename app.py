@@ -16,8 +16,11 @@ from wtforms.validators import DataRequired
 from flask_migrate import Migrate
 import tempfile
 import resource
+from flask_socketio import SocketIO, emit
+
 
 app = Flask(__name__)
+socketio = SocketIO(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 app.config['SECRET_KEY'] = 'khoa'  # Thay bằng giá trị bí mật của bạn
 app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
@@ -108,6 +111,14 @@ def tailieu():
 @app.route('/Khoahoc')
 def Khoahoc():
     return render_template('Khoahoc.html')
+
+@app.route('/test')
+def test():
+    return render_template('test.html')
+
+@socketio.on('send_message')
+def handle_message(data):
+    emit('receive_message', data, broadcast=True)
 
 @app.route('/contest/<int:contest_id>')
 def contest_detail(contest_id):
@@ -294,4 +305,5 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    socketio.run(app, host='0.0.0.0', port=5000, debug=True)
+
