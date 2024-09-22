@@ -1,4 +1,5 @@
 from flask import Flask, request, render_template, jsonify, redirect, url_for, session
+from flask import Flask, request, jsonify, render_template, send_from_directory  # Thêm send_from_directory
 import subprocess
 import os
 import re

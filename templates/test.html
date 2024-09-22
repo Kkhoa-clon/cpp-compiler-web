@@ -12,26 +12,7 @@
 
     <div id="chat-container" class="max-w-full h-screen flex flex-col">
         <div id="header" class="bg-blue-600 p-4 text-center text-xl sticky top-0 z-10">Chat App</div>
-        <div id="messages" class="flex-1 overflow-y-auto p-4 flex flex-col space-y-2">
-            {% for message in messages %}
-                <div class="flex justify-{{ 'end' if message.username == current_user.username else 'start' }}">
-                    <div class="message {% if message.username == current_user.username %}bg-blue-600{% else %}bg-gray-700{% endif %} rounded-lg p-3 mb-2 max-w-xs break-words">
-                        {% if message.replyTo %}
-                            <div class="reply text-gray-300">Replying to: {{ message.replyTo.msg }}</div>
-                        {% endif %}
-                        <div><strong>{{ message.username }}</strong>: {{ message.msg }}</div>
-                        {% if message.type == 'image' %}
-                            <img src="{{ message.data }}" alt="{{ message.name }}" class="mt-2 rounded-lg max-w-full">
-                        {% elif message.type == 'video' %}
-                            <video controls src="{{ message.data }}" alt="{{ message.name }}" class="mt-2 rounded-lg max-w-full"></video>
-                        {% elif message.type == 'file' %}
-                            <a href="{{ message.data }}" download="{{ message.name }}" class="text-blue-400 underline mt-2">Download {{ message.name }}</a>
-                        {% endif %}
-                        <button class="reply-button bg-blue-500 text-white rounded mt-2 py-1 px-2" data-id="{{ message.id }}">Reply</button>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
+        <div id="messages" class="flex-1 overflow-y-auto p-4 flex flex-col space-y-2"></div>
         <div class="input-group flex p-4 bg-gray-900">
             <input id="message_input" placeholder="Type your message..." class="flex-1 p-2 rounded border border-gray-600 bg-gray-800 text-white">
             <input type="file" id="file_input" class="ml-2 bg-blue-600 text-white rounded p-2 cursor-pointer">
@@ -48,7 +29,7 @@
             const fileInput = document.getElementById('file_input');
             const file = fileInput.files[0];
 
-            const messageData = { msg: message, replyTo: replyingTo, username: '{{ current_user.username }}' }; // Thêm username
+            const messageData = { msg: message, replyTo: replyingTo, username: '{{ current_user.username }}' };
 
             if (file) {
                 const reader = new FileReader();
@@ -56,10 +37,12 @@
                     messageData.fileData = event.target.result;
                     messageData.type = file.type.startsWith('image/') ? 'image' : (file.type.startsWith('video/') ? 'video' : 'file');
                     socket.emit('send_message', messageData);
+                    saveMessageToLocal(messageData);
                 };
                 reader.readAsDataURL(file);
             } else if (message) {
                 socket.emit('send_message', messageData);
+                saveMessageToLocal(messageData);
             }
 
             $('#message_input').val('');
@@ -68,6 +51,11 @@
         });
 
         socket.on('receive_message', data => {
+            displayMessage(data);
+            saveMessageToLocal(data);
+        });
+
+        function displayMessage(data) {
             const messageClass = data.username === '{{ current_user.username }}' ? 'bg-blue-600' : 'bg-gray-700';
             const messageElement = $('<div>').addClass(`flex justify-${data.username === '{{ current_user.username }}' ? 'end' : 'start'} mb-2`).append(
                 $('<div>').addClass(`message ${messageClass} rounded-lg p-3 max-w-xs break-words`).data('id', data.id)
@@ -98,14 +86,17 @@
             messageElement.find('.message').append(replyButton);
             $('#messages').append(messageElement);
             $('#messages').scrollTop($('#messages')[0].scrollHeight); // Tự động cuộn xuống
-        });
+        }
 
-        $(document).on('click', '.reply-button', function() {
-            const messageId = $(this).data('id');
-            const messageContent = $(this).closest('.message').find('div:nth-child(2)').text(); 
-            replyingTo = { msg: messageContent, id: messageId };
-            $('#message_input').val('');
-            $('#message_input').attr('placeholder', `Replying to: ${messageContent}`);
+        function saveMessageToLocal(message) {
+            const messages = JSON.parse(localStorage.getItem('messages')) || [];
+            messages.push(message);
+            localStorage.setItem('messages', JSON.stringify(messages));
+        }
+
+        $(document).ready(() => {
+            const messages = JSON.parse(localStorage.getItem('messages')) || [];
+            messages.forEach(message => displayMessage(message));
         });
     </script>
 </body>
