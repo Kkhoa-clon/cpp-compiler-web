@@ -6,49 +6,38 @@
     <title>Chat App</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"></script>
-    <style>
-        #messages {
-            max-height: 400px;
-            overflow-y: auto;
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-        img, video {
-            max-width: 200px;
-            display: block;
-            margin: 5px 0;
-        }
-        .reply {
-            border-left: 2px solid #007bff;
-            margin-left: 10px;
-            padding-left: 10px;
-            color: #555;
-        }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <div id="messages">
-        {% for message in messages %}
-            <div>
-                {% if message.replyTo %}
-                    <div class="reply">Replying to: {{ message.replyTo.msg }}</div>
-                {% endif %}
-                {{ message.msg }}
-                {% if message.type == 'image' %}
-                    <img src="{{ message.data }}" alt="{{ message.name }}">
-                {% elif message.type == 'video' %}
-                    <video controls src="{{ message.data }}" alt="{{ message.name }}"></video>
-                {% elif message.type == 'file' %}
-                    <a href="{{ message.data }}" download="{{ message.name }}">Download {{ message.name }}</a>
-                {% endif %}
-                <button onclick="replyToMessage('{{ message.id }}', '{{ message.msg }}')">Reply</button>
-            </div>
-        {% endfor %}
+<body class="bg-gray-800 text-white">
+
+    <div id="chat-container" class="max-w-full h-screen flex flex-col">
+        <div id="header" class="bg-blue-600 p-4 text-center text-xl sticky top-0 z-10">Chat App</div>
+        <div id="messages" class="flex-1 overflow-y-auto p-4 flex flex-col">
+            {% for message in messages %}
+                <div class="flex justify-{{ 'end' if message.type == 'sent' else 'start' }}">
+                    <div class="message {% if message.type == 'sent' %}bg-blue-600{% else %}bg-gray-700{% endif %} rounded-lg p-3 mb-2 max-w-xs break-words">
+                        {% if message.replyTo %}
+                            <div class="reply text-gray-300">Replying to: {{ message.replyTo.msg }}</div>
+                        {% endif %}
+                        <div><strong>{{ message.username }}</strong>: {{ message.msg }}</div>
+                        {% if message.type == 'image' %}
+                            <img src="{{ message.data }}" alt="{{ message.name }}" class="mt-2 rounded-lg max-w-full">
+                        {% elif message.type == 'video' %}
+                            <video controls src="{{ message.data }}" alt="{{ message.name }}" class="mt-2 rounded-lg max-w-full"></video>
+                        {% elif message.type == 'file' %}
+                            <a href="{{ message.data }}" download="{{ message.name }}" class="text-blue-400 underline mt-2">Download {{ message.name }}</a>
+                        {% endif %}
+                        <button class="reply-button bg-blue-500 text-white rounded mt-2 py-1 px-2" data-id="{{ message.id }}">Reply</button>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="input-group flex p-4 bg-gray-900">
+            <input id="message_input" placeholder="Type your message..." class="flex-1 p-2 rounded border border-gray-600 bg-gray-800 text-white">
+            <input type="file" id="file_input" class="ml-2 bg-blue-600 text-white rounded p-2 cursor-pointer">
+            <button id="send_button" class="bg-blue-600 text-white rounded ml-2 p-2">Send</button>
+        </div>
     </div>
-    <input id="message_input" placeholder="Type your message here..."/>
-    <input type="file" id="file_input" />
-    <button id="send_button">Send</button>
 
     <script>
         const socket = io();
@@ -59,62 +48,64 @@
             const fileInput = document.getElementById('file_input');
             const file = fileInput.files[0];
 
-            const messageData = { msg: message, replyTo: replyingTo };
+            const messageData = { msg: message, replyTo: replyingTo, type: 'sent' };
 
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(event) {
-                    messageData.type = file.type.startsWith('image/') ? 'image' :
-                                       file.type.startsWith('video/') ? 'video' : 'file';
-                    messageData.name = file.name;
-                    messageData.data = event.target.result;
+                    messageData.fileData = event.target.result;
                     socket.emit('send_message', messageData);
                 };
                 reader.readAsDataURL(file);
             } else {
-                messageData.type = null; // Không có file
                 socket.emit('send_message', messageData);
             }
 
             $('#message_input').val('');
             fileInput.value = '';  // Reset file input
-            replyingTo = null;  // Reset reply
+            replyingTo = null; // Reset replyingTo after sending
         });
 
         socket.on('receive_message', data => {
-            const messageElement = $('<div>').text(data.msg || '');
+            const messageClass = data.type === 'sent' ? 'bg-blue-600' : 'bg-gray-700';
+            const messageElement = $('<div>').addClass(`flex justify-${data.type === 'sent' ? 'end' : 'start'} mb-2`).append(
+                $('<div>').addClass(`message ${messageClass} rounded-lg p-3 max-w-xs break-words`).data('id', data.id)
+            );
 
-            // Hiển thị hình ảnh hoặc video
-            if (data.type === 'image') {
-                const imgElement = $('<img>').attr('src', data.data).attr('alt', data.name);
-                messageElement.append(imgElement);
-            } else if (data.type === 'video') {
-                const videoElement = $('<video controls>').attr('src', data.data).attr('alt', data.name);
-                messageElement.append(videoElement);
-            } else if (data.type === 'file') {
-                const linkElement = $('<a>').attr('href', data.data).attr('download', data.name).text('Download');
-                messageElement.append(`File: ${data.name} `).append(linkElement);
-            }
-
-            // Tính năng trả lời
             if (data.replyTo) {
-                const replyMessage = $('<div>').text(`Replying to: ${data.replyTo.msg}`).addClass('reply');
-                messageElement.prepend(replyMessage);
+                messageElement.find('.message').append($('<div>').text(`Replying to: ${data.replyTo.msg}`).addClass('reply text-gray-300'));
+            }
+            messageElement.find('.message').append($('<div>').html(`<strong>${data.username}</strong>: ${data.msg || ''}`));
+
+            if (data.fileData) {
+                const fileType = data.fileData.split(';')[0].split(':')[1];
+                if (fileType.startsWith('image/')) {
+                    messageElement.find('.message').append($('<img>').attr('src', data.fileData).attr('alt', 'Image').addClass('mt-2 rounded-lg max-w-full'));
+                } else if (fileType.startsWith('video/')) {
+                    messageElement.find('.message').append($('<video controls>').attr('src', data.fileData).attr('alt', 'Video').addClass('mt-2 rounded-lg max-w-full'));
+                } else {
+                    messageElement.find('.message').append($('<a>').attr('href', data.fileData).text('Download File').addClass('text-blue-400 underline mt-2'));
+                }
             }
 
-            const replyButton = $('<button>').text('Reply').click(() => {
-                replyingTo = data;  // Set reply target
-                $('#message_input').val(`Replying to: ${data.msg}`);
+            const replyButton = $('<button>').text('Reply').addClass('reply-button bg-blue-500 text-white rounded mt-2 py-1 px-2').click(() => {
+                replyingTo = { msg: data.msg, id: data.id }; 
+                $('#message_input').val('');
+                $('#message_input').attr('placeholder', `Replying to: ${data.msg}`);
             });
 
-            messageElement.append(replyButton);
+            messageElement.find('.message').append(replyButton);
             $('#messages').append(messageElement);
+            $('#messages').scrollTop($('#messages')[0].scrollHeight); // Tự động cuộn xuống
         });
 
-        function replyToMessage(messageId, messageContent) {
-            replyingTo = { msg: messageContent, id: messageId }; // Cập nhật để lưu trữ ID tin nhắn đang trả lời
-            $('#message_input').val(`Replying to: ${messageContent}`);
-        }
+        $(document).on('click', '.reply-button', function() {
+            const messageId = $(this).data('id');
+            const messageContent = $(this).closest('.message').find('div:nth-child(2)').text(); 
+            replyingTo = { msg: messageContent, id: messageId };
+            $('#message_input').val('');
+            $('#message_input').attr('placeholder', `Replying to: ${messageContent}`);
+        });
     </script>
 </body>
 </html>

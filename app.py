@@ -121,7 +121,14 @@ def test():
 
 @socketio.on('send_message')
 def handle_message(data):
-    # Lưu tin nhắn vào biến toàn cục
+    data['username'] = current_user.username  # Lưu tên người dùng
+    data['id'] = len(messages) + 1  # Tạo ID duy nhất cho tin nhắn
+    messages.append(data)
+    emit('receive_message', data, broadcast=True)
+
+@socketio.on('send_message')
+def handle_message(data):
+    data['username'] = current_user.username  # Lưu tên người dùng
     messages.append(data)
     emit('receive_message', data, broadcast=True)
 
