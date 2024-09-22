@@ -12,10 +12,10 @@
 
     <div id="chat-container" class="max-w-full h-screen flex flex-col">
         <div id="header" class="bg-blue-600 p-4 text-center text-xl sticky top-0 z-10">Chat App</div>
-        <div id="messages" class="flex-1 overflow-y-auto p-4 flex flex-col">
+        <div id="messages" class="flex-1 overflow-y-auto p-4 flex flex-col space-y-2">
             {% for message in messages %}
-                <div class="flex justify-{{ 'end' if message.type == 'sent' else 'start' }}">
-                    <div class="message {% if message.type == 'sent' %}bg-blue-600{% else %}bg-gray-700{% endif %} rounded-lg p-3 mb-2 max-w-xs break-words">
+                <div class="flex justify-{{ 'end' if message.username == current_user.username else 'start' }}">
+                    <div class="message {% if message.username == current_user.username %}bg-blue-600{% else %}bg-gray-700{% endif %} rounded-lg p-3 mb-2 max-w-xs break-words">
                         {% if message.replyTo %}
                             <div class="reply text-gray-300">Replying to: {{ message.replyTo.msg }}</div>
                         {% endif %}
@@ -48,16 +48,17 @@
             const fileInput = document.getElementById('file_input');
             const file = fileInput.files[0];
 
-            const messageData = { msg: message, replyTo: replyingTo, type: 'sent' };
+            const messageData = { msg: message, replyTo: replyingTo, username: '{{ current_user.username }}' }; // Thêm username
 
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(event) {
                     messageData.fileData = event.target.result;
+                    messageData.type = file.type.startsWith('image/') ? 'image' : (file.type.startsWith('video/') ? 'video' : 'file');
                     socket.emit('send_message', messageData);
                 };
                 reader.readAsDataURL(file);
-            } else {
+            } else if (message) {
                 socket.emit('send_message', messageData);
             }
 
@@ -67,8 +68,8 @@
         });
 
         socket.on('receive_message', data => {
-            const messageClass = data.type === 'sent' ? 'bg-blue-600' : 'bg-gray-700';
-            const messageElement = $('<div>').addClass(`flex justify-${data.type === 'sent' ? 'end' : 'start'} mb-2`).append(
+            const messageClass = data.username === '{{ current_user.username }}' ? 'bg-blue-600' : 'bg-gray-700';
+            const messageElement = $('<div>').addClass(`flex justify-${data.username === '{{ current_user.username }}' ? 'end' : 'start'} mb-2`).append(
                 $('<div>').addClass(`message ${messageClass} rounded-lg p-3 max-w-xs break-words`).data('id', data.id)
             );
 
