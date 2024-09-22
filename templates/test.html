@@ -19,19 +19,31 @@
             display: block;
             margin: 5px 0;
         }
+        .reply {
+            border-left: 2px solid #007bff;
+            margin-left: 10px;
+            padding-left: 10px;
+            color: #555;
+        }
     </style>
 </head>
 <body>
     <div id="messages">
         {% for message in messages %}
-            <div>{{ message.msg }}</div>
-            {% if message.type == 'image' %}
-                <img src="{{ message.data }}" alt="{{ message.name }}">
-            {% elif message.type == 'video' %}
-                <video controls src="{{ message.data }}" alt="{{ message.name }}"></video>
-            {% elif message.type == 'file' %}
-                <a href="{{ message.data }}" download="{{ message.name }}">Download {{ message.name }}</a>
-            {% endif %}
+            <div>
+                {% if message.replyTo %}
+                    <div class="reply">Replying to: {{ message.replyTo.msg }}</div>
+                {% endif %}
+                {{ message.msg }}
+                {% if message.type == 'image' %}
+                    <img src="{{ message.data }}" alt="{{ message.name }}">
+                {% elif message.type == 'video' %}
+                    <video controls src="{{ message.data }}" alt="{{ message.name }}"></video>
+                {% elif message.type == 'file' %}
+                    <a href="{{ message.data }}" download="{{ message.name }}">Download {{ message.name }}</a>
+                {% endif %}
+                <button onclick="replyToMessage('{{ message.id }}', '{{ message.msg }}')">Reply</button>
+            </div>
         {% endfor %}
     </div>
     <input id="message_input" placeholder="Type your message here..."/>
@@ -40,13 +52,14 @@
 
     <script>
         const socket = io();
+        let replyingTo = null;
 
         $('#send_button').click(() => {
             const message = $('#message_input').val();
             const fileInput = document.getElementById('file_input');
             const file = fileInput.files[0];
 
-            const messageData = { msg: message, replyTo: null };
+            const messageData = { msg: message, replyTo: replyingTo };
 
             if (file) {
                 const reader = new FileReader();
@@ -65,6 +78,7 @@
 
             $('#message_input').val('');
             fileInput.value = '';  // Reset file input
+            replyingTo = null;  // Reset reply
         });
 
         socket.on('receive_message', data => {
@@ -84,18 +98,23 @@
 
             // Tính năng trả lời
             if (data.replyTo) {
-                const replyMessage = $('<div>').text(`Replying to: ${data.replyTo}`).css({ fontWeight: 'bold' });
+                const replyMessage = $('<div>').text(`Replying to: ${data.replyTo.msg}`).addClass('reply');
                 messageElement.prepend(replyMessage);
             }
 
             const replyButton = $('<button>').text('Reply').click(() => {
-                const replyTo = data.msg ? data.msg : data.name;
-                $('#message_input').val(`Replying to: ${replyTo}`);
+                replyingTo = data;  // Set reply target
+                $('#message_input').val(`Replying to: ${data.msg}`);
             });
 
             messageElement.append(replyButton);
             $('#messages').append(messageElement);
         });
+
+        function replyToMessage(messageId, messageContent) {
+            replyingTo = { msg: messageContent, id: messageId }; // Cập nhật để lưu trữ ID tin nhắn đang trả lời
+            $('#message_input').val(`Replying to: ${messageContent}`);
+        }
     </script>
 </body>
 </html>
