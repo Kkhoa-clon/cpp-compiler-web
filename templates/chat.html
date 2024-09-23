@@ -8,15 +8,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <!-- Lightbox CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/lightbox2@2.11.3/dist/css/lightbox.min.css" rel="stylesheet">
     <style>
+        /* Đường viền xanh xung quanh ảnh */
         .lightbox .lb-image {
-            border: 4px solid #007bff;
-            border-radius: 8px;
+            border: 4px solid #007bff; /* Màu xanh */
+            border-radius: 8px; /* Bo tròn góc */
         }
+        /* Màu nút điều hướng (next/previous) và đóng */
         .lightbox .lb-close, .lightbox .lb-next, .lightbox .lb-prev {
-            color: #007bff;
+            color: #007bff; /* Màu xanh cho các nút */
         }
-    </style>
+    </style>    
 </head>
 <body class="bg-gray-800 text-white">
 
@@ -33,6 +37,9 @@
             </button>
         </div>
     </div>
+
+    <!-- Lightbox JS -->
+    <script src="https://cdn.jsdelivr.net/npm/lightbox2@2.11.3/dist/js/lightbox.min.js"></script>
 
     <script>
         const socket = io();
@@ -108,7 +115,7 @@
                 const reader = new FileReader();
                 reader.onload = function(event) {
                     messageData.fileData = event.target.result;
-                    messageData.type = file.type.startsWith('image/') ? 'image' : 'file';
+                    messageData.type = file.type.startsWith('image/') ? 'image' : 'file'; // Kiểm tra loại file
                     socket.emit('send_message', messageData);
                     saveMessageToLocal(messageData);
                 };
@@ -119,8 +126,8 @@
             }
 
             $('#message_input').val('');
-            fileInput.value = '';
-            replyingTo = null;
+            fileInput.value = '';  // Reset file input
+            replyingTo = null; // Reset replyingTo after sending
         });
 
         socket.on('receive_message', data => {
@@ -164,7 +171,7 @@
 
             messageElement.find('.message').append(replyButton);
             $('#messages').append(messageElement);
-            $('#messages').scrollTop($('#messages')[0].scrollHeight);
+            $('#messages').scrollTop($('#messages')[0].scrollHeight); // Tự động cuộn xuống
         }
 
         function saveMessageToLocal(message) {
@@ -173,9 +180,10 @@
             localStorage.setItem('messages', JSON.stringify(messages));
         }
 
+        // Xóa lịch sử tin nhắn khi nhấn vào nút thùng rác
         $('#clear_history_button').click(() => {
-            localStorage.removeItem('messages');
-            $('#messages').empty();
+            localStorage.removeItem('messages'); // Xóa lịch sử trong LocalStorage
+            $('#messages').empty(); // Xóa các tin nhắn trên giao diện
             alert('Lịch sử tin nhắn đã được xóa.');
         });
 
