@@ -146,6 +146,24 @@ def problem_detail(problem_id):
     output_cases = problem.output_cases  # Dữ liệu output cases dưới dạng văn bản
     return render_template('problem_detail.html', problem=problem, input_cases=input_cases, output_cases=output_cases)
 
+UPLOAD_FOLDER = 'uploads'
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+@app.route('/upload_audio', methods=['POST'])
+def upload_audio():
+    if 'audio' not in request.files:
+        return jsonify({'error': 'No audio file provided'}), 400
+
+    audio_file = request.files['audio']
+    audio_file_path = os.path.join(UPLOAD_FOLDER, audio_file.filename)
+    audio_file.save(audio_file_path)
+
+    return jsonify({'audioUrl': f'/{audio_file.filename}'}), 200
+
+@app.route('/<path:filename>', methods=['GET'])
+def uploaded_file(filename):
+    return send_from_directory(UPLOAD_FOLDER, filename)
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
