@@ -8,24 +8,36 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
-    <!-- Lightbox CSS -->
     <link href="https://cdn.jsdelivr.net/npm/lightbox2@2.11.3/dist/css/lightbox.min.css" rel="stylesheet">
     <style>
-        /* Đường viền xanh xung quanh ảnh */
         .lightbox .lb-image {
-            border: 4px solid #007bff; /* Màu xanh */
-            border-radius: 8px; /* Bo tròn góc */
+            border: 4px solid #007bff;
+            border-radius: 8px;
         }
-        /* Màu nút điều hướng (next/previous) và đóng */
         .lightbox .lb-close, .lightbox .lb-next, .lightbox .lb-prev {
-            color: #007bff; /* Màu xanh cho các nút */
+            color: #007bff;
         }
-    </style>    
+        .code-block {
+            background-color: #1e1e1e;
+            color: #dcdcdc;
+            padding: 10px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+        .message {
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 8px;
+            max-width: 80%; /* Hoặc một giá trị bạn muốn */
+            word-wrap: break-word; /* Tự động xuống dòng */
+            overflow-wrap: break-word; /* Tự động xuống dòng cho nội dung dài */
+        }
+    </style>
 </head>
 <body class="bg-gray-800 text-white">
 
     <div id="chat-container" class="max-w-full h-screen flex flex-col">
-        <!-- Header -->
         <div id="header" class="bg-gradient-to-r from-blue-500 to-blue-600 p-4 sticky top-0 z-10 shadow-lg">
             <div class="flex items-center justify-between">
                 <a href="/" class="text-white text-2xl hover:text-gray-200 transition-all duration-200">
@@ -38,13 +50,9 @@
                 </div>
             </div>
         </div>
-    
-        <!-- Phần tin nhắn -->
-        <div id="messages" class="flex-1 overflow-y-auto p-4 flex flex-col space-y-2">
-            <!-- Tin nhắn sẽ hiển thị ở đây -->
-        </div>
-    
-        <!-- Input tin nhắn cố định ở dưới -->
+
+        <div id="messages" class="flex-1 overflow-y-auto p-4 flex flex-col space-y-2"></div>
+
         <div class="input-group flex p-4 bg-gray-900 sticky bottom-0 z-10 shadow-lg">
             <input id="message_input" placeholder="Type your message..." class="flex-1 p-2 rounded border border-gray-600 bg-gray-800 text-white">
             <input type="file" id="file_input" class="ml-2 bg-blue-600 text-white rounded p-2 cursor-pointer">
@@ -55,9 +63,7 @@
             </button>
         </div>
     </div>
-    
 
-    <!-- Lightbox JS -->
     <script src="https://cdn.jsdelivr.net/npm/lightbox2@2.11.3/dist/js/lightbox.min.js"></script>
 
     <script>
@@ -133,20 +139,37 @@
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(event) {
-                    messageData.fileData = event.target.result;
-                    messageData.type = file.type.startsWith('image/') ? 'image' : 'file'; // Kiểm tra loại file
+                    const fileContent = event.target.result;
+                    const fileType = file.type;
+
+                    if (fileType.startsWith('image/')) {
+                        messageData.fileData = fileContent; // Đọc file hình ảnh dưới dạng data URL
+                        messageData.type = 'image'; // Đánh dấu đây là file hình ảnh
+                    } else if (['text/x-c', 'text/x-c++', 'text/x-python'].some(type => fileType.includes(type))) {
+                        messageData.fileData = fileContent; // Nội dung file code sẽ được đưa vào tin nhắn
+                        messageData.type = 'code'; // Đánh dấu đây là file code
+                    } else {
+                        alert('Không hỗ trợ định dạng file này.');
+                        return; // Không gửi tin nhắn nếu định dạng không hỗ trợ
+                    }
+
                     socket.emit('send_message', messageData);
                     saveMessageToLocal(messageData);
                 };
-                reader.readAsDataURL(file);
+                
+                if (file.type.startsWith('image/')) {
+                    reader.readAsDataURL(file); // Đọc file hình ảnh
+                } else {
+                    reader.readAsText(file); // Đọc nội dung file code
+                }
             } else if (message) {
                 socket.emit('send_message', messageData);
                 saveMessageToLocal(messageData);
             }
 
             $('#message_input').val('');
-            fileInput.value = '';  // Reset file input
-            replyingTo = null; // Reset replyingTo after sending
+            fileInput.value = '';
+            replyingTo = null; 
         });
 
         socket.on('receive_message', data => {
@@ -155,43 +178,57 @@
         });
 
         function displayMessage(data) {
-            const messageClass = data.username === '{{ current_user.username }}' ? 'bg-blue-600' : 'bg-gray-700';
-            const messageElement = $('<div>').addClass(`flex justify-${data.username === '{{ current_user.username }}' ? 'end' : 'start'} mb-2`).append(
-                $('<div>').addClass(`message ${messageClass} rounded-lg p-3 max-w-xs break-words`).data('id', data.id)
+    const messageClass = data.username === '{{ current_user.username }}' ? 'bg-blue-600' : 'bg-gray-700';
+    const messageElement = $('<div>').addClass(`flex justify-${data.username === '{{ current_user.username }}' ? 'end' : 'start'} mb-2`).append(
+        $('<div>').addClass(`message ${messageClass}`).data('id', data.id)
+    );
+
+    if (data.replyTo) {
+        messageElement.find('.message').append($('<div>').text(`Replying to: ${data.replyTo.msg}`).addClass('reply text-gray-300'));
+    }
+    messageElement.find('.message').append($('<div>').html(`<strong>${data.username}</strong>: ${data.msg || ''}`));
+
+    if (data.audioData) {
+        messageElement.find('.message').append(
+            $('<audio controls>').attr('src', data.audioData).addClass('mt-2 rounded-lg max-w-full')
+        );
+    } else if (data.fileData) {
+        if (data.type === 'image') {
+            messageElement.find('.message').append(
+                $('<a>').attr('href', data.fileData).attr('data-lightbox', 'image-view').append(
+                    $('<img>').attr('src', data.fileData).attr('alt', 'Image').addClass('mt-2 rounded-lg max-w-full')
+                )
             );
+        } else if (data.type === 'code') {
+            const codeBlock = $('<div>').addClass('code-block mt-2').text(data.fileData);
+            const copyButton = $('<button>')
+                .text('Copy')
+                .addClass('copy-button bg-blue-500 text-white rounded ml-2 py-1 px-2')
+                .click(() => {
+                    navigator.clipboard.writeText(data.fileData).then(() => {
+                        alert('Code copied to clipboard!');
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                    });
+                });
 
-            if (data.replyTo) {
-                messageElement.find('.message').append($('<div>').text(`Replying to: ${data.replyTo.msg}`).addClass('reply text-gray-300'));
-            }
-            messageElement.find('.message').append($('<div>').html(`<strong>${data.username}</strong>: ${data.msg || ''}`));
-
-            if (data.audioData) {
-                messageElement.find('.message').append(
-                    $('<audio controls>').attr('src', data.audioData).addClass('mt-2 rounded-lg max-w-full')
-                );
-            } else if (data.fileData) {
-                const fileType = data.fileData.split(';')[0].split(':')[1];
-                if (fileType.startsWith('image/')) {
-                    messageElement.find('.message').append(
-                        $('<a>').attr('href', data.fileData).attr('data-lightbox', 'image-view').append(
-                            $('<img>').attr('src', data.fileData).attr('alt', 'Image').addClass('mt-2 rounded-lg max-w-full')
-                        )
-                    );
-                } else {
-                    messageElement.find('.message').append($('<a>').attr('href', data.fileData).text('Download File').addClass('text-blue-400 underline mt-2'));
-                }
-            }
-
-            const replyButton = $('<button>').text('Reply').addClass('reply-button bg-blue-500 text-white rounded mt-2 py-1 px-2').click(() => {
-                replyingTo = { msg: data.msg, id: data.id }; 
-                $('#message_input').val('');
-                $('#message_input').attr('placeholder', `Replying to: ${data.msg}`);
-            });
-
-            messageElement.find('.message').append(replyButton);
-            $('#messages').append(messageElement);
-            $('#messages').scrollTop($('#messages')[0].scrollHeight); // Tự động cuộn xuống
+            messageElement.find('.message').append(codeBlock).append(copyButton);
+        } else {
+            messageElement.find('.message').append($('<div>').text('File không hỗ trợ').addClass('text-red-400'));
         }
+    }
+
+    const replyButton = $('<button>').text('Reply').addClass('reply-button bg-blue-500 text-white rounded mt-2 py-1 px-2').click(() => {
+        replyingTo = { msg: data.msg, id: data.id }; 
+        $('#message_input').val('');
+        $('#message_input').attr('placeholder', `Replying to: ${data.msg}`);
+    });
+
+    messageElement.find('.message').append(replyButton);
+    $('#messages').append(messageElement);
+    $('#messages').scrollTop($('#messages')[0].scrollHeight);
+}
+
 
         function saveMessageToLocal(message) {
             const messages = JSON.parse(localStorage.getItem('messages')) || [];
@@ -199,10 +236,9 @@
             localStorage.setItem('messages', JSON.stringify(messages));
         }
 
-        // Xóa lịch sử tin nhắn khi nhấn vào nút thùng rác
         $('#clear_history_button').click(() => {
-            localStorage.removeItem('messages'); // Xóa lịch sử trong LocalStorage
-            $('#messages').empty(); // Xóa các tin nhắn trên giao diện
+            localStorage.removeItem('messages');
+            $('#messages').empty();
             alert('Lịch sử tin nhắn đã được xóa.');
         });
 
@@ -210,12 +246,13 @@
             const messages = JSON.parse(localStorage.getItem('messages')) || [];
             messages.forEach(message => displayMessage(message));
         });
+
         $('#message_input').keypress(function(event) {
-    if (event.which === 13) { // Kiểm tra xem phím nhấn là Enter
-        event.preventDefault(); // Ngăn chặn hành động mặc định (để không tạo dòng mới)
-        $('#send_button').click(); // Gọi sự kiện click của nút gửi
-    }
-});
+            if (event.which === 13) {
+                event.preventDefault();
+                $('#send_button').click();
+            }
+        });
 
     </script>
 </body>
