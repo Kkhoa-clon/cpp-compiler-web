@@ -7,6 +7,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-800 text-white">
 
@@ -17,6 +18,10 @@
             <input id="message_input" placeholder="Type your message..." class="flex-1 p-2 rounded border border-gray-600 bg-gray-800 text-white">
             <input type="file" id="file_input" class="ml-2 bg-blue-600 text-white rounded p-2 cursor-pointer">
             <button id="send_button" class="bg-blue-600 text-white rounded ml-2 p-2">Send</button>
+            <!-- Nút thùng rác để xóa lịch sử -->
+            <button id="clear_history_button" class="bg-blue-600 text-white rounded ml-2 p-2">
+                <i class="fas fa-trash"></i>
+            </button>
         </div>
     </div>
 
@@ -93,6 +98,13 @@
             messages.push(message);
             localStorage.setItem('messages', JSON.stringify(messages));
         }
+
+        // Xóa lịch sử tin nhắn khi nhấn vào nút thùng rác
+        $('#clear_history_button').click(() => {
+            localStorage.removeItem('messages'); // Xóa lịch sử trong LocalStorage
+            $('#messages').empty(); // Xóa các tin nhắn trên giao diện
+            alert('Lịch sử tin nhắn đã được xóa.');
+        });
 
         $(document).ready(() => {
             const messages = JSON.parse(localStorage.getItem('messages')) || [];
