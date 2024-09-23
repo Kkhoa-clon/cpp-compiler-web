@@ -116,9 +116,9 @@ def Khoahoc():
 # Biến toàn cục để lưu tin nhắn
 messages = []
 
-@app.route('/test')
-def test():
-    return render_template('test.html', messages=messages)
+@app.route('/chat')
+def chat():
+    return render_template('chat.html', messages=messages)
 
 @socketio.on('send_message')
 def handle_message(data):

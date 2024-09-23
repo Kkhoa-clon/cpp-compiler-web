@@ -8,6 +8,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <!-- Lightbox CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/lightbox2@2.11.3/dist/css/lightbox.min.css" rel="stylesheet">
+    <style>
+        /* Đường viền xanh xung quanh ảnh */
+        .lightbox .lb-image {
+            border: 4px solid #007bff; /* Màu xanh */
+            border-radius: 8px; /* Bo tròn góc */
+        }
+        /* Màu nút điều hướng (next/previous) và đóng */
+        .lightbox .lb-close, .lightbox .lb-next, .lightbox .lb-prev {
+            color: #007bff; /* Màu xanh cho các nút */
+        }
+    </style>    
 </head>
 <body class="bg-gray-800 text-white">
 
@@ -24,6 +37,9 @@
             </button>
         </div>
     </div>
+
+    <!-- Lightbox JS -->
+    <script src="https://cdn.jsdelivr.net/npm/lightbox2@2.11.3/dist/js/lightbox.min.js"></script>
 
     <script>
         const socket = io();
@@ -74,7 +90,12 @@
             if (data.fileData) {
                 const fileType = data.fileData.split(';')[0].split(':')[1];
                 if (fileType.startsWith('image/')) {
-                    messageElement.find('.message').append($('<img>').attr('src', data.fileData).attr('alt', 'Image').addClass('mt-2 rounded-lg max-w-full'));
+                    // Thêm thẻ a bọc ảnh để sử dụng lightbox
+                    messageElement.find('.message').append(
+                        $('<a>').attr('href', data.fileData).attr('data-lightbox', 'image-view').append(
+                            $('<img>').attr('src', data.fileData).attr('alt', 'Image').addClass('mt-2 rounded-lg max-w-full')
+                        )
+                    );
                 } else if (fileType.startsWith('video/')) {
                     messageElement.find('.message').append($('<video controls>').attr('src', data.fileData).attr('alt', 'Video').addClass('mt-2 rounded-lg max-w-full'));
                 } else {
