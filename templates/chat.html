@@ -33,6 +33,26 @@
             word-wrap: break-word; /* Tự động xuống dòng */
             overflow-wrap: break-word; /* Tự động xuống dòng cho nội dung dài */
         }
+                /* Custom Scrollbar Styles */
+        ::-webkit-scrollbar {
+        width: 8px; /* Độ rộng của thanh trượt */
+        height: 8px; /* Độ cao của thanh trượt ngang */
+        }
+
+        ::-webkit-scrollbar-thumb {
+        background-color: #1a1a1a; /* Màu của thanh trượt */
+        border-radius: 10px; /* Làm tròn các góc của thanh trượt */
+        }
+
+        ::-webkit-scrollbar-track {
+        background-color: #333333; /* Màu của phần track, nền của thanh trượt */
+        }
+
+        /* Firefox Scrollbar */
+        * {
+        scrollbar-width: thin; /* Độ rộng thanh trượt */
+        scrollbar-color: #1a1a1a #333333; /* Màu của thanh trượt và nền */
+        }
     </style>
 </head>
 <body class="bg-gray-800 text-white">
@@ -43,7 +63,7 @@
                 <a href="/" class="text-white text-2xl hover:text-gray-200 transition-all duration-200">
                     <i class="fas fa-arrow-left"></i>
                 </a>
-                <span class="font-bold text-white text-2xl">Chat App</span>
+                <span class="font-bold text-white text-2xl">Chat Group</span>
                 <div class="flex items-center">
                     <i class="fas fa-cog text-white mr-4 text-xl cursor-pointer hover:text-gray-200"></i>
                     <i class="fas fa-user-circle text-white text-2xl cursor-pointer hover:text-gray-200"></i>
@@ -54,7 +74,9 @@
         <div id="messages" class="flex-1 overflow-y-auto p-4 flex flex-col space-y-2"></div>
 
         <div class="input-group flex p-4 bg-gray-900 sticky bottom-0 z-10 shadow-lg">
-            <input id="message_input" placeholder="Type your message..." class="flex-1 p-2 rounded border border-gray-600 bg-gray-800 text-white">
+            <textarea id="message_input" placeholder="Type your message..." 
+            class="flex-1 p-2 rounded border border-gray-600 bg-gray-800 text-white resize-none"
+            style="height: 40px; max-height: 100px; overflow-y: auto;"></textarea>        
             <input type="file" id="file_input" class="ml-2 bg-blue-600 text-white rounded p-2 cursor-pointer">
             <button id="record_button" class="bg-blue-600 text-white rounded ml-2 p-2">Record Audio</button>
             <button id="send_button" class="bg-blue-600 text-white rounded ml-2 p-2">Send</button>
@@ -186,7 +208,7 @@
     if (data.replyTo) {
         messageElement.find('.message').append($('<div>').text(`Replying to: ${data.replyTo.msg}`).addClass('reply text-gray-300'));
     }
-    messageElement.find('.message').append($('<div>').html(`<strong>${data.username}</strong>: ${data.msg || ''}`));
+    messageElement.find('.message').append($('<div>').html(`<strong>${data.username}</strong>: ${data.msg.replace(/\n/g, '<br>') || ''}`));
 
     if (data.audioData) {
         messageElement.find('.message').append(
@@ -230,6 +252,7 @@
 }
 
 
+
         function saveMessageToLocal(message) {
             const messages = JSON.parse(localStorage.getItem('messages')) || [];
             messages.push(message);
@@ -248,7 +271,7 @@
         });
 
         $('#message_input').keypress(function(event) {
-            if (event.which === 13) {
+            if (event.which === 13 && !event.shiftKey) {
                 event.preventDefault();
                 $('#send_button').click();
             }
