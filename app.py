@@ -335,6 +335,7 @@ def test_code_with_constraints(problem_id):
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0', port=5000, debug=True)
+if __name__ == "__main__":
+    socketio.run(app, host='0.0.0.0', port=5000, debug=True, allow_unsafe_werkzeug=True)
+
 
