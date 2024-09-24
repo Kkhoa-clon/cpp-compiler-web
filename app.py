@@ -113,6 +113,10 @@ def tailieu():
 def Khoahoc():
     return render_template('Khoahoc.html')
 
+@app.route('/videocall')
+def videocall():
+    return render_template('videocall.html')
+
 # Biến toàn cục để lưu tin nhắn
 messages = []
 
