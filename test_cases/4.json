@@ -1,0 +1,24 @@
+{
+    "test_cases": [
+        {
+            "input": "abba\n",
+            "output": "YES",
+            "time_limit": 1.0
+        },
+        {
+            "input": "aaaaaaaaaaaabaaa\n",
+            "output": "NO",
+            "time_limit": 1.0
+        },
+        {
+            "input": "abaaba\n",
+            "output": "YES",
+            "time_limit": 1.0
+        },
+        {
+            "input": "gdsagdadsdasgdasgdasgdasgd\n",
+            "output": "NO",
+            "time_limit": 1.0
+        }
+    ]
+}

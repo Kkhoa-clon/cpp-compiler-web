@@ -1,23 +1,8 @@
 {
     "test_cases": [
         {
-            "input": "12\n12",
-            "output": "24",
-            "time_limit": 1.0
-        },
-        {
-            "input": "12\n13",
-            "output": "25",
-            "time_limit": 1.0
-        },
-        {
-            "input": "12\n14",
-            "output": "26",
-            "time_limit": 1.0
-        },
-        {
-            "input": "12\n15",
-            "output": "27",
+            "input": "",
+            "output": "Hello World",
             "time_limit": 1.0
         }
     ]

@@ -1,13 +1,13 @@
 {
     "test_cases": [
         {
-            "input": "admin\n",
-            "output": "admin",
+            "input": "123456789",
+            "output": "123456789",
             "time_limit": 0.5
         },
         {
-            "input": "hello world\n",
-            "output": "hello world",
+            "input": "11111",
+            "output": "11111",
             "time_limit": 0.5
         }
     ]

@@ -30,7 +30,7 @@ const files = [
     { title: "Giáo trính Lập trình [TP.HCM]", url: "/static/tainguyen/giaotrinhlaptrinhhcm.pdf", imageUrl: "/static/images/10.png" },
     { title: "1000 bài tập về lưu đồ thuật toán", url: "/static/tainguyen/1000baitap.pdf", imageUrl: "/static/images/10.png" },
     { title: "300 bài code thiếu nhi", url: "/static/tainguyen/300bai.pdf", imageUrl: "/static/images/10.png" },
-    { title: "Tuyển tập 40 đề thi HSG", url: "/static/tainguyen/40hsgtinh.pdf", imageUrl: "/static/images/10.png" },
+
     { title: "", url: "", imageUrl: "/static/images/10.png" },
     { title: "", url: "", imageUrl: "/static/images/10.png" },
     { title: "", url: "", imageUrl: "/static/images/10.png" },

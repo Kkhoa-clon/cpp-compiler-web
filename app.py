@@ -4,6 +4,7 @@ import subprocess
 import os
 import re
 import platform
+import sys
 import time
 import json
 from datetime import datetime
@@ -113,9 +114,9 @@ def tailieu():
 def Khoahoc():
     return render_template('Khoahoc.html')
 
-@app.route('/videocall')
-def videocall():
-    return render_template('videocall.html')
+@app.route('/thongtin')
+def thongtin():
+    return render_template('thongtin.html')
 
 # Biến toàn cục để lưu tin nhắn
 messages = []
@@ -339,7 +340,17 @@ def test_code_with_constraints(problem_id):
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+# if __name__ == "__main__":
+#     # Mặc định sử dụng port 5000
+#     port = 5000
+
+#     # Kiểm tra xem có tham số cổng từ dòng lệnh không
+#     if len(sys.argv) > 1 and sys.argv[1].startswith("--port="):
+#         port = int(sys.argv[1].split("=")[1])
+
+#     # Chạy ứng dụng với SocketIO
+#     socketio.run(app, host='0.0.0.0', port=port, debug=True)
+
 if __name__ == "__main__":
-    socketio.run(app, host='0.0.0.0', port=5000, debug=True, allow_unsafe_werkzeug=True)
-
-
+    # Mặc định sử dụng port 5000, nhưng trên PythonAnywhere bạn không cần phải xác định cổng
+    socketio.run(app, host='0.0.0.0', debug=True)
