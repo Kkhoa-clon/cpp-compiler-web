@@ -6,7 +6,6 @@ bcc
 bcrypt
 bidict
 blinker
-Brlapi
 Brotli
 cachelib
 certifi
