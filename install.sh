@@ -61,4 +61,5 @@ else
 fi
 
 # Thông báo hoàn tất cài đặt
-echo "Cài đặt hoàn tất. Sử dụng start.sh để khởi động ứng dụng."
+echo "Cài đặt hoàn tất. Sử dụng python app.py để khởi động trên windows hoặc python3 app.py trên linux/macOS
+."

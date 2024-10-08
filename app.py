@@ -352,5 +352,5 @@ def load_user(user_id):
 #     socketio.run(app, host='0.0.0.0', port=port, debug=True)
 
 if __name__ == "__main__":
-    # Mặc định sử dụng port 5000, nhưng trên PythonAnywhere bạn không cần phải xác định cổng
-    socketio.run(app, host='0.0.0.0', debug=True)
+    port = int(os.environ.get("PORT", 5000))  # Render assigns the PORT dynamically
+    socketio.run(app, host='0.0.0.0', port=port)
