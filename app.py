@@ -340,6 +340,12 @@ def test_code_with_constraints(problem_id):
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+# Route để phục vụ tệp xác minh
+@app.route('/google377630dbe00e18b6.html')
+def google_verification():
+    return send_from_directory(os.getcwd(), 'google377630dbe00e18b6.html')
+
+
 # if __name__ == "__main__":
 #     # Mặc định sử dụng port 5000
 #     port = 5000
@@ -352,6 +358,5 @@ def load_user(user_id):
 #     socketio.run(app, host='0.0.0.0', port=port, debug=True)
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))  # Render assigns the PORT dynamically
-    socketio.run(app, host='0.0.0.0', port=port)
-
+    # Mặc định sử dụng port 5000, nhưng trên PythonAnywhere bạn không cần phải xác định cổng
+    socketio.run(app, host='0.0.0.0', debug=True)
